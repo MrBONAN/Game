@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2796437241751019787}
   - component: {fileID: 5367603516435740233}
   - component: {fileID: 5607910873918802930}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -155,7 +155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5859614007091913322}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -187,7 +187,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8038808137624496112}
   - component: {fileID: 2941373819076488979}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Texture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
