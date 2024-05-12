@@ -87,4 +87,14 @@ public class PlayerControl : MonoBehaviour
         if (interactable is null) return;
         interactableObjects.Remove(interactable);
     }
+
+    protected void SetAnimationRun(bool on)
+    {
+        animator.SetBool("isRunning", on);
+    }
+
+    protected void SetAnimationJump(bool on)
+    {
+        animator.SetBool("isJumping", on);
+    }
 }
