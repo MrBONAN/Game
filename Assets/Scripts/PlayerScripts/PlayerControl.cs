@@ -53,7 +53,6 @@ public class PlayerControl : MonoBehaviour
 
     protected virtual void UpdateTexture()
     {
-        throw new NotImplementedException();
     }
 
     protected void Flip(int direction)
