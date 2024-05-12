@@ -56,9 +56,12 @@ public class PlayerControl : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    protected virtual void Flip(int direction)
+    protected void Flip(int direction)
     {
-        throw new NotImplementedException();
+        transform.localScale =
+            new Vector3(direction * Math.Abs(transform.localScale.x),
+                transform.localScale.y,
+                transform.localScale.z);
     }
 
     protected virtual void CheckCollisions()
