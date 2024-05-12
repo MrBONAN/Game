@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,6 +9,7 @@ public class Button : MonoBehaviour
     public UnityEvent onPressed;
     public UnityEvent onStayPressed;
     public UnityEvent onReleased;
+    private string[] whoCanInteract = { "Big player" };
 
     private void Start()
     {
@@ -21,7 +23,7 @@ public class Button : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag is "Player")
+        if (CheckIfCanInteract(other))
         {
             turnOn += 1;
             onPressed.Invoke();
@@ -31,16 +33,19 @@ public class Button : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag is "Player")
+        if (CheckIfCanInteract(other))
             onStayPressed.Invoke();
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag is "Player")
+        if (CheckIfCanInteract(other))
         {
             turnOn -= 1;
             onReleased.Invoke();
         }
     }
+
+    private bool CheckIfCanInteract(Collider2D other)
+        => whoCanInteract.Contains(other.gameObject.tag);
 }
