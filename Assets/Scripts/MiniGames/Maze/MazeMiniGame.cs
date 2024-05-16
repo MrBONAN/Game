@@ -8,20 +8,39 @@ namespace MazeMiniGame
     Класс MazeObject будет графической интерпретацией обычного Maze */
     public class MazeObject : MonoBehaviour
     {
-        
-    }
-    public class MazeMiniGame : IMiniGame
-    {
         private Maze maze;
-
-        public MazeMiniGame(Maze maze)
+        private Node selected;
+        private void Start()
         {
-            this.maze = maze;
+            maze = new Maze(5, 5);
+            selected = maze.GetNode(0, 0);
+            selected.visited = true;
         }
-        
-        public void StartMiniGame()
+
+        private void Update()
         {
-            
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+                maze.MoveInDirection(ref selected, MoveDirection.Up);
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+                maze.MoveInDirection(ref selected, MoveDirection.Down);
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                maze.MoveInDirection(ref selected, MoveDirection.Left);
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+                maze.MoveInDirection(ref selected, MoveDirection.Right);
         }
     }
+    // public class MazeMiniGame : IMiniGame
+    // {
+    //     private Maze maze;
+    //
+    //     public MazeMiniGame(Maze maze)
+    //     {
+    //         this.maze = maze;
+    //     }
+    //     
+    //     public void StartMiniGame()
+    //     {
+    //         
+    //     }
+    // }
 }

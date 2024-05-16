@@ -9,7 +9,7 @@ namespace MazeMiniGame
 {
     public class Node
     {
-        public List<Edge> edges;
+        public List<Edge> edges = new();
         public bool visited;
         public Node prevNode;
         public int X => pos.x;
@@ -33,15 +33,15 @@ namespace MazeMiniGame
 
         public Node GetNeighborNode(MoveDirection direction)
         {
-            var target = ConvertDirectionToVector(direction);
+            var target = pos + ConvertDirectionToVector(direction);
             return edges.Select(e => e.GetOtherNode(this)).FirstOrDefault(n => n.pos == target);
         }
 
         public static Vector2Int ConvertDirectionToVector(MoveDirection direction)
             => direction switch
             {
-                MoveDirection.Up => Vector2Int.down,
-                MoveDirection.Down => Vector2Int.up,
+                MoveDirection.Up => Vector2Int.up,
+                MoveDirection.Down => Vector2Int.down,
                 MoveDirection.Left => Vector2Int.left,
                 MoveDirection.Right => Vector2Int.right,
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
