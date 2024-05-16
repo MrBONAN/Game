@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using MiniGames;
@@ -10,9 +11,12 @@ namespace MazeMiniGame
     {
         private Maze maze;
         private Node selected;
+        private EdgesGenerator edgesGenerator;
+
         private void Start()
         {
-            maze = new Maze(5, 5);
+            edgesGenerator = GetComponentInChildren<EdgesGenerator>();
+            maze = new Maze(5, 5, edgesGenerator);
             selected = maze.GetNode(0, 0);
             selected.visited = true;
         }
@@ -27,6 +31,11 @@ namespace MazeMiniGame
                 maze.MoveInDirection(ref selected, MoveDirection.Left);
             else if (Input.GetKeyDown(KeyCode.RightArrow))
                 maze.MoveInDirection(ref selected, MoveDirection.Right);
+        }
+
+        public void OnDestroy()
+        {
+            Destroy(edgesGenerator);
         }
     }
     // public class MazeMiniGame : IMiniGame

@@ -12,18 +12,20 @@ namespace MazeMiniGame
         public List<Edge> edges = new();
         public bool visited;
         public Node prevNode;
+        private readonly EdgesGenerator edgesGenerator;
         public int X => pos.x;
         public int Y => pos.y;
         private readonly Vector2Int pos;
 
-        public Node(int x, int y)
+        public Node(int x, int y, EdgesGenerator edgesGenerator)
         {
             pos = new Vector2Int(x, y);
+            this.edgesGenerator = edgesGenerator;
         }
 
         public void Connect(Node other)
         {
-            var edge = new Edge(this, other, EdgeState.Unvisited);
+            var edge = new Edge(this, other, EdgeState.Unvisited, edgesGenerator);
             edges.Add(edge);
             other.edges.Add(edge);
         }

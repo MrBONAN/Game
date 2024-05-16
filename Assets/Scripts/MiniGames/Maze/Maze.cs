@@ -13,14 +13,14 @@ namespace MazeMiniGame
         public int Height => maze.GetLength(0);
         private int version = 0;
 
-        public Maze(int width, int height)
+        public Maze(int width, int height, EdgesGenerator edgesGenerator)
         {
             maze = new Node[height, width];
             for (var i = 0; i < height; i++)
             {
                 for (var j = 0; j < width; j++)
                 {
-                    maze[i, j] = new Node(j, i);
+                    maze[i, j] = new Node(j, i, edgesGenerator);
                 }
             }
 
@@ -36,6 +36,7 @@ namespace MazeMiniGame
             }
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         public void MoveInDirection(ref Node curNode, MoveDirection direction)
         {
             var otherNode = curNode.GetNeighborNode(direction);
@@ -57,6 +58,7 @@ namespace MazeMiniGame
                 otherNode.prevNode = curNode;
                 curNode = otherNode;
             }
+
             WriteMaze();
         }
 
@@ -78,6 +80,7 @@ namespace MazeMiniGame
                         if (y < Height - 1)
                             m[edgeCor + len] = ' ';
                     }
+
                     if (y < Height - 1)
                     {
                         var n1 = maze[y, x];
@@ -93,6 +96,7 @@ namespace MazeMiniGame
                 if (y < Height - 1)
                     m[endCor + len] = '\n';
             }
+
             return m.ToString() + ++version;
         }
 
@@ -111,12 +115,13 @@ namespace MazeMiniGame
         private void WriteMaze()
         {
             var filePath = @"C:\Users\Admin\Desktop\maze.txt";
-            
+
             if (!File.Exists(filePath))
             {
                 Debug.Log("Created");
                 File.Create(filePath);
             }
+
             try
             {
                 File.WriteAllText(filePath, ToString());
@@ -129,6 +134,13 @@ namespace MazeMiniGame
 
         public Node GetNode(int x, int y)
             => maze[y, x];
+
+        public void SetEdgeType(Node n1, Node n2, EdgeState type)
+            => n1.GetEdgeBetween(n2).Type = type;
+        
+        public void SetEdgeType(Vector2Int n1, Vector2Int n2, EdgeState type)
+            => maze[n1.y, n1.x].GetEdgeBetween(maze[n2.y, n2.x]).Type = type;
+
 
         // TODO перенести это в класс MazeObject
         // private void OnDestroy()
