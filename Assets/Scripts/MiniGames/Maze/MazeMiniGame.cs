@@ -13,7 +13,7 @@ namespace MazeMiniGame
         private Node selected;
         private EdgesGenerator edgesGenerator;
 
-        private void Start()
+        public void StartMiniGame()
         {
             edgesGenerator = GetComponentInChildren<EdgesGenerator>();
             edgesGenerator.SetParentTransform(transform);
@@ -22,7 +22,7 @@ namespace MazeMiniGame
             selected.visited = true;
         }
 
-        private void Update()
+        public void UpdateMiniGame()
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
                 maze.MoveInDirection(ref selected, MoveDirection.Up);
@@ -37,11 +37,6 @@ namespace MazeMiniGame
         public void OnDestroy()
         {
             Destroy(edgesGenerator);
-        }
-
-        public void StartMiniGame()
-        {
-            throw new NotImplementedException();
         }
     }
 }
