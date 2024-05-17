@@ -18,7 +18,7 @@ namespace MiniGames.MiniGamesZone
             zoneCamera = GetComponentInChildren<Camera>();
             zoneCamera.enabled = false;
 
-            zoneCamera.rect = new Rect(0.1f, 0.1f, 0.9f, 0.9f);
+            zoneCamera.rect = new Rect(0.1f, 0.1f, 0.8f, 0.8f);
         }
 
         public void CreateMazeMiniGame()
@@ -26,6 +26,7 @@ namespace MiniGames.MiniGamesZone
             if (currentMiniGame is not null)
                 return;
             mazeGame = Instantiate(mazePrefab);
+            mazeGame.StartMiniGame();
             currentMiniGame = mazeGame;
             zoneCamera.enabled = true;
         }
@@ -37,8 +38,9 @@ namespace MiniGames.MiniGamesZone
 
         public void CloseMiniGame()
         {
-            currentMiniGame.OnDestroy();
+            Destroy(currentMiniGame as Object);
             currentMiniGame = null;
+            zoneCamera.enabled = false;
         }
     }
 }
