@@ -26,7 +26,8 @@ namespace MazeMiniGame
         public void OnDestroy()
         {
             foreach (var edge in edges)
-                Destroy(edge);
+                Destroy(edge.gameObject);
+            Destroy(gameObject);
         }
     }
 }
