@@ -15,7 +15,7 @@ namespace MiniGames.MiniGamesZone
 
         private void Awake()
         {
-            zoneCamera = GetComponent<Camera>();
+            zoneCamera = GetComponentInChildren<Camera>();
             zoneCamera.enabled = false;
 
             zoneCamera.rect = new Rect(0.1f, 0.1f, 0.9f, 0.9f);

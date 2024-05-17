@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class SplitScrin : MonoBehaviour
 {
+    private bool initialized = false;
+    
     public bool splitScreen = true;
 
     public Camera camera1;
@@ -25,13 +27,13 @@ public class SplitScrin : MonoBehaviour
     public float dWidth, dHeight;
     public float xOffset = 0f, yOffset = 0f;
 
-
-    public void Start()
+    public void Initialize()
     {
         if (splitScreen)
             InitializeSplitModeSettings();
         else
             InitializeMonoCameraSettings();
+        initialized = true;
     }
 
     private void InitializeSplitModeSettings()
@@ -74,6 +76,8 @@ public class SplitScrin : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (initialized is false)
+            return;
         if (!splitScreen)
         {
             camera1.transform.position += GetCameraMoveDirection(camera1, player1.position) * cameraSpeed;
