@@ -8,7 +8,7 @@ namespace MiniGames.MiniGamesZone
 
         [SerializeField] private Camera zoneCamera;
         private IMiniGame currentMiniGame;
-        [SerializeField] private MazeMiniGame.MazeObject mazeGame;
+        private MazeMiniGame.MazeObject mazeGame;
 
         public bool IsMiniGameActive
             => currentMiniGame is not null;
