@@ -7,7 +7,7 @@ namespace MazeMiniGame
 {
     /* По заветам Окуловского, отделяю логику игры от её графической реализации
     Класс MazeObject будет графической интерпретацией обычного Maze */
-    public class MazeObject : MonoBehaviour
+    public class MazeObject : MonoBehaviour, IMiniGame
     {
         private Maze maze;
         private Node selected;
@@ -16,6 +16,7 @@ namespace MazeMiniGame
         private void Start()
         {
             edgesGenerator = GetComponentInChildren<EdgesGenerator>();
+            edgesGenerator.SetParentTransform(transform);
             maze = new Maze(5, 5, edgesGenerator);
             selected = maze.GetNode(0, 0);
             selected.visited = true;
@@ -37,19 +38,10 @@ namespace MazeMiniGame
         {
             Destroy(edgesGenerator);
         }
+
+        public void StartMiniGame()
+        {
+            throw new NotImplementedException();
+        }
     }
-    // public class MazeMiniGame : IMiniGame
-    // {
-    //     private Maze maze;
-    //
-    //     public MazeMiniGame(Maze maze)
-    //     {
-    //         this.maze = maze;
-    //     }
-    //     
-    //     public void StartMiniGame()
-    //     {
-    //         
-    //     }
-    // }
 }
