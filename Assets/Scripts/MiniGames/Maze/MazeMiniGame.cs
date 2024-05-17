@@ -37,6 +37,7 @@ namespace MazeMiniGame
         public void OnDestroy()
         {
             Destroy(edgesGenerator);
+            Destroy(gameObject);
         }
     }
 }
