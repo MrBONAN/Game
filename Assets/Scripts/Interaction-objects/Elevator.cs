@@ -9,7 +9,7 @@ namespace Interaction_objects
         [SerializeField] private float speed = 1f;
         [SerializeField] private Transform start;
         [SerializeField] private Transform end;
-
+        private Animator animator;
         private bool _moveUp;
         public void MoveUp() => moveUp = true;
         public void MoveDown() => moveUp = false;
@@ -24,16 +24,13 @@ namespace Interaction_objects
         public bool moveUp
         {
             get => _moveUp;
-            private set
-            {
-                _moveUp = value;
-                UpdateAnimation();
-            }
+            private set => _moveUp = value;
         }
 
         public void Start()
         {
             transform.position = start.position;
+            animator = GetComponentInChildren<Animator>();
         }
 
         public void FixedUpdate()
@@ -41,11 +38,14 @@ namespace Interaction_objects
             transform.position = Vector3.MoveTowards(transform.position,
                 moveUp ? end.position : start.position,
                 Time.fixedDeltaTime * speed);
+            
+            animator.SetBool("IsWorking",
+                !(Math.Abs((transform.position - (moveUp ? end.position : start.position)).sqrMagnitude) < 1e-5));
         }
 
         private void UpdateAnimation()
         {
-            //TODO: добавить обработку анимаций
+            throw new NotImplementedException();
         }
     }
 }
