@@ -25,7 +25,7 @@ namespace MiniGames.MiniGamesZone
         {
             if (currentMiniGame is not null)
                 return;
-            mazeGame = Instantiate(mazePrefab);
+            mazeGame = Instantiate(mazePrefab, zoneCamera.transform);
             mazeGame.StartMiniGame();
             currentMiniGame = mazeGame;
             zoneCamera.enabled = true;
