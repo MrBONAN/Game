@@ -15,6 +15,7 @@ namespace MazeMiniGame
 
         public void StartMiniGame()
         {
+            transform.position += new Vector3(0, 0, 0.5f);
             edgesGenerator = GetComponentInChildren<EdgesGenerator>();
             edgesGenerator.SetParentTransform(transform);
             maze = new Maze(5, 5, edgesGenerator);
