@@ -5,7 +5,6 @@ namespace MazeMiniGame
 {
     public class EdgeObject : MonoBehaviour
     {
-        private static float scale = 0.76f;
         public Edge RealEdge { get; set; }
         private Vector2 _pos;
 
@@ -14,7 +13,7 @@ namespace MazeMiniGame
             get => _pos;
             set
             {
-                _pos = new Vector2(value.x, value.y) * scale;
+                _pos = new Vector2(value.x, value.y);
                 transform.localPosition = _pos;
             }
         }

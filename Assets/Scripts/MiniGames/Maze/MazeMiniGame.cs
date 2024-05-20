@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using MiniGames;
@@ -9,37 +10,69 @@ namespace MazeMiniGame
     Класс MazeObject будет графической интерпретацией обычного Maze */
     public class MazeObject : MonoBehaviour, IMiniGame
     {
-        private Maze maze;
-        private Node selected;
-        private EdgesGenerator edgesGenerator;
+        private Maze maze1, maze2;
+        private Node selected1, selected2;
+        [SerializeField] private EdgesGenerator edgesGeneratorPrefab;
+        private List<EdgesGenerator> generators = new();
+        private float mazeScale = 7;
+        
+        private static Dictionary<MoveDirection, KeyCode> player1Control = new()
+        {
+            { MoveDirection.Up, KeyCode.UpArrow },
+            { MoveDirection.Down, KeyCode.DownArrow },
+            { MoveDirection.Left, KeyCode.LeftArrow },
+            { MoveDirection.Right, KeyCode.RightArrow }
+        };
+        
+        private static Dictionary<MoveDirection, KeyCode> player2Control = new()
+        {
+            { MoveDirection.Up, KeyCode.W },
+            { MoveDirection.Down, KeyCode.S },
+            { MoveDirection.Left, KeyCode.A },
+            { MoveDirection.Right, KeyCode.D }
+        };
 
         public void StartMiniGame()
         {
-            transform.position += new Vector3(0, 0, 0.5f);
-            edgesGenerator = GetComponentInChildren<EdgesGenerator>();
-            edgesGenerator.SetParentTransform(transform);
-            maze = new Maze(5, 5, edgesGenerator);
-            selected = maze.GetNode(0, 0);
-            selected.visited = true;
+            transform.localPosition += new Vector3(0, 0, 1f);
+            var width = 9;
+            var height = 8;
+            var shift1 = new Vector3(0, 0);
+            var shift2 = new Vector3(0, 0);
+            maze1 = CreateMaze(9, 8, shift1);
+            maze2 = CreateMaze(9, 8, shift2);
+            selected1 = maze1.GetNode(0, 0);
+            selected1.visited = true;
+            selected2 = maze2.GetNode(0, 0);
+            selected2.visited = true;
             Debug.Log("MazeMiniGame started");
+        }
+
+        private Maze CreateMaze(int width, int height, Vector3 shift)
+        {
+            var generator = Instantiate(edgesGeneratorPrefab, transform);
+            generator.transform.position += shift;
+            generator.scale = mazeScale;
+            generators.Add(generator);
+            return new Maze(width, height, generator);
         }
 
         public void UpdateMiniGame()
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-                maze.MoveInDirection(ref selected, MoveDirection.Up);
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-                maze.MoveInDirection(ref selected, MoveDirection.Down);
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
-                maze.MoveInDirection(ref selected, MoveDirection.Left);
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
-                maze.MoveInDirection(ref selected, MoveDirection.Right);
+            foreach (var (direction, keyCode) in player1Control)
+                if (Input.GetKeyDown(keyCode))
+                    maze1.MoveInDirection(ref selected1, direction);
+            
+            foreach (var (direction, keyCode) in player2Control)
+                if (Input.GetKeyDown(keyCode))
+                    maze2.MoveInDirection(ref selected2, direction);
         }
 
         public void OnDestroy()
         {
             Debug.Log("MazeMiniGame destroyed");
-            Destroy(edgesGenerator);
+            foreach (var generator in generators)
+                Destroy(generator);
             Destroy(gameObject);
         }
     }

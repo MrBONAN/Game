@@ -10,13 +10,16 @@ namespace MazeMiniGame
         public List<EdgeObject> edges = new();
         public EdgeObject prefab;
         private Transform parent;
+        public float scale;
 
-        private void Start()
+        private void Awake()
             => parent = transform;
 
         public EdgeObject GetNewEdge()
         {
-            edges.Add(Instantiate(prefab, parent));
+            var edge = Instantiate(prefab, parent);
+            edge.transform.localScale = new Vector3(scale, scale);
+            edges.Add(edge);
             return edges.Last();
         }
 
