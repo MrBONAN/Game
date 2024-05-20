@@ -10,10 +10,10 @@ namespace GameHandler
         
         [SerializeField] private Camera Camera1prefab;
         [SerializeField] private Camera Camera2prefab;
-        [SerializeField] private MiniGames.MiniGamesZone.MiniGamesHandler MiniGamesHandlerPrefab;
         
         private Camera camera1;
         private Camera camera2;
+        [SerializeField]
         private MiniGames.MiniGamesZone.MiniGamesHandler miniGamesHandler;
 
         private bool initialized;
@@ -40,7 +40,6 @@ namespace GameHandler
         {
             camera1 = Instantiate(Camera1prefab);
             camera2 = Instantiate(Camera2prefab);
-            miniGamesHandler = Instantiate(MiniGamesHandlerPrefab);
 
             var mainCamera = camera1.GetComponent<SplitScrin>();
             mainCamera.splitScreen = true;
