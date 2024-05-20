@@ -1,33 +1,34 @@
-using System;
-using Interaction_objects;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Switcher : MonoBehaviour, IInteractable
+namespace Interaction_objects
 {
-    private Animator animator;
-    public UnityEvent turnOn;
-    public UnityEvent turnOff;
-    public bool state { get; private set; }
-
-    public void SwitchOnOff()
+    public class Switcher : MonoBehaviour, IInteractable
     {
-        state = !state;
-        Debug.Log($"Switch state: {state}");
-        animator.SetBool("turn-on", state);
-        if (state)
-            turnOn.Invoke();
-        else
-            turnOff.Invoke();
-    }
+        private Animator animator;
+        public UnityEvent turnOn;
+        public UnityEvent turnOff;
+        public bool state { get; private set; }
 
-    private void Start()
-    {
-        animator = GetComponent<Animator>();
-    }
+        public void SwitchOnOff()
+        {
+            state = !state;
+            Debug.Log($"Switch state: {state}");
+            animator.SetBool("turn-on", state);
+            if (state)
+                turnOn.Invoke();
+            else
+                turnOff.Invoke();
+        }
 
-    public void Interact()
-    {
-        SwitchOnOff();
+        private void Start()
+        {
+            animator = GetComponent<Animator>();
+        }
+
+        public void Interact()
+        {
+            SwitchOnOff();
+        }
     }
 }
