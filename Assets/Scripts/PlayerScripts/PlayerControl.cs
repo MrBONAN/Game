@@ -56,9 +56,12 @@ public class PlayerControl : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    protected virtual void Flip(int direction)
+    protected void Flip(int direction)
     {
-        throw new NotImplementedException();
+        transform.localScale =
+            new Vector3(direction * Math.Abs(transform.localScale.x),
+                transform.localScale.y,
+                transform.localScale.z);
     }
 
     protected virtual void CheckCollisions()
@@ -83,5 +86,15 @@ public class PlayerControl : MonoBehaviour
         var interactable = other.gameObject.GetComponent<IInteractable>();
         if (interactable is null) return;
         interactableObjects.Remove(interactable);
+    }
+
+    protected void SetAnimationRun(bool on)
+    {
+        animator.SetBool("isRunning", on);
+    }
+
+    protected void SetAnimationJump(bool on)
+    {
+        animator.SetBool("isJumping", on);
     }
 }
