@@ -20,6 +20,7 @@ namespace MazeMiniGame
             maze = new Maze(5, 5, edgesGenerator);
             selected = maze.GetNode(0, 0);
             selected.visited = true;
+            Debug.Log("MazeMiniGame started");
         }
 
         public void UpdateMiniGame()
@@ -36,6 +37,7 @@ namespace MazeMiniGame
 
         public void OnDestroy()
         {
+            Debug.Log("MazeMiniGame destroyed");
             Destroy(edgesGenerator);
             Destroy(gameObject);
         }
