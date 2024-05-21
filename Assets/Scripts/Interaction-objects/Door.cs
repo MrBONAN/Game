@@ -15,6 +15,7 @@ namespace Interaction_objects
         {
             IsOpened = 1;
             _realSpeed = 0;
+            Debug.Log("Жопа");
         }
 
         public void Close()
@@ -28,7 +29,7 @@ namespace Interaction_objects
             var initTransform = GetComponent<Transform>();
             start = initTransform.position;
             end = initTransform.position + new Vector3(0, initTransform.localScale.y, 0);
-            Debug.Log(initTransform.transform.localScale.y);
+            Debug.Log(initTransform.localScale.y);
         }
 
         public void FixedUpdate()
