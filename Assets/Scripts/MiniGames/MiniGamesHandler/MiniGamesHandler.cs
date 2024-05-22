@@ -1,17 +1,17 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
+using Object = UnityEngine.Object;
 
 namespace MiniGames.MiniGamesZone
 {
     public class MiniGamesHandler : MonoBehaviour
     {
-        [SerializeField] private MazeMiniGame.MazeObject mazePrefab;
-
         [SerializeField] private Camera zoneCamera;
-        private IMiniGame currentMiniGame;
-        private MazeMiniGame.MazeObject mazeGame;
+        private CurrentMiniGameHandler currentMiniGameHandler;
 
         public bool IsMiniGameActive
-            => currentMiniGame is not null;
+            => currentMiniGameHandler is not null;
 
         private void Awake()
         {
@@ -21,25 +21,28 @@ namespace MiniGames.MiniGamesZone
             zoneCamera.rect = new Rect(0.1f, 0.1f, 0.8f, 0.8f);
         }
 
-        public void CreateMazeMiniGame()
+        public void CreateMiniGame(CurrentMiniGameHandler miniGameHandler)
         {
-            if (currentMiniGame is not null)
-                return;
-            mazeGame = Instantiate(mazePrefab, zoneCamera.transform);
-            mazeGame.StartMiniGame();
-            currentMiniGame = mazeGame;
+            if (currentMiniGameHandler is not null) return;
+            currentMiniGameHandler = miniGameHandler;
+            currentMiniGameHandler.transform.position = zoneCamera.transform.position;
+            currentMiniGameHandler.StartMiniGame();
             zoneCamera.enabled = true;
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         public void UpdateMiniGame()
         {
-            currentMiniGame.UpdateMiniGame();
+            if (currentMiniGameHandler is null) return;
+            var result = currentMiniGameHandler.UpdateMiniGame();
+            if (result is not MiniGameResult.ContinuePlay) CloseMiniGame();
         }
 
         public void CloseMiniGame()
         {
-            Destroy(currentMiniGame as Object);
-            currentMiniGame = null;
+            if (currentMiniGameHandler is null) return;
+            currentMiniGameHandler.CloseGame();
+            currentMiniGameHandler = null;
             zoneCamera.enabled = false;
         }
     }
