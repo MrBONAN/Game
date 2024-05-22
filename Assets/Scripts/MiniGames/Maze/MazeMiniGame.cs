@@ -8,7 +8,7 @@ namespace MazeMiniGame
 {
     /* По заветам Окуловского, отделяю логику игры от её графической реализации
     Класс MazeObject будет графической интерпретацией обычного Maze */
-    public class MazeObject : MonoBehaviour, IMiniGame
+    public class MazeObject : MiniGame
     {
         private Maze maze1, maze2;
         private Node selected1, selected2;
@@ -32,7 +32,7 @@ namespace MazeMiniGame
             { MoveDirection.Right, KeyCode.D }
         };
 
-        public void StartMiniGame()
+        public override void StartMiniGame()
         {
             transform.localPosition += new Vector3(0, 0, 1f);
             var distanceFromOrigin = 4.5f;
@@ -56,7 +56,7 @@ namespace MazeMiniGame
             return new Maze(width, height, generator);
         }
 
-        public MiniGameResult UpdateMiniGame()
+        public override MiniGameResult UpdateMiniGame()
         {
             foreach (var (direction, keyCode) in player1Control)
                 if (Input.GetKeyDown(keyCode))
@@ -69,12 +69,13 @@ namespace MazeMiniGame
             return MiniGameResult.ContinuePlay;
         }
 
-        public void OnDestroy()
+        public override void OnDestroy()
         {
             Debug.Log("MazeMiniGame destroyed");
             foreach (var generator in generators)
                 Destroy(generator);
-            Destroy(gameObject);
+            generators.Clear();
+            //Destroy(gameObject);
         }
     }
 }

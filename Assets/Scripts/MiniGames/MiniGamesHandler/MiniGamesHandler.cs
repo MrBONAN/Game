@@ -7,17 +7,11 @@ namespace MiniGames.MiniGamesZone
 {
     public class MiniGamesHandler : MonoBehaviour
     {
-        [SerializeField] private MazeMiniGame.MazeObject mazePrefab;
-
         [SerializeField] private Camera zoneCamera;
-
-        private UnityEvent<MiniGameResult> miniGameEnd;
-
-        private IMiniGame currentMiniGame;
-        private MazeMiniGame.MazeObject mazeGame;
+        private CurrentMiniGameHandler currentMiniGameHandler;
 
         public bool IsMiniGameActive
-            => currentMiniGame is not null;
+            => currentMiniGameHandler is not null;
 
         private void Awake()
         {
@@ -27,46 +21,28 @@ namespace MiniGames.MiniGamesZone
             zoneCamera.rect = new Rect(0.1f, 0.1f, 0.8f, 0.8f);
         }
 
-        public void CreateMazeMiniGame(UnityEvent<MiniGameResult> miniGameEndAction = null)
+        public void CreateMiniGame(CurrentMiniGameHandler miniGameHandler)
         {
-            if (currentMiniGame is not null)
-                return;
-            miniGameEnd = miniGameEndAction;
-            mazeGame = Instantiate(mazePrefab, zoneCamera.transform);
-            mazeGame.StartMiniGame();
-            currentMiniGame = mazeGame;
+            if (currentMiniGameHandler is not null) return;
+            currentMiniGameHandler = miniGameHandler;
+            currentMiniGameHandler.transform.position = zoneCamera.transform.position;
+            currentMiniGameHandler.StartMiniGame();
             zoneCamera.enabled = true;
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
         public void UpdateMiniGame()
         {
-            var result = currentMiniGame.UpdateMiniGame();
-            if (result is MiniGameResult.ContinuePlay)
-                return;
-            switch (result)
-            {
-                case MiniGameResult.Win:
-                    break;
-                case MiniGameResult.Lose:
-                    break;
-                case MiniGameResult.Exit:
-                    break;
-                default:
-                    Debug.Log("Неизвестный результат для миниигры");
-                    throw new ArgumentOutOfRangeException();
-            }
-            miniGameEnd?.Invoke(result);
-            CloseMiniGame();
+            if (currentMiniGameHandler is null) return;
+            var result = currentMiniGameHandler.UpdateMiniGame();
+            if (result is not MiniGameResult.ContinuePlay) CloseMiniGame();
         }
 
         public void CloseMiniGame()
         {
-            if (currentMiniGame is null) return;
-            
-            miniGameEnd = null;
-            Destroy(currentMiniGame as Object);
-            currentMiniGame = null;
+            if (currentMiniGameHandler is null) return;
+            currentMiniGameHandler.CloseGame();
+            currentMiniGameHandler = null;
             zoneCamera.enabled = false;
         }
     }
