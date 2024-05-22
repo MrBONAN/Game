@@ -56,7 +56,7 @@ namespace MazeMiniGame
             return new Maze(width, height, generator);
         }
 
-        public void UpdateMiniGame()
+        public MiniGameResult UpdateMiniGame()
         {
             foreach (var (direction, keyCode) in player1Control)
                 if (Input.GetKeyDown(keyCode))
@@ -65,6 +65,8 @@ namespace MazeMiniGame
             foreach (var (direction, keyCode) in player2Control)
                 if (Input.GetKeyDown(keyCode))
                     maze2.MoveInDirection(ref selected2, direction);
+
+            return MiniGameResult.ContinuePlay;
         }
 
         public void OnDestroy()
