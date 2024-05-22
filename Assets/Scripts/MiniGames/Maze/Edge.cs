@@ -15,6 +15,7 @@ namespace MazeMiniGame
         public readonly Node From;
         public readonly Node To;
         private EdgeObject edgeObject;
+        private float edgeSize = 0.38f;
 
         private EdgeState _type;
 
@@ -44,8 +45,9 @@ namespace MazeMiniGame
         {
             edgeObject = edgesGenerator.GetNewEdge();
             edgeObject.RealEdge = this;
-            edgeObject.Pos = new Vector2(Math.Min(from.X, to.X), Math.Min(from.Y, to.Y)) *
-                             (edgesGenerator.scale * 0.38f);
+            edgeObject.transform.localScale /= edgeSize;
+            edgeObject.Pos = (new Vector2(Math.Min(from.X, to.X), Math.Min(from.Y, to.Y)) + edgesGenerator.shift) *
+                             edgesGenerator.scale;
             edgeObject.Horizontal = from.X == to.X;
 
             From = from;

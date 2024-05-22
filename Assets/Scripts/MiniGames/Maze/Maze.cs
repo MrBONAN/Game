@@ -16,6 +16,7 @@ namespace MazeMiniGame
         public Maze(int width, int height, EdgesGenerator edgesGenerator)
         {
             maze = new Node[height, width];
+            edgesGenerator.shift = new Vector3(-(width - 1) / 2f, -(height - 1) / 2f);
             for (var i = 0; i < height; i++)
             {
                 for (var j = 0; j < width; j++)
@@ -59,7 +60,7 @@ namespace MazeMiniGame
                 curNode = otherNode;
             }
 
-            WriteMaze();
+            //WriteMaze();
         }
 
         public override string ToString()
@@ -137,7 +138,7 @@ namespace MazeMiniGame
 
         public void SetEdgeType(Node n1, Node n2, EdgeState type)
             => n1.GetEdgeBetween(n2).Type = type;
-        
+
         public void SetEdgeType(Vector2Int n1, Vector2Int n2, EdgeState type)
             => maze[n1.y, n1.x].GetEdgeBetween(maze[n2.y, n2.x]).Type = type;
 

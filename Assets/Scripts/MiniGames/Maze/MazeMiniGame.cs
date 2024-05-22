@@ -14,8 +14,8 @@ namespace MazeMiniGame
         private Node selected1, selected2;
         [SerializeField] private EdgesGenerator edgesGeneratorPrefab;
         private List<EdgesGenerator> generators = new();
-        private float mazeScale = 7;
-        
+        private float mazeScale = 15f / 9 / 2;
+
         private static Dictionary<MoveDirection, KeyCode> player1Control = new()
         {
             { MoveDirection.Up, KeyCode.UpArrow },
@@ -23,7 +23,7 @@ namespace MazeMiniGame
             { MoveDirection.Left, KeyCode.LeftArrow },
             { MoveDirection.Right, KeyCode.RightArrow }
         };
-        
+
         private static Dictionary<MoveDirection, KeyCode> player2Control = new()
         {
             { MoveDirection.Up, KeyCode.W },
@@ -35,10 +35,9 @@ namespace MazeMiniGame
         public void StartMiniGame()
         {
             transform.localPosition += new Vector3(0, 0, 1f);
-            var width = 9;
-            var height = 8;
-            var shift1 = new Vector3(0, 0);
-            var shift2 = new Vector3(0, 0);
+            var distanceFromOrigin = 4.5f;
+            var shift1 = new Vector3(distanceFromOrigin, 0);
+            var shift2 = new Vector3(-distanceFromOrigin, 0);
             maze1 = CreateMaze(9, 8, shift1);
             maze2 = CreateMaze(9, 8, shift2);
             selected1 = maze1.GetNode(0, 0);
@@ -62,7 +61,7 @@ namespace MazeMiniGame
             foreach (var (direction, keyCode) in player1Control)
                 if (Input.GetKeyDown(keyCode))
                     maze1.MoveInDirection(ref selected1, direction);
-            
+
             foreach (var (direction, keyCode) in player2Control)
                 if (Input.GetKeyDown(keyCode))
                     maze2.MoveInDirection(ref selected2, direction);

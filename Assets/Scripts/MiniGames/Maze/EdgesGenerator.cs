@@ -11,6 +11,7 @@ namespace MazeMiniGame
         public EdgeObject prefab;
         private Transform parent;
         public float scale;
+        public Vector2 shift = Vector2.zero;
 
         private void Awake()
             => parent = transform;
