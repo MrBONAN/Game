@@ -141,17 +141,5 @@ namespace MazeMiniGame
 
         public void SetEdgeType(Vector2Int n1, Vector2Int n2, EdgeState type)
             => maze[n1.y, n1.x].GetEdgeBetween(maze[n2.y, n2.x]).Type = type;
-
-
-        // TODO перенести это в класс MazeObject
-        // private void OnDestroy()
-        // {
-        //     // Я хз, можно ли удалить объект дважды, поэтому лучше в HashSet записать их
-        //     var edges = new HashSet<Edge>();
-        //     foreach (var node in maze)
-        //         edges.AddRange(node.edges);
-        //     foreach (var edge in edges)
-        //         Destroy(edge);
-        // }
     }
 }
