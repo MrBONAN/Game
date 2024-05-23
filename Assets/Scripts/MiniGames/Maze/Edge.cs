@@ -7,7 +7,7 @@ namespace MazeMiniGame
     {
         Unvisited,
         Dot,
-        Missing,
+        Missed,
     }
 
     public class Edge
