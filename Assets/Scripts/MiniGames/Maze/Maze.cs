@@ -11,8 +11,8 @@ namespace MazeMiniGame
     {
         public (int X, int Y) Start { get; set; }
         public (int X, int Y) End  { get; set; }
-        public List<((int X, int Y), (int X, int Y))> Missed  { get; set; }
-        public List<((int X, int Y), (int X, int Y))> Dots  { get; set; }
+        public List<((int X, int Y), MoveDirection)> Missed  { get; set; }
+        public List<((int X, int Y), MoveDirection)> Dots  { get; set; }
     }
     
     public class Maze
@@ -167,5 +167,12 @@ namespace MazeMiniGame
         
         public void SetEdgeType((int X, int Y) n1, (int X, int Y) n2, EdgeState type)
             => maze[n1.Y, n1.X].GetEdgeBetween(maze[n2.Y, n2.X]).Type = type;
+        
+        public void SetEdgeType((int X, int Y) n1, MoveDirection direction, EdgeState type)
+        {
+            var dx  = direction is MoveDirection.Left or MoveDirection.Right ? direction is MoveDirection.Right? 1 : -1 : 0;
+            var dy  = direction is MoveDirection.Up or MoveDirection.Down ? direction is MoveDirection.Up? 1 : -1 : 0;
+            maze[n1.Y, n1.X].GetEdgeBetween(maze[n1.Y + dy, n1.X + dx]).Type = type;
+        }
     }
 }

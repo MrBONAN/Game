@@ -35,8 +35,8 @@ namespace MazeMiniGame
             }
         }
 
-        public MazeState mazeState1 = new() { Start = (0, 0), End = (-1, -1) };
-        public MazeState mazeState2 = new() { Start = (0, 0), End = (-1, -1) };
+        public MazeState mazeState1 = new() { Start = (0, 0), End = (-1, -1), Missed = new (), Dots = new()};
+        public MazeState mazeState2 = new() { Start = (0, 0), End = (-1, -1), Missed = new (), Dots = new()};
 
         private static Dictionary<MoveDirection, KeyCode> player1Control = new()
         {
@@ -55,11 +55,11 @@ namespace MazeMiniGame
         };
 
         public void SetGameState(
-            List<((int X, int Y), (int X, int Y))> missed1,
-            List<((int X, int Y), (int X, int Y))> dots1,
+            List<((int X, int Y), MoveDirection)> missed1,
+            List<((int X, int Y), MoveDirection)> dots1,
             (int X, int Y) start1, (int X, int Y) end1,
-            List<((int X, int Y), (int X, int Y))> missed2,
-            List<((int X, int Y), (int X, int Y))> dots2,
+            List<((int X, int Y), MoveDirection)> missed2,
+            List<((int X, int Y), MoveDirection)> dots2,
             (int X, int Y) start2, (int X, int Y) end2)
         {
             mazeState1 = new MazeState { Start = start1, End = end1, Missed = missed1, Dots = dots1 };

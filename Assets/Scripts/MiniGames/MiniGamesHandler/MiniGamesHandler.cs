@@ -25,7 +25,7 @@ namespace MiniGames.MiniGamesZone
         {
             if (currentMiniGameHandler is not null) return;
             currentMiniGameHandler = miniGameHandler;
-            currentMiniGameHandler.transform.position = zoneCamera.transform.position;
+            currentMiniGameHandler.transform.position = zoneCamera.transform.position + new Vector3(0, 0, 1);
             currentMiniGameHandler.StartMiniGame();
             zoneCamera.enabled = true;
         }

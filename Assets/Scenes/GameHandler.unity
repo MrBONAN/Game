@@ -590,6 +590,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MazeHandler
       objectReference: {fileID: 0}
+    - target: {fileID: 6684722032769280870, guid: cbee4529608b42c429fd2b018ba87fa7, type: 3}
+      propertyPath: mazeType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
