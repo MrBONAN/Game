@@ -34,7 +34,6 @@ namespace MazeMiniGame
 
         public override void StartMiniGame()
         {
-            transform.localPosition += new Vector3(0, 0, 1f);
             var distanceFromOrigin = 4.5f;
             var shift1 = new Vector3(distanceFromOrigin, 0);
             var shift2 = new Vector3(-distanceFromOrigin, 0);
