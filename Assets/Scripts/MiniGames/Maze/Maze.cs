@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -6,12 +7,21 @@ using UnityEngine.EventSystems;
 
 namespace MazeMiniGame
 {
+    public record MazeState
+    {
+        public (int X, int Y) Start { get; set; }
+        public (int X, int Y) End  { get; set; }
+        public List<((int X, int Y), (int X, int Y))> Missed  { get; set; }
+        public List<((int X, int Y), (int X, int Y))> Dots  { get; set; }
+    }
+    
     public class Maze
     {
         private Node[,] maze;
         public int Width => maze.GetLength(1);
         public int Height => maze.GetLength(0);
         private int version = 0;
+        public int DotsLeft { get; private set; }
 
         public Maze(int width, int height, EdgesGenerator edgesGenerator)
         {
@@ -43,24 +53,37 @@ namespace MazeMiniGame
             var otherNode = curNode.GetNeighborNode(direction);
             if (otherNode is null ||
                 otherNode.visited && otherNode != curNode.prevNode ||
-                curNode.GetEdgeBetween(otherNode).Type == EdgeState.Missing)
+                curNode.GetEdgeBetween(otherNode).Type == EdgeState.Missed)
                 return;
             if (otherNode == curNode.prevNode)
             {
+                var edge = curNode.GetEdgeBetween(otherNode);
+                edge.Visited = false;
+                if (edge.Type == EdgeState.Dot) DotsLeft++;
+                
                 curNode.visited = false;
-                curNode.GetEdgeBetween(otherNode).Visited = false;
                 curNode.prevNode = null;
                 curNode = otherNode;
             }
             else
             {
+                var edge = curNode.GetEdgeBetween(otherNode);
+                edge.Visited = true;
+                if (edge.Type == EdgeState.Dot) DotsLeft--;
+                
                 otherNode.visited = true;
-                curNode.GetEdgeBetween(otherNode).Visited = true;
                 otherNode.prevNode = curNode;
                 curNode = otherNode;
             }
 
             //WriteMaze();
+        }
+
+        public void SetMazeState(MazeState state)
+        {
+            foreach (var e in state.Missed) SetEdgeType(e.Item1, e.Item2, EdgeState.Missed);
+            foreach (var e in state.Dots) SetEdgeType(e.Item1, e.Item2, EdgeState.Dot);
+            DotsLeft = state.Dots.Count;
         }
 
         public override string ToString()
@@ -107,7 +130,7 @@ namespace MazeMiniGame
                 m[edgeCor] = '+';
             else if (edge.Type is EdgeState.Dot)
                 m[edgeCor] = '.';
-            else if (edge.Type is EdgeState.Missing)
+            else if (edge.Type is EdgeState.Missed)
                 m[edgeCor] = ' ';
             else
                 m[edgeCor] = '-';
@@ -141,5 +164,8 @@ namespace MazeMiniGame
 
         public void SetEdgeType(Vector2Int n1, Vector2Int n2, EdgeState type)
             => maze[n1.y, n1.x].GetEdgeBetween(maze[n2.y, n2.x]).Type = type;
+        
+        public void SetEdgeType((int X, int Y) n1, (int X, int Y) n2, EdgeState type)
+            => maze[n1.Y, n1.X].GetEdgeBetween(maze[n2.Y, n2.X]).Type = type;
     }
 }
