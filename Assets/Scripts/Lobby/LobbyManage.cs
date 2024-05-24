@@ -11,7 +11,7 @@ public class LobbyManage : MonoBehaviourPunCallbacks
     [SerializeField] private string region;
     [SerializeField] public TextMeshProUGUI nickName;
     [NonSerialized] public static string _roomName;
-    [NonSerialized] public static string[] RoomNames = new[] {"Choose level", "SampleScene"};
+    [NonSerialized] public static string[] RoomNames = new[] {"Choose level", "GameHandler"};
     private List<RoomInfo> allRoomsInfo = new List<RoomInfo>();
     [SerializeField] ListItem itemPrefab;
     [SerializeField] Transform content;

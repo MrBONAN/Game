@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Interaction_objects;
+using Photon.Pun;
 using UnityEngine;
 
 public enum PlayerState
@@ -18,6 +19,7 @@ public class PlayerControl : MonoBehaviour
     protected Transform legs;
     protected Animator animator;
     protected HashSet<IInteractable> interactableObjects = new();
+    protected PhotonView View;
 
     protected void Start()
     {

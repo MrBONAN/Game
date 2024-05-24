@@ -571,6 +571,22 @@ PrefabInstance:
       propertyPath: MiniGamesHandlerPrefab
       value: 
       objectReference: {fileID: 1735880041}
+    - target: {fileID: 2337300696557786606, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016167384915609390, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3872881758897454863, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087755543911408639, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9093037942788271394, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
       propertyPath: m_Name
       value: GameHandler

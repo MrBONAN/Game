@@ -1,4 +1,5 @@
 using System;
+using Photon.Pun;
 using UnityEngine;
 
 namespace GameHandler
@@ -21,6 +22,7 @@ namespace GameHandler
         private void Awake()
         {
             InitializeGame();
+            //SetViewWhenNewPlayerJoined();
         }
 
         private void Update()
