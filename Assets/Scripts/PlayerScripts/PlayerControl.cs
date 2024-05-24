@@ -34,7 +34,7 @@ public class PlayerControl : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    protected void FixedUpdate()
+    public void UpdateState()
     {
         CheckCollisions();
         MovePlayer();
