@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Interaction_objects;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,7 +21,7 @@ public enum Control
     Exit
 }
 
-public class PlayerControl : MonoBehaviour
+public abstract class PlayerControl : MonoBehaviour
 {
     public float speed = 350f;
     public float jumpForce = 10f;
@@ -30,7 +31,7 @@ public class PlayerControl : MonoBehaviour
     protected Vector2 legsSize;
     protected Animator animator;
     protected HashSet<IInteractable> interactableObjects = new();
-    
+
     public static readonly Dictionary<Control, KeyCode> ControlSecond = new()
     {
         { Control.Up, KeyCode.UpArrow },
@@ -38,7 +39,7 @@ public class PlayerControl : MonoBehaviour
         { Control.Left, KeyCode.LeftArrow },
         { Control.Right, KeyCode.RightArrow },
         { Control.Use, KeyCode.RightShift },
-        { Control.Exit, KeyCode.Slash}
+        { Control.Exit, KeyCode.Slash }
     };
 
     public static readonly Dictionary<Control, KeyCode> ControlFirst = new()
@@ -48,7 +49,7 @@ public class PlayerControl : MonoBehaviour
         { Control.Left, KeyCode.A },
         { Control.Right, KeyCode.D },
         { Control.Use, KeyCode.E },
-        { Control.Exit, KeyCode.Q}
+        { Control.Exit, KeyCode.Q }
     };
 
     protected void Start()
@@ -102,29 +103,30 @@ public class PlayerControl : MonoBehaviour
     private void CheckCollisions()
     {
         var colliders = Physics2D.OverlapBoxAll(legs.position, legsSize, 0);
-        foreach (var c in colliders)
+        if (colliders.Any(c => c.gameObject.CompareTag("Ground")))
         {
-            if (c.gameObject.CompareTag("Ground"))
-            {
-                state = PlayerState.grounded;
-                SetAnimationJump(false);
-                break;
-            }
+            state = PlayerState.grounded;
+            SetAnimationJump(false);
+        }
+        else
+        {
+            state = PlayerState.jumped;
+            SetAnimationJump(true);
         }
     }
-    
+
     protected virtual void CheckControl()
     {
         throw new NotImplementedException();
     }
-    
+
     protected void OnTriggerEnter2D(Collider2D other)
     {
         var interactable = other.gameObject.GetComponent<IInteractable>();
         if (interactable is null) return;
         interactableObjects.Add(interactable);
     }
-    
+
     protected void OnTriggerExit2D(Collider2D other)
     {
         var interactable = other.gameObject.GetComponent<IInteractable>();
