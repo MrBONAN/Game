@@ -5,8 +5,8 @@ namespace GameHandler
 {
     public class GameHandler : MonoBehaviour
     {
-        [SerializeField] private Player1 player1;
-        [SerializeField] private Player2 player2;
+        [SerializeField] private PlayerControl player1;
+        [SerializeField] private PlayerControl player2;
         
         [SerializeField] private Camera Camera1prefab;
         [SerializeField] private Camera Camera2prefab;

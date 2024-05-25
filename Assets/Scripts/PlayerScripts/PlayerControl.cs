@@ -21,7 +21,7 @@ public enum Control
     Exit
 }
 
-public abstract class PlayerControl : MonoBehaviour
+public class PlayerControl : MonoBehaviour
 {
     public float speed = 350f;
     public float jumpForce = 10f;
@@ -52,6 +52,8 @@ public abstract class PlayerControl : MonoBehaviour
         { Control.Exit, KeyCode.Q }
     };
 
+    private Dictionary<Control, KeyCode> currentControl;
+
     protected void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -67,13 +69,14 @@ public abstract class PlayerControl : MonoBehaviour
         legsSize = transform.GetComponent<BoxCollider2D>().size * transform.lossyScale.x;
         legsSize = new Vector2(legsSize.x * 0.9f, 0.2f);
         animator = GetComponent<Animator>();
+
+        currentControl = gameObject.CompareTag("Small player") ? ControlFirst : ControlSecond;
     }
 
     public void UpdateState()
     {
         CheckCollisions();
         MovePlayer();
-        UpdateTexture();
     }
 
     protected void Update()
@@ -84,12 +87,26 @@ public abstract class PlayerControl : MonoBehaviour
 
     protected virtual void MovePlayer()
     {
-        throw new NotImplementedException();
-    }
+        var direction = 0;
+        if (Input.GetKey(currentControl[Control.Left]) ||
+            Input.GetKey(currentControl[Control.Right]))
+        {
+            direction = Input.GetKey(currentControl[Control.Right]) ? 1 : -1;
+            Flip(direction);
+            SetAnimationRun(true);
+        }
+        else
+            SetAnimationRun(false);
 
-    protected virtual void UpdateTexture()
-    {
-        throw new NotImplementedException();
+        var velocity = new Vector2(direction * speed * Time.fixedDeltaTime, rb.velocity.y);
+        if (state == PlayerState.grounded && Input.GetKey(currentControl[Control.Up]))
+        {
+            velocity.y = jumpForce;
+            state = PlayerState.jumped;
+            SetAnimationJump(true);
+        }
+
+        rb.velocity = transform.TransformDirection(velocity);
     }
 
     protected void Flip(int direction)
@@ -115,9 +132,12 @@ public abstract class PlayerControl : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     protected virtual void CheckControl()
     {
-        throw new NotImplementedException();
+        if (Input.GetKeyDown(currentControl[Control.Use]))
+            foreach (var interactable in interactableObjects)
+                interactable.Interact();
     }
 
     protected void OnTriggerEnter2D(Collider2D other)

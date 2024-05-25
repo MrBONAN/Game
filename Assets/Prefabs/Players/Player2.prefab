@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2342079396306769971}
   - component: {fileID: 2796437241751019787}
   - component: {fileID: 5367603516435740233}
-  - component: {fileID: 5607910873918802930}
+  - component: {fileID: 6675165476563130596}
   m_Layer: 7
   m_Name: Player2
   m_TagString: Big player
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 492922353252459610}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.045, y: 0.632, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
   m_LocalScale: {x: 3.2, y: 3.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -130,7 +130,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5607910873918802930
+--- !u!114 &6675165476563130596
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,13 +139,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 492922353252459610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 208249c62348a29468929107eded5b52, type: 3}
+  m_Script: {fileID: 11500000, guid: f6ff34bee232e1148925fb0aa2899f84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1000
   jumpForce: 11
   state: 0
-  isGroundRad: 0.2
 --- !u!1 &1623492795177722911
 GameObject:
   m_ObjectHideFlags: 0
