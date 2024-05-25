@@ -67,7 +67,6 @@ public class PlayerControl : MonoBehaviour
 
     public void UpdateState()
     {
-        rb.velocity = new Vector2(0, rb.velocity.y);
         CheckCollisions();
         MovePlayer();
         UpdateTexture();
@@ -75,6 +74,7 @@ public class PlayerControl : MonoBehaviour
 
     protected void Update()
     {
+        rb.velocity = new Vector2(0, rb.velocity.y);
         CheckControl();
     }
 
