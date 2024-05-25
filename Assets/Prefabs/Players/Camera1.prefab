@@ -114,7 +114,7 @@ MonoBehaviour:
   convergenceSpeed: 5
   halfWidth: 7.546917
   halfHeight: 2.5
-  orthographicSize: 5
+  orthographicSize: 20
   xMaxPlayersDistance: 18.867292
   yMaxPlayersDistance: 5
   dWidth: 2.515639
