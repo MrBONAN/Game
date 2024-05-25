@@ -7,9 +7,9 @@ public partial class Player2 : PlayerControl
     protected override void MovePlayer()
     {
         var direction = 0;
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(ControlSecond[Control.Left]) || Input.GetKey(ControlSecond[Control.Right]))
         {
-            direction = Input.GetKey(KeyCode.RightArrow) ? 1 : -1;
+            direction = Input.GetKey(ControlSecond[Control.Right]) ? 1 : -1;
             Flip(direction);
             SetAnimationRun(true);
         }
@@ -17,7 +17,7 @@ public partial class Player2 : PlayerControl
             SetAnimationRun(false);
 
         var velocity = new Vector2(direction * speed * Time.fixedDeltaTime, rb.velocity.y);
-        if (state == PlayerState.grounded && Input.GetKey(KeyCode.UpArrow))
+        if (state == PlayerState.grounded && Input.GetKey(ControlSecond[Control.Up]))
         {
             velocity.y = jumpForce;
             state = PlayerState.jumped;
@@ -44,7 +44,7 @@ public partial class Player2 : PlayerControl
     // ReSharper disable Unity.PerformanceAnalysis
     protected override void CheckControl()
     {
-        if (Input.GetKeyDown(KeyCode.RightShift))
+        if (Input.GetKeyDown(ControlSecond[Control.Use]))
             foreach (var interactable in interactableObjects)
                 interactable.Interact();
     }

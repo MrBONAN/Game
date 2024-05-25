@@ -2,11 +2,22 @@ using System;
 using System.Collections.Generic;
 using Interaction_objects;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum PlayerState
 {
     grounded,
     jumped,
+}
+
+public enum Control
+{
+    Up,
+    Down,
+    Left,
+    Right,
+    Use,
+    Exit
 }
 
 public class PlayerControl : MonoBehaviour
@@ -18,6 +29,26 @@ public class PlayerControl : MonoBehaviour
     protected Transform legs;
     protected Animator animator;
     protected HashSet<IInteractable> interactableObjects = new();
+    
+    public static readonly Dictionary<Control, KeyCode> ControlSecond = new()
+    {
+        { Control.Up, KeyCode.UpArrow },
+        { Control.Down, KeyCode.DownArrow },
+        { Control.Left, KeyCode.LeftArrow },
+        { Control.Right, KeyCode.RightArrow },
+        { Control.Use, KeyCode.RightShift },
+        { Control.Exit, KeyCode.Slash}
+    };
+
+    public static readonly Dictionary<Control, KeyCode> ControlFirst = new()
+    {
+        { Control.Up, KeyCode.W },
+        { Control.Down, KeyCode.S },
+        { Control.Left, KeyCode.A },
+        { Control.Right, KeyCode.D },
+        { Control.Use, KeyCode.E },
+        { Control.Exit, KeyCode.Q}
+    };
 
     protected void Start()
     {
@@ -36,6 +67,7 @@ public class PlayerControl : MonoBehaviour
 
     protected void FixedUpdate()
     {
+        rb.velocity = new Vector2(0, rb.velocity.y);
         CheckCollisions();
         MovePlayer();
         UpdateTexture();
