@@ -269,11 +269,6 @@ PrefabInstance:
       propertyPath: m_BackGroundColor.b
       value: 0.27058825
       objectReference: {fileID: 0}
-    - target: {fileID: 2475732614265589620, guid: 4b6e950b3842e2944972bdb17c778ed4,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -11.15
-      objectReference: {fileID: 0}
     - target: {fileID: 2327357157605516311, guid: 4b6e950b3842e2944972bdb17c778ed4,
         type: 3}
       propertyPath: miniGamesHandler
