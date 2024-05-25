@@ -2,12 +2,11 @@ using UnityEngine;
 
 public partial class Player2 : PlayerControl
 {
-    public float isGroundRad = 0.2f;
-
     protected override void MovePlayer()
     {
         var direction = 0;
-        if (Input.GetKey(ControlSecond[Control.Left]) || Input.GetKey(ControlSecond[Control.Right]))
+        if (Input.GetKey(ControlSecond[Control.Left]) ||
+            Input.GetKey(ControlSecond[Control.Right]))
         {
             direction = Input.GetKey(ControlSecond[Control.Right]) ? 1 : -1;
             Flip(direction);
@@ -25,20 +24,6 @@ public partial class Player2 : PlayerControl
         }
 
         rb.velocity = transform.TransformDirection(velocity);
-    }
-
-    protected override void CheckCollisions()
-    {
-        var colliders = Physics2D.OverlapCircleAll(legs.position, isGroundRad);
-        foreach (var c in colliders)
-        {
-            if (c.gameObject.CompareTag("Ground"))
-            {
-                state = PlayerState.grounded;
-                SetAnimationJump(false);
-                break;
-            }
-        }
     }
     
     // ReSharper disable Unity.PerformanceAnalysis

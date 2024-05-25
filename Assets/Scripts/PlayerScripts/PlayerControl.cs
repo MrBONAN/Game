@@ -27,6 +27,7 @@ public class PlayerControl : MonoBehaviour
     public PlayerState state = PlayerState.grounded;
     protected Rigidbody2D rb;
     protected Transform legs;
+    protected Vector2 legsSize;
     protected Animator animator;
     protected HashSet<IInteractable> interactableObjects = new();
     
@@ -61,7 +62,9 @@ public class PlayerControl : MonoBehaviour
                 break;
             }
         }
-        Debug.Log(legs?.name);
+
+        legsSize = transform.GetComponent<BoxCollider2D>().size * transform.lossyScale.x;
+        legsSize = new Vector2(legsSize.x * 0.9f, 0.2f);
         animator = GetComponent<Animator>();
     }
 
@@ -96,9 +99,18 @@ public class PlayerControl : MonoBehaviour
                 transform.localScale.z);
     }
 
-    protected virtual void CheckCollisions()
+    private void CheckCollisions()
     {
-        throw new NotImplementedException();
+        var colliders = Physics2D.OverlapBoxAll(legs.position, legsSize, 0);
+        foreach (var c in colliders)
+        {
+            if (c.gameObject.CompareTag("Ground"))
+            {
+                state = PlayerState.grounded;
+                SetAnimationJump(false);
+                break;
+            }
+        }
     }
     
     protected virtual void CheckControl()

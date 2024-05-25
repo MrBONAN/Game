@@ -200,6 +200,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 236426238390630524, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236426238390630524, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.7
+      objectReference: {fileID: 0}
     - target: {fileID: 1312206735572451253, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -256,13 +264,29 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -10
       objectReference: {fileID: 0}
+    - target: {fileID: 3660238803946344106, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3660238803946344106, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 5888550856174716514, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.95
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5888550856174716514, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.08
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8241755654570883536, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8241755654570883536, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9064956697057413737, guid: 4b6e950b3842e2944972bdb17c778ed4, type: 3}
       propertyPath: m_LocalPosition.x
