@@ -11,21 +11,6 @@ namespace MazeMiniGame
     {
         private WireField wireField;
         
-        private static Dictionary<MoveDirection, KeyCode> player1Control = new()
-        {
-            { MoveDirection.Up, KeyCode.UpArrow },
-            { MoveDirection.Down, KeyCode.DownArrow },
-            { MoveDirection.Left, KeyCode.LeftArrow },
-            { MoveDirection.Right, KeyCode.RightArrow }
-        };
-
-        private static Dictionary<MoveDirection, KeyCode> player2Control = new()
-        {
-            { MoveDirection.Up, KeyCode.W },
-            { MoveDirection.Down, KeyCode.S },
-            { MoveDirection.Left, KeyCode.A },
-            { MoveDirection.Right, KeyCode.D }
-        };
         public override void StartMiniGame()
         {
             Debug.Log("WireMiniGame started");
@@ -33,23 +18,21 @@ namespace MazeMiniGame
         
         public override MiniGameResult UpdateMiniGame()
         {
-            foreach (var (keyCode, pressed) in player1Control)
+            foreach (var (keyCode, pressed) in PlayerControl.ControlFirst)
             {
-                if (Input.GetKeyDown(pressed))
+                if (Input.GetKeyDown(pressed) && keyCode is Control.Up or Control.Down or Control.Left or Control.Right)
                     MovePosition1(keyCode);
+                if (Input.GetKeyDown(pressed) && keyCode is Control.Use)
+                    wireField.RotateWire1();
             }
             
-            foreach (var (keyCode, pressed) in player2Control)
+            foreach (var (keyCode, pressed) in PlayerControl.ControlSecond)
             {
-                if (Input.GetKeyDown(pressed))
+                if (Input.GetKeyDown(pressed) && keyCode is Control.Up or Control.Down or Control.Left or Control.Right)
                     MovePosition2(keyCode);
+                if (Input.GetKeyDown(pressed) && keyCode is Control.Use)
+                    wireField.RotateWire2();
             }
-
-            if (Input.GetKeyDown(KeyCode.KeypadEnter))
-                wireField.RotateWire1();
-
-            if (Input.GetKeyDown(KeyCode.E))
-                wireField.RotateWire2();
                 
             if (wireField.CheckWin())
                 return MiniGameResult.Win;
@@ -59,54 +42,54 @@ namespace MazeMiniGame
 
         public override void OnDestroy()
         {
-            //ToDo destroy objects created
+            wireField.DestroyWires();
         }
 
         public void SetGameState()
         {
-            
+            wireField = WiresStateFormer.GetLevel(1);
         }
 
-        private void MovePosition1(MoveDirection direction)
+        private void MovePosition1(Control direction)
         {
             switch (direction)
             {
-                case MoveDirection.Up:
+                case Control.Up:
                     if (IsInBorders1(wireField.currentPosition1.xPos, wireField.currentPosition1.yPos+1))
                         wireField.currentPosition1.yPos++;
                     break;
-                case MoveDirection.Down:
+                case Control.Down:
                     if (IsInBorders1(wireField.currentPosition1.xPos, wireField.currentPosition1.yPos-1))
                         wireField.currentPosition1.yPos--;
                     break;
-                case MoveDirection.Right:
+                case Control.Right:
                     if (IsInBorders1(wireField.currentPosition1.xPos+1, wireField.currentPosition1.yPos))
                         wireField.currentPosition1.xPos++;
                     break;
-                case MoveDirection.Left:
+                case Control.Left:
                     if (IsInBorders1(wireField.currentPosition1.xPos-1, wireField.currentPosition1.yPos))
                         wireField.currentPosition1.xPos--;
                     break;
             }
         }
         
-        private void MovePosition2(MoveDirection direction)
+        private void MovePosition2(Control direction)
         {
             switch (direction)
             {
-                case MoveDirection.Up:
+                case Control.Up:
                     if (IsInBorders2(wireField.currentPosition2.xPos, wireField.currentPosition2.yPos+1))
                         wireField.currentPosition2.yPos++;
                     break;
-                case MoveDirection.Down:
+                case Control.Down:
                     if (IsInBorders2(wireField.currentPosition2.xPos, wireField.currentPosition2.yPos-1))
                         wireField.currentPosition2.yPos--;
                     break;
-                case MoveDirection.Right:
+                case Control.Right:
                     if (IsInBorders2(wireField.currentPosition2.xPos+1, wireField.currentPosition2.yPos))
                         wireField.currentPosition2.xPos++;
                     break;
-                case MoveDirection.Left:
+                case Control.Left:
                     if (IsInBorders2(wireField.currentPosition2.xPos-1, wireField.currentPosition2.yPos))
                         wireField.currentPosition2.xPos--;
                     break;

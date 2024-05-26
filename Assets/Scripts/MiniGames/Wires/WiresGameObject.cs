@@ -15,9 +15,7 @@ namespace MazeMiniGame
         {
             game ??= Instantiate(mazeGamePrefab, transform);
             miniGame = game;
-            //TODO задать состояние
             game.SetGameState();
-            //---------
             base.StartMiniGame();
         }
     }

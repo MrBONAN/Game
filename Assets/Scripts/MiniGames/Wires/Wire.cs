@@ -6,12 +6,6 @@ using UnityEngine;
 
 namespace MazeMiniGame
 {
-    public enum VisitedState
-    {
-        Visited,
-        Unvisited
-    }
-
     public enum WireType
     {
         Default,
@@ -26,8 +20,8 @@ namespace MazeMiniGame
         public Vector2Int Entry;
         public Vector2Int Exit;
         private WireType _type;
-        public Rotation rotation;
-        private WireGUI WireGUI = new WireGUI();
+        public Rotation rotation = Rotation.Normal;
+        public WireGUI WireGUI;
 
         public WireType Type
         {
@@ -78,7 +72,7 @@ namespace MazeMiniGame
                     break;
             }
             Exit = Entry + Rotate(rotation, _type);
-            WireGUI.rotation = rotation;
+            WireGUI.rotation = rotation; // тут мб не просто сменить но еще вызвать обновление текстурки
         }
 
         private static Vector2Int Rotate(Rotation rotation, WireType type)

@@ -10,11 +10,12 @@ namespace MazeMiniGame
         Degree180,
         Degree270
     }
-    public class WireGUI
+    public class WireGUI : MonoBehaviour
     {
         public WireType type;
         public Vector2Int position;
         public Rotation rotation;
+        public GameObject gameObj;
         
 
         public void Draw()
