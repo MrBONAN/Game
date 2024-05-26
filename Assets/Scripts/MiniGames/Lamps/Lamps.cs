@@ -69,8 +69,8 @@ namespace LampsMiniGame
 
         public void MoveCursor(ref (int X, int Y) cursor, Control direction)
         {
-            if (direction is Control.Up) cursor = (cursor.X, 1);
-            else if (direction is Control.Down) cursor = (cursor.X, 0);
+            if (direction is Control.Down) cursor = (cursor.X, 1);
+            else if (direction is Control.Up) cursor = (cursor.X, 0);
             else if (direction is Control.Left) cursor = (Math.Max(cursor.X - 1, 0), cursor.Y);
             else if (direction is Control.Right) cursor = (Math.Min(cursor.X + 1, 3), cursor.Y);
         }

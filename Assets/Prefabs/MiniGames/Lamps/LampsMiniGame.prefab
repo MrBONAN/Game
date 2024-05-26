@@ -47,3 +47,4 @@ MonoBehaviour:
   levelsCount: 5
   levelsDifficulty: 1
   ButtonPrefab: {fileID: 8581144664108838063, guid: c87537bbf8f3c7247948921192ab8095, type: 3}
+  SelectorPrefab: {fileID: 4824280890437157141, guid: 524cfad8a2cd52243802ed84bfde10c4, type: 3}

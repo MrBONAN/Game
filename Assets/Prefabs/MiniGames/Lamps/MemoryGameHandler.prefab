@@ -56,5 +56,5 @@ MonoBehaviour:
   continueAction:
     m_PersistentCalls:
       m_Calls: []
-  lampsGamePrefab: {fileID: 0}
+  lampsGamePrefab: {fileID: 541414310341337129, guid: 5e7997985278e0a42a0e8052fa4cab34, type: 3}
   game: {fileID: 0}
