@@ -12,11 +12,32 @@ namespace MazeMiniGame
     }
     public class WireGUI
     {
-        public WireType Type;
-        public Vector2Int Position;
-        public Rotation Rotation;
+        public WireType type;
+        public Vector2Int position;
+        public Rotation rotation;
+        
 
         public void Draw()
+        {
+            
+        }
+
+        private void DrawLine()
+        {
+            
+        }
+
+        private void DrawCorner()
+        {
+            
+        }
+
+        private void DrawBridge()
+        {
+            
+        }
+
+        public void UpdateWire()
         {
             
         }
