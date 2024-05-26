@@ -24,6 +24,8 @@ namespace LampsMiniGame
         Cyan,
         Orange,
         White,
+        
+        Default
     }
 
     public enum Result
