@@ -25,12 +25,14 @@ namespace LampsMiniGame
         Orange,
         White,
         
-        Default
+        Default,
+        Empty
     }
 
     public enum Result
     {
         Success,
+        Correct,
         Failure,
         Neutral
     }
@@ -49,11 +51,13 @@ namespace LampsMiniGame
             { ButtonContent.Yellow, ButtonContent.Cyan, ButtonContent.Orange, ButtonContent.White, }
         };
 
-        public List<(List<ButtonContent>, List<ButtonContent>)> correctSequence;
-        private (List<ButtonContent>, List<ButtonContent>) currentSequenceRepeat = (new(), new());
+        public List<(ButtonContent, ButtonContent)> correctSequence;
+        
+        private List<ButtonContent> currentSequenceRepeat = new();
         private int currentLevelRepeat;
+        public int CurrentLevel { get; private set; } = 1;
+        
         private readonly int levelsCount;
-        public int CurrentLevel { get; set; }
 
         private readonly int levelsDifficulty;
         public (int X, int Y) cursor1 = (0, 0);
@@ -77,39 +81,47 @@ namespace LampsMiniGame
 
         public Result PlayerClicked(bool first)
         {
-            var control = control1;
-            var cursor = cursor1;
-            var expectedSequence = correctSequence[currentLevelRepeat].Item1;
-            var actualSequence = currentSequenceRepeat.Item1;
-            if (!first)
-            {
-                control = control2;
-                cursor = cursor2;
-                expectedSequence = correctSequence[currentLevelRepeat].Item2;
-                actualSequence = currentSequenceRepeat.Item2;
-            }
-            var content = control[cursor.Y, cursor.X];
-            actualSequence.Add(content);
-            if (actualSequence.SequenceEqual(expectedSequence))
-                return Result.Success;
-            if (actualSequence.Except(expectedSequence).Any())
-                return Result.Failure;
+            var expectedSequence = correctSequence[currentLevelRepeat];
+            var content = first ? control1[cursor1.Y, cursor1.X] : control2[cursor2.Y, cursor2.X];
+            
+            currentSequenceRepeat.Add(content);
+            if (currentSequenceRepeat.Count == 2 &&
+                currentSequenceRepeat.Contains(expectedSequence.Item1) &&
+                currentSequenceRepeat.Contains(expectedSequence.Item2))
+                return CorrectGuess();
+            if (content != expectedSequence.Item1 && content != expectedSequence.Item2 ||
+                currentSequenceRepeat.Count(x => x == content) > 1)
+                return WrongGuess();
             return Result.Neutral;
         }
 
-        private List<(List<ButtonContent>, List<ButtonContent>)> GenerateNewSequence()
+        private Result CorrectGuess()
         {
-            var newSequence = new List<(List<ButtonContent>, List<ButtonContent>)>(levelsCount);
+            currentSequenceRepeat.Clear();
+            currentLevelRepeat++;
+            if (currentLevelRepeat == CurrentLevel)
+            {
+                CurrentLevel = currentLevelRepeat + 1;
+                currentLevelRepeat = 0;
+                return Result.Success;
+            }
+            return Result.Correct;
+        }
+
+        private Result WrongGuess()
+        {
+            currentSequenceRepeat.Clear();
+            currentLevelRepeat = 0;
+            CurrentLevel = 1;
+            return Result.Failure;
+        }
+
+        private List<(ButtonContent, ButtonContent)> GenerateNewSequence()
+        {
+            var newSequence = new List<(ButtonContent, ButtonContent)>(levelsCount);
             var r = new Random();
             for (var i = 0; i < levelsCount; i++)
-            {
-                newSequence.Add(new(new(), new()));
-                for (var c = 0; c < levelsDifficulty; c++)
-                {
-                    newSequence[i].Item1.Add((ButtonContent)r.Next(0, 7)); // генерация цифр
-                    newSequence[i].Item2.Add((ButtonContent)r.Next(8, 15)); // генерация цветов
-                }
-            }
+                newSequence.Add(((ButtonContent)r.Next(0, 7), (ButtonContent)r.Next(8, 15)));
 
             return newSequence;
         }
@@ -117,7 +129,7 @@ namespace LampsMiniGame
         public void Restart()
         {
             correctSequence = GenerateNewSequence();
-            currentSequenceRepeat = (new(), new());
+            currentSequenceRepeat.Clear();
             currentLevelRepeat = 0;
         }
     }

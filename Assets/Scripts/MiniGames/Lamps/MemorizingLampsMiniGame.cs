@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using MiniGames;
+using Unity.VisualScripting;
 
 namespace LampsMiniGame
 {
@@ -10,16 +12,19 @@ namespace LampsMiniGame
         private Lamps game;
         [SerializeField] private int levelsCount = 5;
         [SerializeField] private int levelsDifficulty = 1;
-        
+
         [SerializeField] private Button ButtonPrefab;
         [SerializeField] private GameObject SelectorPrefab;
         private GameObject firstPlayerButtons;
         private GameObject secondPlayerButtons;
         private Button[,] firstPlayer = new Button[2, 4];
         private Button[,] secondPlayer = new Button[2, 4];
+        private Button mainButton;
         private GameObject select1, select2;
         private float gameScale = 2f;
         private float buttonScale = 1.5f;
+
+        private bool controlIsAvailable;
 
         public override void StartMiniGame()
         {
@@ -30,11 +35,13 @@ namespace LampsMiniGame
             select1.transform.localScale = new Vector3(buttonScale, buttonScale);
             select2.transform.localScale = new Vector3(buttonScale, buttonScale);
             UpdateSelectorsPosition();
+            StartCoroutine(PlayCurrentSequenceAnimation());
             Debug.Log("MemorizingLampsMiniGame started");
         }
 
         public override MiniGameResult UpdateMiniGame()
         {
+            if (!controlIsAvailable) return MiniGameResult.ContinuePlay;
             foreach (var (direction, keyCode) in PlayerControl.ControlFirst)
                 if (Input.GetKeyDown(keyCode) &&
                     direction is Control.Up or Control.Down or Control.Left or Control.Right)
@@ -66,6 +73,7 @@ namespace LampsMiniGame
             return game.PlayerClicked(first) switch
             {
                 Result.Success => SuccessAction(),
+                Result.Correct => CorrectAction(),
                 Result.Failure => FailureAction(),
                 Result.Neutral => NeutralAction(),
                 _ => throw new ArgumentException()
@@ -75,13 +83,18 @@ namespace LampsMiniGame
         private MiniGameResult SuccessAction()
         {
             Debug.Log("Success action");
-            game.CurrentLevel++;
             if (game.CurrentLevel == levelsCount)
             {
                 OnDestroy();
                 return MiniGameResult.Win;
             }
+            StartCoroutine(PlayCurrentSequenceAnimation());
+            return MiniGameResult.ContinuePlay;
+        }
 
+        private MiniGameResult CorrectAction()
+        {
+            Debug.Log("Correct action");
             return MiniGameResult.ContinuePlay;
         }
 
@@ -89,6 +102,7 @@ namespace LampsMiniGame
         {
             Debug.Log("Failure action");
             game.Restart();
+            StartCoroutine(PlayCurrentSequenceAnimation());
             return MiniGameResult.ContinuePlay;
         }
 
@@ -114,7 +128,7 @@ namespace LampsMiniGame
                 b.transform.localScale = new Vector3(buttonScale, buttonScale, 1);
                 firstPlayer[i / 4, i % 4] = b;
             }
-            
+
             secondPlayerButtons = Instantiate(go, transform);
             secondPlayerButtons.transform.localScale = new Vector3(gameScale, gameScale, 1);
             secondPlayerButtons.transform.localPosition = shift;
@@ -127,8 +141,26 @@ namespace LampsMiniGame
                 b.transform.localScale = new Vector3(buttonScale, buttonScale, 1);
                 secondPlayer[i / 4, i % 4] = b;
             }
-            
+
             Destroy(go);
+
+            mainButton = Instantiate(ButtonPrefab, transform);
+            mainButton.transform.localScale = new Vector3(5, 5, 1);
+            mainButton.transform.localPosition = new Vector3(0, 2.5f, 0);
+            mainButton.SetButton(ButtonContent.Empty, ButtonContent.Default);
+        }
+
+        private IEnumerator PlayCurrentSequenceAnimation()
+        {
+            controlIsAvailable = false;
+            for (var i = 0; i < game.CurrentLevel; i++)
+            {
+                var (number, color) = game.correctSequence[i];
+                mainButton.SetButton(number, color);
+                yield return new WaitForSeconds(1);
+            }
+            mainButton.SetButton(ButtonContent.Empty, ButtonContent.Default);
+            controlIsAvailable = true;
         }
 
         private void UpdateSelectorsPosition()
@@ -148,7 +180,7 @@ namespace LampsMiniGame
             Destroy(secondPlayerButtons);
             Destroy(select1);
             Destroy(select2);
-            
+
             Debug.Log("MemorizingLampsMiniGame destroyed");
         }
     }
