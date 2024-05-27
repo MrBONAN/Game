@@ -16,31 +16,11 @@ namespace MazeMiniGame
         public Vector2Int position;
         public Rotation rotation;
         public GameObject gameObj;
-        
 
-        public void Draw()
-        {
-            
-        }
 
-        private void DrawLine()
+        public void ChangeRotation(Rotation rotation)
         {
-            
-        }
-
-        private void DrawCorner()
-        {
-            
-        }
-
-        private void DrawBridge()
-        {
-            
-        }
-
-        public void UpdateWire()
-        {
-            
+            this.rotation = rotation;
         }
     }
 }

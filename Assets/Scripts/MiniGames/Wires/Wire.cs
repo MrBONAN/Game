@@ -72,7 +72,7 @@ namespace MazeMiniGame
                     break;
             }
             Exit = Entry + Rotate(rotation, _type);
-            WireGUI.rotation = rotation; // тут мб не просто сменить но еще вызвать обновление текстурки
+            WireGUI.ChangeRotation(rotation); 
         }
 
         private static Vector2Int Rotate(Rotation rotation, WireType type)

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace MazeMiniGame
 {
-    public static class WiresStateFormer
+    public class WiresStateFormer : MonoBehaviour
     {
         public static Dictionary<char, WireType> translateDict = new Dictionary<char, WireType>()
         {
@@ -13,33 +14,33 @@ namespace MazeMiniGame
             { '|', WireType.LongCorner },
             { '?', WireType.Bridge }
         };
-        public static WireField GetLevel(int number)
+        public static WireField GetLevel(int number, GameObject gameObject)
         {
             switch (number)
             {
                 case 1:
-                    return MakeWireField1();
+                    return MakeWireField1(gameObject);
             }
 
             return null;
         }
 
-        private static WireField MakeWireField1()
+        private static WireField MakeWireField1(GameObject gameObject)
         {
-            var field = new WireField();
+            var field = gameObject.AddComponent<WireField>();
             var stringField = new string[]
             {
                 "/|?-",
                 "_-?/"
             };
-            var positions = new string[]
+            var positions = new string[] 
             {
                 "(5, 5)|(15, 9)|(25, 40)|(56, 70)",
                 "(5, 85)|(15, 29)|(25, 70)|(56, 99)"
             };
-            //ToDo scales for game
-            field.scaleX = 5;
-            field.scaleY = 5;
+            field.startPosition1 = (0, 0);
+            field.startPosition2 = (2, 0);
+            field.endPoosition = (3, 1);
             field.SetField(stringField, positions);
             return field;
         }
