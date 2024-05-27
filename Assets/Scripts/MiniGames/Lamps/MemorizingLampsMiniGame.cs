@@ -83,11 +83,14 @@ namespace LampsMiniGame
         private MiniGameResult SuccessAction()
         {
             Debug.Log("Success action");
+            UpdateMainButton();
+            
             if (game.CurrentLevel == levelsCount)
             {
                 OnDestroy();
                 return MiniGameResult.Win;
             }
+            game.NextLevel();
             StartCoroutine(PlayCurrentSequenceAnimation());
             return MiniGameResult.ContinuePlay;
         }
@@ -95,13 +98,19 @@ namespace LampsMiniGame
         private MiniGameResult CorrectAction()
         {
             Debug.Log("Correct action");
+            UpdateMainButton();
+            
+            game.NextLevelRepeat();
             return MiniGameResult.ContinuePlay;
         }
 
         private MiniGameResult FailureAction()
         {
             Debug.Log("Failure action");
+            UpdateMainButton();
+            
             game.Restart();
+            UpdateMainButton();
             StartCoroutine(PlayCurrentSequenceAnimation());
             return MiniGameResult.ContinuePlay;
         }
@@ -109,6 +118,8 @@ namespace LampsMiniGame
         private MiniGameResult NeutralAction()
         {
             Debug.Log("Neutral action");
+            UpdateMainButton();
+            
             return MiniGameResult.ContinuePlay;
         }
 
@@ -159,6 +170,7 @@ namespace LampsMiniGame
                 mainButton.SetButton(number, color);
                 yield return new WaitForSeconds(1);
             }
+
             mainButton.SetButton(ButtonContent.Empty, ButtonContent.Default);
             controlIsAvailable = true;
         }
@@ -169,6 +181,9 @@ namespace LampsMiniGame
             select1.transform.localPosition = firstPlayer[cursor1.Y, cursor1.X].Position + new Vector3(0, 0, 0.5f);
             select2.transform.localPosition = secondPlayer[cursor2.Y, cursor2.X].Position + new Vector3(0, 0, 0.5f);
         }
+
+        private void UpdateMainButton()
+            => (mainButton.ButtonText, mainButton.ButtonBackground) = game.GetSelectedContent();
 
         public override void OnDestroy()
         {
