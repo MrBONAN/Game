@@ -18,6 +18,7 @@ namespace MazeMiniGame
         public (int xPos, int yPos) startPosition1;
         public (int xPos, int yPos) startPosition2;
         public (int xPos, int yPos) endPoosition;
+        public WireFieldGUI fieldGUI;
 
         public int Width => wireField.GetLength(1);
         public int Height => wireField.GetLength(0);
@@ -79,6 +80,9 @@ namespace MazeMiniGame
 
         public void SetField(string[] fieldInfo, string[] positions)
         {
+            wireField = new Wire[fieldInfo.Length,fieldInfo[0].Length];
+            fieldGUI = gameObject.AddComponent<WireFieldGUI>();
+            fieldGUI.DrawField();
             for (var i = 0; i < fieldInfo.Length; i++)
             {
                 var pos = positions[i].Split("|");
@@ -90,6 +94,7 @@ namespace MazeMiniGame
                         Entry = new Vector2Int(pos[j][0], pos[j][3]) // set entry and exit to wire
                     };
                     wireField[i, j] = wire;
+                    wire.WireGUI.DrawWire(fieldGUI.transform);
                 }
             }
         }
