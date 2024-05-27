@@ -67,12 +67,14 @@ namespace LampsMiniGame
             {
                 Result.Success => SuccessAction(),
                 Result.Failure => FailureAction(),
-                _ => MiniGameResult.ContinuePlay
+                Result.Neutral => NeutralAction(),
+                _ => throw new ArgumentException()
             };
         }
 
         private MiniGameResult SuccessAction()
         {
+            Debug.Log("Success action");
             game.CurrentLevel++;
             if (game.CurrentLevel == levelsCount)
             {
@@ -85,7 +87,14 @@ namespace LampsMiniGame
 
         private MiniGameResult FailureAction()
         {
+            Debug.Log("Failure action");
             game.Restart();
+            return MiniGameResult.ContinuePlay;
+        }
+
+        private MiniGameResult NeutralAction()
+        {
+            Debug.Log("Neutral action");
             return MiniGameResult.ContinuePlay;
         }
 
@@ -95,27 +104,27 @@ namespace LampsMiniGame
             var shift = new Vector3(4.3f, 0);
             var centerShift = new Vector3(1.5f, 0.75f);
             firstPlayerButtons = Instantiate(go, transform);
-            firstPlayerButtons.transform.localScale = new Vector3(gameScale, gameScale);
-            firstPlayerButtons.transform.position = transform.position - shift;
+            firstPlayerButtons.transform.localScale = new Vector3(gameScale, gameScale, 1);
+            firstPlayerButtons.transform.localPosition = -shift;
             for (var i = 0; i < 8; i++)
             {
                 var b = Instantiate(ButtonPrefab, firstPlayerButtons.transform);
                 b.SetButton((ButtonContent)((int)ButtonContent.One + i), ButtonContent.Default);
                 b.Position = new Vector3(i % 4, -i / 4) - centerShift;
-                b.transform.localScale = new Vector3(buttonScale, buttonScale);
+                b.transform.localScale = new Vector3(buttonScale, buttonScale, 1);
                 firstPlayer[i / 4, i % 4] = b;
             }
             
             secondPlayerButtons = Instantiate(go, transform);
-            secondPlayerButtons.transform.localScale = new Vector3(gameScale, gameScale);
-            secondPlayerButtons.transform.position = transform.position + shift;
+            secondPlayerButtons.transform.localScale = new Vector3(gameScale, gameScale, 1);
+            secondPlayerButtons.transform.localPosition = shift;
             for (var i = 0; i < 8; i++)
             {
                 var b = Instantiate(ButtonPrefab, secondPlayerButtons.transform);
                 b.ButtonBackground = ButtonContent.Red + i;
                 b.SetButtonTextColor(ButtonContent.Red + i);
                 b.Position = new Vector3(i % 4, -i / 4) - centerShift;
-                b.transform.localScale = new Vector3(buttonScale, buttonScale);
+                b.transform.localScale = new Vector3(buttonScale, buttonScale, 1);
                 secondPlayer[i / 4, i % 4] = b;
             }
             
@@ -125,8 +134,8 @@ namespace LampsMiniGame
         private void UpdateSelectorsPosition()
         {
             var (cursor1, cursor2) = (game.cursor1, game.cursor2);
-            select1.transform.localPosition = firstPlayer[cursor1.Y, cursor1.X].Position + new Vector3(0, 0, 0.1f);
-            select2.transform.localPosition = secondPlayer[cursor2.Y, cursor2.X].Position + new Vector3(0, 0, 0.1f);
+            select1.transform.localPosition = firstPlayer[cursor1.Y, cursor1.X].Position + new Vector3(0, 0, 0.5f);
+            select2.transform.localPosition = secondPlayer[cursor2.Y, cursor2.X].Position + new Vector3(0, 0, 0.5f);
         }
 
         public override void OnDestroy()
