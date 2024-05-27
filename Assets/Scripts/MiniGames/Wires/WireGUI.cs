@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
@@ -42,8 +41,8 @@ namespace MazeMiniGame
                 { WireType.Corner, cornerPrefab },
                 { WireType.Long, longPrefab }
             };
-            gameObj = Instantiate(prefabs[type], parent);
-            gameObj.transform.position = new Vector3(position.x, position.y, 0);
+            gameObj = Instantiate(prefabs[type], new Vector3(position.x, position.y, 0), 
+                UnityEngine.Quaternion.identity, parent);
         }
     }
 }

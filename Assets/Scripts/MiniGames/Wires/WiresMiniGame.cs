@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using MiniGames;
-using UnityEditor;
 
 namespace MazeMiniGame
 {

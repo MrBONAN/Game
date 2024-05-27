@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace MazeMiniGame
@@ -17,7 +16,7 @@ namespace MazeMiniGame
         public (int xPos, int yPos) currentPosition2;
         public (int xPos, int yPos) startPosition1;
         public (int xPos, int yPos) startPosition2;
-        public (int xPos, int yPos) endPoosition;
+        public (int xPos, int yPos) endPosition;
         public WireFieldGUI fieldGUI;
 
         public int Width => wireField.GetLength(1);
@@ -26,7 +25,7 @@ namespace MazeMiniGame
         public bool CheckWin()
         {
             return RecFind(startPosition1, startPosition2, new HashSet<(int xPos, int yPos)>(), Player.First) &&
-                   RecFind(startPosition2, endPoosition, new HashSet<(int xPos, int yPos)>(), Player.Second);
+                   RecFind(startPosition2, endPosition, new HashSet<(int xPos, int yPos)>(), Player.Second);
         }
 
         private bool RecFind((int posX, int posY) currentPos, (int posX, int posY) toFind,
@@ -41,6 +40,7 @@ namespace MazeMiniGame
 
             if (currentPos.posX == toFind.posX && currentPos.posY == toFind.posY)
                 return true;
+            
             var goneRight =
                 !visited.Contains((currentPos.posX + 1, currentPos.posY)) &&
                 wireField[currentPos.posX, currentPos.posY] == wireField[currentPos.posX + 1, currentPos.posY] &&
@@ -91,7 +91,7 @@ namespace MazeMiniGame
                     var wire = new Wire
                     {
                         Type = WiresStateFormer.translateDict[fieldInfo[j][i]], // set type to wire
-                        Entry = new Vector2Int(pos[j][0], pos[j][3]) // set entry and exit to wire
+                        Position = new Vector2Int(pos[j][0], pos[j][3]) // set entry and exit to wire
                     };
                     wireField[i, j] = wire;
                     wire.WireGUI.DrawWire(fieldGUI.transform);

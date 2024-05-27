@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace MazeMiniGame
@@ -40,7 +39,7 @@ namespace MazeMiniGame
             };
             field.startPosition1 = (0, 0);
             field.startPosition2 = (2, 0);
-            field.endPoosition = (3, 1);
+            field.endPosition = (3, 1);
             field.SetField(stringField, positions);
             return field;
         }

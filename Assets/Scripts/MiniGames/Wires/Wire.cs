@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace MazeMiniGame
@@ -30,16 +27,6 @@ namespace MazeMiniGame
             {
                 _type = value;
                 WireGUI.type = value;
-            }
-        }
-
-        public Rotation Rotation
-        {
-            get => rotation;
-            set
-            {
-                rotation = value;
-                WireGUI.rotation = value;
             }
         }
 
