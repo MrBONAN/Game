@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using MiniGames;
 using Unity.VisualScripting;
+using UnityEngine.U2D;
 
 namespace LampsMiniGame
 {
@@ -15,21 +16,28 @@ namespace LampsMiniGame
 
         [SerializeField] private Button ButtonPrefab;
         [SerializeField] private GameObject SelectorPrefab;
+        [SerializeField] private SpriteAtlas ResultSpriteAtlas;
+
         private GameObject firstPlayerButtons;
         private GameObject secondPlayerButtons;
         private Button[,] firstPlayer = new Button[2, 4];
         private Button[,] secondPlayer = new Button[2, 4];
+
         private Button mainButton;
+        private GameObject resultSheet;
+        private SpriteRenderer resultSheetRenderer;
+
         private GameObject select1, select2;
         private float gameScale = 2f;
         private float buttonScale = 1.5f;
 
-        private bool controlIsAvailable;
+        private bool controlIsAvailable = true;
 
         public override void StartMiniGame()
         {
             game = new Lamps(levelsCount, levelsDifficulty);
             CreateButtons();
+            CreateResultSheet();
             select1 = Instantiate(SelectorPrefab, firstPlayerButtons.transform);
             select2 = Instantiate(SelectorPrefab, secondPlayerButtons.transform);
             select1.transform.localScale = new Vector3(buttonScale, buttonScale);
@@ -84,12 +92,14 @@ namespace LampsMiniGame
         {
             Debug.Log("Success action");
             UpdateMainButton();
-            
+            StartCoroutine(PlayResultAnimation(Result.Correct));
+
             if (game.CurrentLevel == levelsCount)
             {
                 OnDestroy();
                 return MiniGameResult.Win;
             }
+
             game.NextLevel();
             StartCoroutine(PlayCurrentSequenceAnimation());
             return MiniGameResult.ContinuePlay;
@@ -99,7 +109,7 @@ namespace LampsMiniGame
         {
             Debug.Log("Correct action");
             UpdateMainButton();
-            
+            StartCoroutine(PlayResultAnimation(Result.Correct));
             game.NextLevelRepeat();
             return MiniGameResult.ContinuePlay;
         }
@@ -107,8 +117,7 @@ namespace LampsMiniGame
         private MiniGameResult FailureAction()
         {
             Debug.Log("Failure action");
-            UpdateMainButton();
-            
+            StartCoroutine(PlayResultAnimation(Result.Failure));
             game.Restart();
             UpdateMainButton();
             StartCoroutine(PlayCurrentSequenceAnimation());
@@ -119,7 +128,7 @@ namespace LampsMiniGame
         {
             Debug.Log("Neutral action");
             UpdateMainButton();
-            
+
             return MiniGameResult.ContinuePlay;
         }
 
@@ -161,8 +170,25 @@ namespace LampsMiniGame
             mainButton.SetButton(ButtonContent.Empty, ButtonContent.Default);
         }
 
+        private void CreateResultSheet()
+        {
+            var go = new GameObject();
+            resultSheet = Instantiate(go, transform);
+            resultSheet.AddComponent<SpriteRenderer>();
+            resultSheet.transform.localScale = new Vector3(5, 5, 1);
+            resultSheet.transform.localPosition = new Vector3(0, 2.5f, 0);
+            resultSheetRenderer = resultSheet.GetComponent<SpriteRenderer>();
+            SetResultSheetState(Result.Correct);
+            resultSheetRenderer.enabled = false;
+            Destroy(go);
+        }
+
+        private void SetResultSheetState(Result result)
+            => resultSheetRenderer.sprite = ResultSpriteAtlas.GetSprite(result.ToString());
+
         private IEnumerator PlayCurrentSequenceAnimation()
         {
+            while (!controlIsAvailable) yield return null;
             controlIsAvailable = false;
             for (var i = 0; i < game.CurrentLevel; i++)
             {
@@ -172,6 +198,17 @@ namespace LampsMiniGame
             }
 
             mainButton.SetButton(ButtonContent.Empty, ButtonContent.Default);
+            controlIsAvailable = true;
+        }
+
+        private IEnumerator PlayResultAnimation(Result result)
+        {
+            while (!controlIsAvailable) yield return null;
+            controlIsAvailable = false;
+            SetResultSheetState(result);
+            resultSheetRenderer.enabled = true;
+            yield return new WaitForSeconds(1);
+            resultSheetRenderer.enabled = false;
             controlIsAvailable = true;
         }
 
@@ -195,6 +232,7 @@ namespace LampsMiniGame
             Destroy(secondPlayerButtons);
             Destroy(select1);
             Destroy(select2);
+            Destroy(resultSheet);
 
             Debug.Log("MemorizingLampsMiniGame destroyed");
         }
