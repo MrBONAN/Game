@@ -15,9 +15,4 @@ public partial class Player1
     {
         animator.SetBool("isJumping", on);
     }
-
-    protected override void Flip(int direction)
-    {
-        transform.localScale = new Vector3(direction, 1, 1);
-    }
 }
