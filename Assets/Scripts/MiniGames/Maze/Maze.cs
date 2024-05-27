@@ -48,7 +48,7 @@ namespace MazeMiniGame
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        public void MoveInDirection(ref Node curNode, MoveDirection direction)
+        public void MoveInDirection(ref Node curNode, Control direction)
         {
             var otherNode = curNode.GetNeighborNode(direction);
             if (otherNode is null ||
