@@ -34,7 +34,10 @@ namespace LampsMiniGame
         Success,
         Correct,
         Failure,
-        Neutral
+        Neutral,
+        
+        LetsStart,
+        NextLevel,
     }
 
     public class Lamps
