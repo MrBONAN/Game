@@ -5,16 +5,16 @@ namespace GameHandler
 {
     public class GameHandler : MonoBehaviour
     {
-        [SerializeField] private Player1 player1;
-        [SerializeField] private Player2 player2;
+        [SerializeField] private PlayerControl player1;
+        [SerializeField] private PlayerControl player2;
         
         [SerializeField] private Camera Camera1prefab;
         [SerializeField] private Camera Camera2prefab;
+        [SerializeField] private float orthographicSize = 20f;
         
         private Camera camera1;
         private Camera camera2;
-        [SerializeField]
-        private MiniGames.MiniGamesZone.MiniGamesHandler miniGamesHandler;
+        [SerializeField] private MiniGames.MiniGamesZone.MiniGamesHandler miniGamesHandler;
 
         private bool initialized;
 
@@ -47,6 +47,7 @@ namespace GameHandler
             mainCamera.camera2 = camera2;
             mainCamera.player1 = player1.transform;
             mainCamera.player2 = player2.transform;
+            mainCamera.orthographicSize = orthographicSize;
             mainCamera.Initialize();
 
             initialized = true;
