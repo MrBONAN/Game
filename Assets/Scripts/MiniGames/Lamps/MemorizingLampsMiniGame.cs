@@ -64,6 +64,7 @@ namespace LampsMiniGame
 
         public override MiniGameResult UpdateMiniGame()
         {
+            if (CheckExit() is MiniGameResult.Exit) return MiniGameResult.Exit;
             if (_animationsQueue > 0) return MiniGameResult.ContinuePlay;
             foreach (var (direction, keyCode) in PlayerControl.ControlFirst)
                 if (Input.GetKeyDown(keyCode) &&
@@ -280,6 +281,14 @@ namespace LampsMiniGame
 
         private void UpdateMainButton()
             => (_mainButton.ButtonText, _mainButton.ButtonBackground) = _game.GetSelectedContent();
+
+        private MiniGameResult CheckExit()
+        {
+            if (Input.GetKey(PlayerControl.ControlFirst[Control.Exit]) &&
+                Input.GetKey(PlayerControl.ControlSecond[Control.Exit]))
+                return MiniGameResult.Exit;
+            return MiniGameResult.ContinuePlay;
+        }
 
         public override void OnDestroy()
         {
