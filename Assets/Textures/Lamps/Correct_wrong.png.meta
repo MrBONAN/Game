@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: eab687844844b864aa14c53e058b41fd
+guid: 9501e139ddd6a1849901a094a6218166
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d9d70d4d6a40204181a6730a89d8014
-      internalID: 1889421170
+      spriteID: c0ed7312b3e322f48ad615f91278ffdf
+      internalID: 2048278166
       vertices: []
       indices: 
       edges: []
@@ -145,50 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 961bbfe134e502a41ab10d0bf856a7b3
-      internalID: 1962627644
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: NextLevel
-      rect:
-        serializedVersion: 2
-        x: 163
-        y: 1
-        width: 80
-        height: 51
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a858fb727d7a8c2448e0757f9c4edcd1
-      internalID: 171248280
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: LetsStart
-      rect:
-        serializedVersion: 2
-        x: 244
-        y: 1
-        width: 80
-        height: 51
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: db2cb1eed10c19244a92f08ef8565433
-      internalID: 645155551
+      spriteID: a3073a7a5f0e4e1419d2783614e2c71c
+      internalID: -1098771837
       vertices: []
       indices: 
       edges: []
@@ -204,10 +162,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Correct: 1889421170
-      Failure: 1962627644
-      LetsStart: 645155551
-      NextLevel: 171248280
+      Correct: 2048278166
+      Failure: -1098771837
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

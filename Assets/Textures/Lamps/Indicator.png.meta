@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: eab687844844b864aa14c53e058b41fd
+guid: 3d7798a5f673cbe4384637cf9bc4359e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,85 +110,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Correct
+      name: Passed
       rect:
         serializedVersion: 2
         x: 1
         y: 1
-        width: 80
-        height: 51
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d9d70d4d6a40204181a6730a89d8014
-      internalID: 1889421170
+      spriteID: 71c673937f4de624f9c36969389edefe
+      internalID: 87479700
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Failure
+      name: Current
       rect:
         serializedVersion: 2
-        x: 82
+        x: 34
         y: 1
-        width: 80
-        height: 51
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 961bbfe134e502a41ab10d0bf856a7b3
-      internalID: 1962627644
+      spriteID: 267db7bc73cdcb44c8ef18678c3ad16f
+      internalID: -38742423
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NextLevel
+      name: Upcoming
       rect:
         serializedVersion: 2
-        x: 163
+        x: 67
         y: 1
-        width: 80
-        height: 51
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a858fb727d7a8c2448e0757f9c4edcd1
-      internalID: 171248280
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: LetsStart
-      rect:
-        serializedVersion: 2
-        x: 244
-        y: 1
-        width: 80
-        height: 51
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: db2cb1eed10c19244a92f08ef8565433
-      internalID: 645155551
+      spriteID: c59cf6e2a216039479193c1250fcbb38
+      internalID: 417008896
       vertices: []
       indices: 
       edges: []
@@ -204,10 +183,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Correct: 1889421170
-      Failure: 1962627644
-      LetsStart: 645155551
-      NextLevel: 171248280
+      Current: -38742423
+      Passed: 87479700
+      Upcoming: 417008896
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
