@@ -26,7 +26,7 @@ namespace Interaction_objects
             animator = GetComponent<Animator>();
         }
 
-        public void Interact()
+        public void Interact(PlayerControl player)
         {
             SwitchOnOff();
         }

@@ -11,9 +11,13 @@ namespace MazeMiniGame
     public class MazeObject : MiniGame
     {
         private Maze maze1, maze2;
-        private Node selected1, selected2;
         [SerializeField] private EdgesGenerator edgesGeneratorPrefab;
         private List<EdgesGenerator> generators = new();
+
+        [SerializeField] private GameObject StartEndNodePrefab;
+        private GameObject StartNode1, EndNode1;
+        private GameObject StartNode2, EndNode2;
+        private Node selected1, selected2;
         private float MazeScale => 15f / Width / 2;
         private int _width = 9, _height = 8;
 
@@ -35,8 +39,8 @@ namespace MazeMiniGame
             }
         }
 
-        public MazeState mazeState1 = new() { Start = (0, 0), End = (-1, -1), Missed = new (), Dots = new()};
-        public MazeState mazeState2 = new() { Start = (0, 0), End = (-1, -1), Missed = new (), Dots = new()};
+        public MazeState mazeState1 = new() { Start = (0, 0), End = (-1, -1), Missed = new(), Dots = new() };
+        public MazeState mazeState2 = new() { Start = (0, 0), End = (-1, -1), Missed = new(), Dots = new() };
 
         private static Dictionary<MoveDirection, KeyCode> player1Control = new()
         {
@@ -71,27 +75,48 @@ namespace MazeMiniGame
             var distanceFromOrigin = 4.5f;
             var shift1 = new Vector3(distanceFromOrigin, 0);
             var shift2 = new Vector3(-distanceFromOrigin, 0);
-            
-            maze1 = CreateMaze(Width, Height, shift1);
-            maze2 = CreateMaze(Width, Height, shift2);
+
+            EdgesGenerator anchor1, anchor2;
+            (maze1, anchor1) = CreateMaze(Width, Height, shift1);
+            (maze2, anchor2) = CreateMaze(Width, Height, shift2);
             selected1 = maze1.GetNode(mazeState1.Start.X, mazeState1.Start.Y);
             selected1.visited = true;
             selected2 = maze2.GetNode(mazeState2.Start.X, mazeState2.Start.Y);
             selected2.visited = true;
-            
+
+            (StartNode1, EndNode1) = GetStartEndObjects(mazeState1.Start, mazeState1.End, anchor1);
+            (StartNode2, EndNode2) = GetStartEndObjects(mazeState2.Start, mazeState2.End, anchor2);
+
             maze1.SetMazeState(mazeState1);
             maze2.SetMazeState(mazeState2);
-            
+
             Debug.Log("MazeMiniGame started");
         }
 
-        private Maze CreateMaze(int width, int height, Vector3 shift)
+        private (GameObject, GameObject) GetStartEndObjects((int X, int Y) startNode, (int X, int Y) endNode,
+            EdgesGenerator anchor)
+        {
+            var start = Instantiate(StartEndNodePrefab, anchor.transform);
+            var end = Instantiate(StartEndNodePrefab, anchor.transform);
+            start.transform.localScale = start.transform.transform.localScale / Edge.edgeSize * MazeScale;
+            start.transform.localPosition =
+                (Vector3)(new Vector2(startNode.X, startNode.Y) + anchor.shift) * anchor.scale +
+                new Vector3(0, 0, -0.1f);
+            end.transform.localScale = end.transform.localScale / Edge.edgeSize * MazeScale;
+            end.transform.localPosition =
+                (Vector3)(new Vector2(endNode.X, endNode.Y) + anchor.shift) * anchor.scale +
+                new Vector3(0, 0, -0.1f);
+
+            return (start, end);
+        }
+
+        private (Maze, EdgesGenerator) CreateMaze(int width, int height, Vector3 shift)
         {
             var generator = Instantiate(edgesGeneratorPrefab, transform);
             generator.transform.position += shift;
             generator.scale = MazeScale;
             generators.Add(generator);
-            return new Maze(width, height, generator);
+            return (new Maze(width, height, generator), generator);
         }
 
         public override MiniGameResult UpdateMiniGame()
@@ -116,6 +141,10 @@ namespace MazeMiniGame
             Debug.Log("MazeMiniGame destroyed");
             foreach (var generator in generators)
                 Destroy(generator);
+            Destroy(StartNode1);
+            Destroy(StartNode2);
+            Destroy(EndNode1);
+            Destroy(EndNode2);
             generators.Clear();
             //Destroy(gameObject);
         }

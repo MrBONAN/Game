@@ -137,7 +137,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (Input.GetKeyDown(currentControl[Control.Use]))
             foreach (var interactable in interactableObjects)
-                interactable.Interact();
+                interactable.Interact(this);
     }
 
     protected void OnTriggerEnter2D(Collider2D other)

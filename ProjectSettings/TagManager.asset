@@ -8,6 +8,8 @@ TagManager:
   - Switcher
   - Small player
   - Big player
+  - Big Panel
+  - Small Panel
   layers:
   - Default
   - TransparentFX
