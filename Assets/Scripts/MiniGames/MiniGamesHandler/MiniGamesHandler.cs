@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Object = UnityEngine.Object;
@@ -9,9 +10,10 @@ namespace MiniGames.MiniGamesZone
     {
         [SerializeField] private Camera zoneCamera;
         private CurrentMiniGameHandler currentMiniGameHandler;
+        private Queue<CurrentMiniGameHandler> miniGamesQueue = new();
 
         public bool IsMiniGameActive
-            => currentMiniGameHandler is not null;
+            => currentMiniGameHandler is not null && currentMiniGameHandler.isMiniGameExist;
 
         private void Awake()
         {
@@ -23,7 +25,12 @@ namespace MiniGames.MiniGamesZone
 
         public void CreateMiniGame(CurrentMiniGameHandler miniGameHandler)
         {
-            if (currentMiniGameHandler is not null) return;
+            if (currentMiniGameHandler is not null && currentMiniGameHandler.isMiniGameExist) return;
+            if (currentMiniGameHandler is not null)
+            {
+                miniGamesQueue.Enqueue(miniGameHandler);
+                return;
+            }
             currentMiniGameHandler = miniGameHandler;
             currentMiniGameHandler.transform.position = zoneCamera.transform.position + new Vector3(0, 0, 1);
             currentMiniGameHandler.StartMiniGame();
@@ -33,7 +40,7 @@ namespace MiniGames.MiniGamesZone
         // ReSharper disable Unity.PerformanceAnalysis
         public void UpdateMiniGame()
         {
-            if (currentMiniGameHandler is null) return;
+            if (currentMiniGameHandler is null || !currentMiniGameHandler.isMiniGameExist) return;
             var result = currentMiniGameHandler.UpdateMiniGame();
             if (result is not MiniGameResult.ContinuePlay) CloseMiniGame();
         }
@@ -43,7 +50,12 @@ namespace MiniGames.MiniGamesZone
             if (currentMiniGameHandler is null) return;
             currentMiniGameHandler.CloseGame();
             currentMiniGameHandler = null;
-            zoneCamera.enabled = false;
+            if (miniGamesQueue.Count == 0)
+            {
+                zoneCamera.enabled = false;
+                return;
+            }
+            CreateMiniGame(miniGamesQueue.Dequeue());
         }
     }
 }
