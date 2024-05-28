@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using MiniGames;
-using UnityEngine.Serialization;
 using UnityEngine.U2D;
 
 namespace LampsMiniGame
@@ -301,6 +300,9 @@ namespace LampsMiniGame
             Destroy(_select1);
             Destroy(_select2);
             Destroy(_resultSheet);
+            foreach (var indicator in _indicators)
+                Destroy(indicator);
+            Destroy(_mainButton.gameObject);
 
             Debug.Log("MemorizingLampsMiniGame destroyed");
         }
