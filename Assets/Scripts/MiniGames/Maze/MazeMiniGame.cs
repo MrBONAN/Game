@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -106,12 +105,12 @@ namespace MazeMiniGame
         public override MiniGameResult UpdateMiniGame()
         {
             if (CheckExit() is MiniGameResult.Exit) return MiniGameResult.Exit;
-            foreach (var (direction, keyCode) in PlayerControl.ControlFirst)
+            foreach (var (direction, keyCode) in PlayerControl.ControlSecond)
                 if (Input.GetKeyDown(keyCode) && 
                     direction is Control.Up or Control.Down or Control.Left or Control.Right)
                     maze1.MoveInDirection(ref selected1, direction);
 
-            foreach (var (direction, keyCode) in PlayerControl.ControlSecond)
+            foreach (var (direction, keyCode) in PlayerControl.ControlFirst)
                 if (Input.GetKeyDown(keyCode) && 
                     direction is Control.Up or Control.Down or Control.Left or Control.Right)
                     maze2.MoveInDirection(ref selected2, direction);
