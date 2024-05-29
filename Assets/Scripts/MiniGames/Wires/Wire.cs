@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace MazeMiniGame
 {
@@ -12,12 +15,12 @@ namespace MazeMiniGame
         Bridge
     }
     
-    public class Wire
+    public class Wire : MonoBehaviour
     {
-        public Vector2Int Entry;
-        public Vector2Int Exit;
+        public Vector2 Entry;
+        public Vector2 Exit;
         private WireType _type;
-        public Rotation rotation = Rotation.Normal;
+        public Rotation rotation;
         public WireGUI WireGUI;
 
         public WireType Type
@@ -30,14 +33,13 @@ namespace MazeMiniGame
             }
         }
 
-        public Vector2Int Position
+        public Vector2 Position
         {
             get => Entry;
             set
             {
                 Entry = value;
                 Exit = value + Rotate(rotation, _type);
-                WireGUI.position = Entry;
             }
         }
 
@@ -62,24 +64,39 @@ namespace MazeMiniGame
             WireGUI.ChangeRotation(rotation); 
         }
 
-        private static Vector2Int Rotate(Rotation rotation, WireType type)
+        private static Vector2 Rotate(Rotation rotation, WireType type)
         {
-            var sizes = new Dictionary<WireType, (int Width, int Height)>()
-            {
-                { WireType.Default, (5, 0) },
-                { WireType.Long, (7, 0) },
-                { WireType.Corner, (3, 3) },
-                { WireType.LongCorner, (8, 5) },
-                { WireType.Bridge, (4, 0) }
-            };
             return rotation switch
             {
-                Rotation.Normal => new Vector2Int(sizes[type].Width, sizes[type].Height),
-                Rotation.Degree90 => new Vector2Int(sizes[type].Height, sizes[type].Width),
-                Rotation.Degree180 => new Vector2Int(-sizes[type].Width, sizes[type].Height),
-                Rotation.Degree270 => new Vector2Int(sizes[type].Height, -sizes[type].Width),
-                _ => new Vector2Int()
+                Rotation.Normal => new Vector2(WiresStateFormer.sizes[type].Width, -WiresStateFormer.sizes[type].Height),
+                Rotation.Degree90 => new Vector2(WiresStateFormer.sizes[type].Height, -WiresStateFormer.sizes[type].Width),
+                Rotation.Degree180 => new Vector2(WiresStateFormer.sizes[type].Width, -WiresStateFormer.sizes[type].Height),
+                Rotation.Degree270 => new Vector2(WiresStateFormer.sizes[type].Height, -WiresStateFormer.sizes[type].Width),
+                _ => new Vector2()
             };
+        }
+        
+        public void SetRandomRotation()
+        {
+            var random = new System.Random();
+            Rotation[] rotations = (Rotation[])Enum.GetValues(typeof(Rotation));
+            var rotationLocal = rotations[random.Next(0, rotations.Length)];
+            rotation = rotationLocal;
+            WireGUI.rotation = rotationLocal;
+            
+            DrawWireRotation();
+        }
+        
+        private void DrawWireRotation()
+        {
+            if (rotation == Rotation.Degree90)
+                RotateWire();
+            else if (rotation == Rotation.Degree180)
+                for (var i = 0; i < 2; i++)
+                    RotateWire();
+            else if (rotation == Rotation.Degree270)
+                for (var i = 0; i < 2; i++)
+                    RotateWire();
         }
     }
 }

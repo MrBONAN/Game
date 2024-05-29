@@ -8,14 +8,16 @@ namespace MazeMiniGame
 {
     public class WireHandler : CurrentMiniGameHandler
     {
-        [SerializeField] private WiresGameObject mazeGamePrefab;
+        [SerializeField] private WiresGameObject wireGamePrefab;
         [SerializeField] private WiresGameObject game;
+        [SerializeField] private WireGUIPref _wireGUI;
+        [SerializeField] private FieldGUIPref _fieldGUI;
 
         public override void StartMiniGame()
         {
-            game ??= Instantiate(mazeGamePrefab, transform);
+            game = gameObject.AddComponent<WiresGameObject>();
             miniGame = game;
-            game.SetGameState();
+            game.SetGameState(_wireGUI, _fieldGUI);
             base.StartMiniGame();
         }
     }
