@@ -32,7 +32,7 @@ namespace MazeMiniGame
         public void ChangeRotation(Rotation rotation)
         {
             this.rotation = rotation;
-            gameObj.transform.Rotate(new Vector3(0,0 -90));
+            gameObj.transform.Rotate(new Vector3(0,0, -90));
         }
 
         public void DrawWire(Transform parent)
