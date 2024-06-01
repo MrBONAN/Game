@@ -8,6 +8,7 @@ namespace Interaction_objects
     {
         [SerializeField] private Panel other;
         private Animator animator;
+        private AudioSource audio;
         private float timeElapsed = 10f;
         public UnityEvent turnOn;
         public bool state { get; private set; }
@@ -16,6 +17,8 @@ namespace Interaction_objects
         {
             if (state)
                 timeElapsed = 10f;
+            else
+                audio.Play();
             state = !state;
             animator.SetBool("isWaiting", state);
             if (state && other.state)
@@ -36,6 +39,7 @@ namespace Interaction_objects
         private void Start()
         {
             animator = GetComponentInChildren<Animator>();
+            audio = GetComponentInParent<AudioSource>();
             state = false;
         }
 
