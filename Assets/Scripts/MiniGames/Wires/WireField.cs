@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using MiniGames;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -39,47 +40,74 @@ namespace MazeMiniGame
 
         public bool CheckWin()
         {
-            return RecFind(startPosition1, startPosition2, new HashSet<(int xPos, int yPos)>(), Player.First) &&
-                   RecFind(startPosition2, endPosition, new HashSet<(int xPos, int yPos)>(), Player.Second);
-        }
-
-        private bool RecFind((int posY, int posX) currentPos, (int posY, int posX) toFind,
-            HashSet<(int xPos, int yPos)> visited, Player player)
-        {
-            if (IsInBounds(currentPos.posX, currentPos.posY, player))
-                return false;
-
-            visited.Add(currentPos);
-
-            if (currentPos.posX == toFind.posX && currentPos.posY == toFind.posY)
+            if (RecFind(startPosition1, startPosition2, new HashSet<(int posX, int posY)>()) &&
+                RecFind(startPosition2, endPosition, new HashSet<(int posX, int posY)>()))
                 return true;
 
-            var goneRight =
-                !visited.Contains((currentPos.posX + 1, currentPos.posY)) &&
-                IsInBounds(currentPos.posX + 1, currentPos.posY, player) &&
-                wireField[currentPos.posY, currentPos.posX].Exit ==
-                wireField[currentPos.posY, currentPos.posX + 1].Entry &&
-                RecFind((currentPos.posY, currentPos.posX + 1), toFind, visited, player);
-            var goneUp =
-                !visited.Contains((currentPos.posX, currentPos.posY + 1)) &&
-                IsInBounds(currentPos.posX, currentPos.posY + 1, player) &&
-                wireField[currentPos.posY, currentPos.posX].Exit ==
-                wireField[currentPos.posY + 1, currentPos.posX].Entry &&
-                RecFind((currentPos.posY + 1, currentPos.posX), toFind, visited, player);
-            var goneLeft =
-                !visited.Contains((currentPos.posX - 1, currentPos.posY)) &&
-                IsInBounds(currentPos.posX - 1, currentPos.posY, player) &&
-                wireField[currentPos.posY, currentPos.posX].Exit ==
-                wireField[currentPos.posY, currentPos.posX - 1].Entry &&
-                RecFind((currentPos.posY, currentPos.posX - 1), toFind, visited, player);
-            var goneDown =
-                !visited.Contains((currentPos.posX, currentPos.posY - 1)) &&
-                IsInBounds(currentPos.posX, currentPos.posY - 1, player) &&
-                wireField[currentPos.posY, currentPos.posX].Exit ==
-                wireField[currentPos.posY - 1, currentPos.posX].Entry &&
-                RecFind((currentPos.posY - 1, currentPos.posX), toFind, visited, player);
+            return false;
+        }
 
-            return goneLeft || goneRight || goneUp || goneDown;
+        private bool RecFind((int posX, int posY) currPos, (int posY, int posX) toFind,
+            HashSet<(int posX, int posY)> visited)
+        {
+            visited.Add(currPos);
+            
+            if (currPos.posX == toFind.posX && currPos.posY == toFind.posY)
+                return true;
+
+            switch (wireField[currPos.posY, currPos.posX].rotation.Item2)
+            {
+                case Rotation.Degree90:
+                    if (!visited.Contains((currPos.posY + 1, currPos.posX)) &&
+                        IsInBounds(currPos.posY + 1, currPos.posX) &&
+                        AreConnected(
+                        wireField[currPos.posY + 1, currPos.posX].rotation.Item1,
+                        wireField[currPos.posY, currPos.posX].rotation.Item2))
+                    {
+                        currPos.posY++;
+                        return RecFind(currPos, toFind, visited);
+                    }
+
+                    return false;
+                case Rotation.Degree180:
+                    if (!visited.Contains((currPos.posY, currPos.posX - 1)) &&
+                        IsInBounds(currPos.posY, currPos.posX - 1) &&
+                        AreConnected(
+                        wireField[currPos.posY, currPos.posX - 1].rotation.Item1,
+                        wireField[currPos.posY, currPos.posX].rotation.Item2))
+                    {
+                        currPos.posX--;
+                        return RecFind(currPos, toFind, visited);
+                    }
+
+                    return false;
+                case Rotation.Normal:
+                    if (!visited.Contains((currPos.posY, currPos.posX + 1)) &&
+                        IsInBounds(currPos.posY, currPos.posX + 1) &&
+                        AreConnected(
+                        wireField[currPos.posY, currPos.posX + 1].rotation.Item1,
+                        wireField[currPos.posY, currPos.posX].rotation.Item2))
+                    {
+                        currPos.posX++;
+                        return RecFind(currPos, toFind, visited);
+                    }
+
+                    return false;
+                case Rotation.Degree270:
+                    if (!visited.Contains((currPos.posY - 1, currPos.posX)) &&
+                        IsInBounds(currPos.posY - 1, currPos.posX) &&
+                        AreConnected(
+                        wireField[currPos.posY - 1, currPos.posX].rotation.Item1,
+                        wireField[currPos.posY, currPos.posX].rotation.Item2))
+                    {
+                        currPos.posY--;
+                        return RecFind(currPos, toFind, visited);
+                    }
+
+                    return false;
+            }
+
+            throw new ArgumentException();
         }
 
         public void RotateWire1()
@@ -99,32 +127,19 @@ namespace MazeMiniGame
                 Destroy(wireField[i, j].WireGUI);
         }
 
-        private bool IsInBounds(int x, int y, Player player)
-        {
-            if (y < 0 || y >= Height
-                      || x < (player == Player.First ? 0 : Width / 2)
-                      || x >= (player == Player.First ? Width / 2 : Width))
-                return false;
-            return true;
-        }
-
-        public void SetField(string[] fieldInfo, string[] positionsReal, string[] positionalsGUI, float[] scales)
+        public void SetField(string[] fieldInfo, float scale, Vector2 shift)
         {
             wireField = new Wire[fieldInfo.Length, fieldInfo[0].Length];
-            WirePrefab.SetScales(scales[0], scales[1], scales[2], scales[3], scales[4]);
+            WirePrefab.SetScales(scale);
 
             field = gameObject.AddComponent<WireFieldGUI>();
             field.fieldPrefab = fieldGUIPrefab.fieldPrefab;
             field.position = fieldGUIPrefab.position;
-            for (var i = 0; i < fieldInfo.Length; i++)
+            for (var i = 0; i < Height; i++)
             {
-                var posReal = positionsReal[i].Split("|").Select(x => x.Split(' ').ToArray()).ToArray();
-                var posGUI = positionalsGUI[i].Split("|").Select(x => x.Split(' ').ToArray()).ToArray();
-                for (var j = 0; j < fieldInfo[0].Length; j++)
+                for (var j = 0; j < Width; j++)
                 {
-                    AddNewWire(fieldInfo[i][j], i, j, float.Parse(posReal[j][0]), float.Parse(posReal[j][1]),
-                        float.Parse(posGUI[j][0], CultureInfo.InvariantCulture.NumberFormat),
-                        float.Parse(posGUI[j][1], CultureInfo.InvariantCulture.NumberFormat));
+                    AddNewWire(fieldInfo[i][j], i, j, 3, shift);
                 }
             }
 
@@ -132,18 +147,16 @@ namespace MazeMiniGame
             wireField[startPosition2.yPos, startPosition2.xPos].WireGUI.Visualize();
         }
 
-        private void AddNewWire(char wireType, int i, int j, float realPosX, float realPosY, float GUIPosX,
-            float GUIPosY)
+        private void AddNewWire(char wireType, int i, int j, float scale, Vector2 shift)
         {
             var wire = gameObject.AddComponent<Wire>();
             wire.WireGUI = gameObject.AddComponent<WireGUI>();
             wire.WireGUI.objectSizes = WirePrefab.objectsRenderer;
             SetWireGUIPref(wire.WireGUI);
             wire.Type = WiresStateFormer.translateDict[wireType]; // set type to wire
-            wire.WireGUI.SetGUIPosition(new Vector2(GUIPosX, GUIPosY));
+            wire.WireGUI.SetGUIPosition((new Vector2(j, -i) - shift) * scale ); // тут вместо i и j надо да
             wire.WireGUI.DrawWire(field.transform);
             wire.SetRandomRotation(); // DrawWire дает возможность вращать обьект
-            wire.Position = new Vector2(realPosX, realPosY); // set entry and exit to wire
             wireField[i, j] = wire;
         }
 
@@ -208,6 +221,25 @@ namespace MazeMiniGame
         private void UnVisualize(Wire wire)
         {
             wire.WireGUI.UnVisualize();
+        }
+
+        private bool IsInBounds(int posY, int posX)
+        {
+            return (posY >= 0 && posX >= 0 && posY < Height && posX < Width);
+        }
+
+        private bool AreConnected(Rotation rotation1, Rotation rotation2)
+        {
+            if (rotation1 == Rotation.Normal)
+                return rotation2 == Rotation.Degree180;
+            if (rotation1 == Rotation.Degree90)
+                return rotation2 == Rotation.Degree270;
+            if (rotation1 == Rotation.Degree180)
+                return rotation2 == Rotation.Normal;
+            if (rotation1 == Rotation.Degree270)
+                return rotation2 == Rotation.Degree90;
+            
+            throw new ArgumentException();
         }
     }
 }

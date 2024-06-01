@@ -15,23 +15,22 @@ namespace MazeMiniGame
 
     public class WireGUI : MonoBehaviour
     {
-        public WireType type;
-        public Vector2 position;
-        public Rotation rotation;
-        [NonSerialized] public GameObject gameObj;
         public GameObject defaultPrefab;
         public GameObject bridgePrefab;
         public GameObject longCornerPrefab;
         public GameObject cornerPrefab;
         public GameObject longPrefab;
+        [NonSerialized] public GameObject gameObj;
         public Dictionary<WireType, GameObject> prefabs;
+        public WireType type;
         public Dictionary<GameObject, Renderer> objectSizes;
         private new SpriteRenderer renderer;
+        
+        public Vector2 position;
 
 
-        public void ChangeRotation(Rotation rotation)
+        public void ChangeRotation()
         {
-            this.rotation = rotation;
             gameObj.transform.Rotate(new Vector3(0,0, -90));
         }
 
@@ -46,8 +45,7 @@ namespace MazeMiniGame
                 { WireType.Long, longPrefab }
             };
             gameObj = Instantiate(prefabs[type], parent);
-            gameObj.transform.localPosition = new Vector3(position.x - objectSizes[prefabs[type]].bounds.size.x / 2,
-                position.y - objectSizes[prefabs[type]].bounds.size.y / 2, 0);
+            gameObj.transform.localPosition = new Vector3(position.x, position.y, 0);
         }
 
         public void SetGUIPosition(Vector2 pos)

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,10 +15,8 @@ namespace MazeMiniGame
     
     public class Wire : MonoBehaviour
     {
-        public Vector2 Entry;
-        public Vector2 Exit;
         private WireType _type;
-        public Rotation rotation;
+        public (Rotation, Rotation) rotation;
         public WireGUI WireGUI;
 
         public WireType Type
@@ -33,47 +29,11 @@ namespace MazeMiniGame
             }
         }
 
-        public Vector2 Position
-        {
-            get => Entry;
-            set
-            {
-                Entry = value;
-                Exit = value + Rotate(rotation, _type);
-            }
-        }
-
         public void RotateWire()
         {
-            switch (rotation)
-            {
-                case Rotation.Normal:
-                    rotation = Rotation.Degree90;
-                    break;
-                case Rotation.Degree90:
-                    rotation = Rotation.Degree180;
-                    break;
-                case Rotation.Degree180:
-                    rotation = Rotation.Degree270;
-                    break;
-                case Rotation.Degree270:
-                    rotation = Rotation.Normal;
-                    break;
-            }
-            Exit = Entry + Rotate(rotation, _type);
-            WireGUI.ChangeRotation(rotation); 
-        }
+            rotation = GetNewDirection(GetNextRotation(rotation.Item1));
 
-        private static Vector2 Rotate(Rotation rotation, WireType type)
-        {
-            return rotation switch
-            {
-                Rotation.Normal => new Vector2(WiresStateFormer.sizes[type].Width, -WiresStateFormer.sizes[type].Height),
-                Rotation.Degree90 => new Vector2(WiresStateFormer.sizes[type].Height, -WiresStateFormer.sizes[type].Width),
-                Rotation.Degree180 => new Vector2(WiresStateFormer.sizes[type].Width, -WiresStateFormer.sizes[type].Height),
-                Rotation.Degree270 => new Vector2(WiresStateFormer.sizes[type].Height, -WiresStateFormer.sizes[type].Width),
-                _ => new Vector2()
-            };
+            WireGUI.ChangeRotation();
         }
         
         public void SetRandomRotation()
@@ -81,22 +41,50 @@ namespace MazeMiniGame
             var random = new System.Random();
             Rotation[] rotations = (Rotation[])Enum.GetValues(typeof(Rotation));
             var rotationLocal = rotations[random.Next(0, rotations.Length)];
-            rotation = rotationLocal;
-            WireGUI.rotation = rotationLocal;
+            rotation = GetNewDirection(rotationLocal); // Gets random rotation
             
-            DrawWireRotation();
+            MakeWireRotation(); // Подгоняет интерфейс по этот рандом
         }
         
-        private void DrawWireRotation()
+        private void MakeWireRotation()
         {
-            if (rotation == Rotation.Degree90)
-                RotateWire();
-            else if (rotation == Rotation.Degree180)
-                for (var i = 0; i < 2; i++)
-                    RotateWire();
-            else if (rotation == Rotation.Degree270)
-                for (var i = 0; i < 2; i++)
-                    RotateWire();
+            switch (rotation.Item1)
+            {
+                case Rotation.Degree270:
+                    WireGUI.ChangeRotation();
+                    break;
+                case Rotation.Normal:
+                    for (var i = 0; i < 2; i++)
+                        WireGUI.ChangeRotation();
+                    break;
+                case Rotation.Degree90:
+                    for (var i = 0; i < 3; i++)
+                        WireGUI.ChangeRotation();
+                    break;
+            }
+        }
+
+        private Rotation GetNextRotation(Rotation currentRotation)
+        {
+            return currentRotation switch
+            {
+                Rotation.Normal => Rotation.Degree90,
+                Rotation.Degree90 => Rotation.Degree180,
+                Rotation.Degree180 => Rotation.Degree270,
+                Rotation.Degree270 => Rotation.Normal,
+                _ => throw new ArgumentException()
+            };
+        }
+
+        private (Rotation, Rotation) GetNewDirection(Rotation firstRotation) // Восстановление второго аргумента у rotation
+        {
+            return _type switch
+            {
+                WireType.Bridge or WireType.Long or WireType.Default => (firstRotation,
+                    GetNextRotation(GetNextRotation(firstRotation))),
+                WireType.Corner or WireType.LongCorner => (firstRotation, GetNextRotation(firstRotation)),
+                _ => throw new ArgumentException()
+            };
         }
     }
 }

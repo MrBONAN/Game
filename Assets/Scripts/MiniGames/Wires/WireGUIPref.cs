@@ -15,13 +15,13 @@ namespace MazeMiniGame
         [NonSerialized]
         public Dictionary<GameObject, Renderer> objectsRenderer = new Dictionary<GameObject, Renderer>();
 
-        public void SetScales(float x1, float x2, float x3, float x4, float x5)
+        public void SetScales(float scale)
         {
-            defaultPrefab.transform.localScale = new Vector3(1, 1, 1) * x1;
-            bridgePrefab.transform.localScale = new Vector3(1, 1, 1) * x2;
-            longPrefab.transform.localScale = new Vector3(1, 1, 1) * x3;
-            longCornerPrefab.transform.localScale = new Vector3(1, 1, 1) * x4;
-            cornerPrefab.transform.localScale = new Vector3(1, 1, 1) * x5;
+            defaultPrefab.transform.localScale = new Vector3(1, 1, 1) * scale;
+            bridgePrefab.transform.localScale = new Vector3(1, 1, 1) * scale;
+            longPrefab.transform.localScale = new Vector3(1, 1, 1) * scale;
+            longCornerPrefab.transform.localScale = new Vector3(1, 1, 1) * scale;
+            cornerPrefab.transform.localScale = new Vector3(1, 1, 1) * scale;
 
             objectsRenderer.Add(defaultPrefab, defaultPrefab.GetComponent<Renderer>());
             objectsRenderer.Add(bridgePrefab, bridgePrefab.GetComponent<Renderer>());
