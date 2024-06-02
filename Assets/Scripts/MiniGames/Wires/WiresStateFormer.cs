@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -41,10 +42,19 @@ namespace MazeMiniGame
             var stringField = new[]
             {
                 "-/-/",
-                "----",
-                "///-"
+                "?---",
+                "////"
             };
-            var scale = 6.25f;
+            var bridgesRotations = new Dictionary<(int, int), (Rotation, Rotation)>
+            {
+                {(1, 0), (Rotation.Degree270, Rotation.Degree90)},
+                {(2, 3), (Rotation.Normal, Rotation.Degree180)}
+            };
+            var scale = 5.5f;
+            var bridgePositions = stringField.SelectMany((row, y) => row.Select((c, x) => new { Char = c, Coord = (y, x) }))
+                .Where(item => item.Char == '?')
+                .Select(item => item.Coord)
+                .ToArray();;
             var shiftX = (stringField[0].Length - 1) / 2.0f;
             var shiftY = (stringField.Length - 1) / 2.0f;
             var shift = new Vector2(shiftX, -shiftY);
@@ -55,7 +65,7 @@ namespace MazeMiniGame
             field.endPosition = (1, 3);
             field.StartPointPref = start;
             field.EndPointPref = end;
-            field.SetField(stringField, scale, shift);
+            field.SetField(stringField, scale, shift, bridgePositions, bridgesRotations);
             return field;
         }
     }

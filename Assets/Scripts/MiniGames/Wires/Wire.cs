@@ -38,13 +38,15 @@ namespace MazeMiniGame
         
         public void SetRandomRotation()
         {
-            var random = new System.Random();
-            Rotation[] rotations = (Rotation[])Enum.GetValues(typeof(Rotation));
-            var rotationLocal = rotations[random.Next(0, rotations.Length)];
-            
-            rotation = GetNewDirection(rotationLocal); // Gets random rotation
-            
-            MakeWireRotation(); // Подгоняет интерфейс по этот рандом
+            if (_type != WireType.Bridge)
+            {
+                var random = new System.Random();
+                Rotation[] rotations = (Rotation[])Enum.GetValues(typeof(Rotation));
+                var rotationLocal = rotations[random.Next(0, rotations.Length)];
+
+                rotation = GetNewDirection(rotationLocal);
+                MakeWireRotation();
+            }
         }
         
         private void MakeWireRotation()
@@ -105,6 +107,18 @@ namespace MazeMiniGame
             if (_type == WireType.Bridge || _type == WireType.Long || _type == WireType.Default) return;
             rotation = (rotation.Item2, rotation.Item1);
             WireGUI.ChangeRotationSides();
+        }
+
+        public void SetRotationToBridge((Rotation entry, Rotation exit) rotation)
+        {
+            this.rotation = rotation;
+            MakeWireRotation();
+        }
+
+        public void HighLight()
+        {
+            WireGUI.HighLight();
+            
         }
     }
 }
