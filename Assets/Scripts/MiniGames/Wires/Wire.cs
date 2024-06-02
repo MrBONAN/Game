@@ -18,6 +18,7 @@ namespace MazeMiniGame
         private WireType _type;
         public (Rotation, Rotation) rotation;
         public WireGUI WireGUI;
+        private bool reversed;
 
         public WireType Type
         {
@@ -32,6 +33,8 @@ namespace MazeMiniGame
         public void RotateWire(float duration)
         {
             rotation = GetNewDirection(GetNextRotation(rotation.Item1));
+            if (reversed)
+                ReverseWire();
 
             WireGUI.ChangeRotation(duration);
         }
@@ -106,7 +109,8 @@ namespace MazeMiniGame
         public void ChangeDirection()
         {
             if (_type == WireType.Bridge || _type == WireType.Long || _type == WireType.Default) return;
-            rotation = (rotation.Item2, rotation.Item1);
+            ReverseWire();
+            reversed = !reversed;
             WireGUI.ChangeRotationSides();
         }
 
@@ -117,5 +121,7 @@ namespace MazeMiniGame
         }
 
         public void HighLight() => WireGUI.HighLight();
+        
+        private void ReverseWire() => rotation = (rotation.Item2, rotation.Item1);
     }
 }

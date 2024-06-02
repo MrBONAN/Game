@@ -112,6 +112,7 @@ namespace MazeMiniGame
 
         public void HighLight()
         {
+            if (gameObj	== null) return;
             if (renderer == null)
                 renderer = gameObj.GetComponent<SpriteRenderer>();
             renderer.color = new Color(0, 1f, 1f, 1f);

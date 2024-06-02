@@ -62,7 +62,7 @@ namespace MazeMiniGame
                         win = false;
 
                 if (win)
-                    StartCoroutine(WaitForAnimation(obj));
+                    obj.gameWon = true;
             }
         }
 
@@ -148,6 +148,7 @@ namespace MazeMiniGame
             for (var i = 0; i < Height; i++)
             for (var j = 0; j < Width; j++)
                 Destroy(wireField[i, j].WireGUI.gameObj);
+            WirePrefab.objectsRenderer.Clear();
         }
 
         public void SetField(string[] fieldInfo, float scale, Vector2 shift, (int yPos, int xPos)[] bridges,
@@ -331,19 +332,10 @@ namespace MazeMiniGame
                 yield return new WaitForSeconds(0.2f);
             }
 
-
+            
             obj.animated = true;
         }
-
-        private IEnumerator WaitForAnimation(WiresGameObject obj)
-        {
-            foreach (var wire in wireField)
-                if (wire.WireGUI.rotating)
-                    yield return new WaitForSeconds(0.1f);
-
-
-            obj.gameWon = true;
-        }
+        
 
         private bool CheckIsOutOfMap(int posY, int posX)
         {

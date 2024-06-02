@@ -1,5 +1,9 @@
 using System;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class SplitScrin : MonoBehaviour
 {
@@ -9,6 +13,11 @@ public class SplitScrin : MonoBehaviour
 
     public Camera camera1;
     public Camera camera2;
+    public GameObject splitLinePrefab;
+    private Transform line1, line2;
+    private Vector2 start1, start2;
+    private Vector2 end1, end2;
+    private float speed = 30f;
 
     public Transform player1;
     public Transform player2;
@@ -55,6 +64,28 @@ public class SplitScrin : MonoBehaviour
         var playerCenter = (player1.position + player2.position) / 2;
         camera1.transform.position = playerCenter + new Vector3(-halfWidth, 0, zPos);
         camera2.transform.position = playerCenter + new Vector3(halfWidth, 0, zPos);
+        
+        CreateSplitLine();
+    }
+
+    private void CreateSplitLine()
+    {
+        var canvas1 = camera1.GetComponentInChildren<Canvas>();
+        var canvas2 = camera2.GetComponentInChildren<Canvas>();
+        foreach (var line in canvas1.GetComponentInChildren<Transform>())
+        {
+            Debug.Log(line);
+        }
+        line1 = canvas1.GetComponentsInChildren<Transform>().First(mb => mb.gameObject.name is "Line");
+        line2 = canvas2.GetComponentsInChildren<Transform>().First(mb => mb.gameObject.name is "Line");
+        var shift = new Vector2(camera1.pixelWidth/2f, 0);
+        start1 = shift;
+        start2 = -shift;
+        shift = new Vector2(10, 0);
+        end1 = start1 + shift;
+        end2 = start2 - shift;
+        line1.localPosition = end1;
+        line2.localPosition = end2;
     }
 
     private void InitializeMonoCameraSettings()
@@ -104,6 +135,9 @@ public class SplitScrin : MonoBehaviour
             (targetPos1 - camera1.transform.position) * (Time.fixedDeltaTime * convergenceSpeed);
         camera2.transform.position +=
             (targetPos2 - camera2.transform.position) * (Time.fixedDeltaTime * convergenceSpeed);
+        
+        line1.localPosition = Vector2.MoveTowards(line1.localPosition, end1, Time.fixedDeltaTime * speed);;
+        line2.localPosition = Vector2.MoveTowards(line2.localPosition, end2, Time.fixedDeltaTime * speed);;
     }
 
     private void MoveSplitedCameras()
@@ -115,6 +149,8 @@ public class SplitScrin : MonoBehaviour
 
         camera1.transform.position += GetCameraMoveDirection(camera1, target1) * cameraSpeed;
         camera2.transform.position += GetCameraMoveDirection(camera2, target2) * cameraSpeed;
+        line1.localPosition = Vector2.MoveTowards(line1.localPosition, start1, Time.fixedDeltaTime * speed);
+        line2.localPosition = Vector2.MoveTowards(line2.localPosition, start2, Time.fixedDeltaTime * speed);
     }
 
     private Vector3 GetCameraMoveDirection(Camera camera, Vector3 target)
