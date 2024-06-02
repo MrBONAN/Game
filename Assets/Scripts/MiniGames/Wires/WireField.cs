@@ -52,7 +52,7 @@ namespace MazeMiniGame
         {
             var firstPath = RecFind(startPosition1, startPosition2, new List<(int posY, int posX)>());
             var secondPath = RecFind(startPosition2, endPosition, new List<(int posX, int posY)>());
-            if (firstPath.Item1 && secondPath.Item1)
+            if (firstPath.Item1 && secondPath.Item1 && CheckIsOutOfMap(endPosition.yPos, endPosition.xPos))
             {
                 var win = true;
                 var allWay = firstPath.Item2.Concat(secondPath.Item2).ToArray();
@@ -343,6 +343,23 @@ namespace MazeMiniGame
 
 
             obj.gameWon = true;
+        }
+
+        private bool CheckIsOutOfMap(int posY, int posX)
+        {
+            switch (wireField[posY, posX].rotation.Item2)
+            {
+                case Rotation.Degree90:
+                    return !IsInBounds(posY + 1, posX);
+                case Rotation.Degree180:
+                    return !IsInBounds(posY, posX - 1);
+                case Rotation.Normal:
+                    return !IsInBounds(posY, posX + 1);
+                case Rotation.Degree270:
+                    return IsInBounds(posY - 1, posX);
+            }
+
+            throw new AggregateException();
         }
     }
 }
