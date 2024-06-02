@@ -74,8 +74,9 @@ public class SplitScrin : MonoBehaviour
         }
         var line1 = canvas1.GetComponentsInChildren<Transform>().FirstOrDefault(mb => mb.gameObject.name is "Line");
         var line2 = canvas2.GetComponentsInChildren<Transform>().FirstOrDefault(mb => mb.gameObject.name is "Line");
-        line1.localPosition = new Vector2(-halfWidth, 0);
-        line2.localPosition = new Vector2(halfWidth, 0);
+        var shift = new Vector2(camera1.pixelWidth/2f,0);
+        line1.localPosition = shift;
+        line2.localPosition = -shift;
 
         // var line1 = Instantiate(splitLinePrefab, canvas1.transform);
         // canvas1.transform.
