@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using Object = UnityEngine.Object;
@@ -11,6 +12,7 @@ namespace MiniGames.MiniGamesZone
     {
         [SerializeField] private Camera zoneCamera;
         private CurrentMiniGameHandler currentMiniGameHandler;
+        private AudioSource[] audio;
         private Queue<CurrentMiniGameHandler> miniGamesQueue = new();
         private Vector2 cameraSettings = new(0.8f, 0.8f);
         public Vector2 targetCameraPosition = new(0.1f, 0.1f);
@@ -22,6 +24,7 @@ namespace MiniGames.MiniGamesZone
 
         private void Awake()
         {
+            audio = GetComponents<AudioSource>();
             zoneCamera = GetComponentInChildren<Camera>();
             zoneCamera.enabled = false;
 
@@ -46,21 +49,23 @@ namespace MiniGames.MiniGamesZone
         {
             if (currentMiniGameHandler is null || !currentMiniGameHandler.isMiniGameExist) return;
             var result = currentMiniGameHandler.UpdateMiniGame();
-            if (result is not MiniGameResult.ContinuePlay) CloseMiniGame();
+            if (result is not MiniGameResult.ContinuePlay) CloseMiniGame(result);
         }
 
-        public void CloseMiniGame()
+        public void CloseMiniGame(MiniGameResult gameResult)
         {
             if (currentMiniGameHandler is null) return;
             currentMiniGameHandler.CloseGame();
             currentMiniGameHandler = null;
-            StartCoroutine(CloseMiniGameAnimation());
+            StartCoroutine(CloseMiniGameAnimation(gameResult));
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator OpenMiniGameAnimation()
         {
             yield return new WaitForSeconds(0.01f);
+            audio.FirstOrDefault(x => x.clip.name == "OpenMiniGame").Play();
+            //audio[0].Play();
             var startCameraPosition = new Vector2(targetCameraPosition.x, 1.1f);
             yield return CameraMove(startCameraPosition, bottomCameraPosition, 0.07f);
             yield return CameraMove(zoneCamera.rect.position, targetCameraPosition, 0.04f);
@@ -69,9 +74,20 @@ namespace MiniGames.MiniGamesZone
         }
         
         // ReSharper disable Unity.PerformanceAnalysis
-        private IEnumerator CloseMiniGameAnimation()
+        private IEnumerator CloseMiniGameAnimation(MiniGameResult gameResult)
         {
             yield return new WaitForSeconds(0.01f);
+            
+            switch (gameResult)
+            {
+                case MiniGameResult.Exit:
+                    audio.FirstOrDefault(x => x.clip.name == "QuitMiniGame").Play();
+                    break;
+                case MiniGameResult.Win:
+                    audio.FirstOrDefault(x => x.clip.name == "WinMiniGame").Play();
+                    break;
+            }
+
             var endCameraPosition = new Vector2(targetCameraPosition.x, 1.1f);
             yield return CameraMove(targetCameraPosition, bottomCameraPosition, 0.1f);
             yield return CameraMove(zoneCamera.rect.position, endCameraPosition, 0.07f);
