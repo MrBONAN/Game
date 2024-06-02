@@ -50,7 +50,7 @@ namespace MazeMiniGame
                 { (1, 0), (Rotation.Degree270, Rotation.Degree90) },
                 { (1, 3), (Rotation.Degree270, Rotation.Degree90) }
             };
-            var scale = 6.25f;
+            var scale = 6.2f;
             var bridgePositions = stringField
                 .SelectMany((row, y) => row.Select((c, x) => new { Char = c, Coord = (y, x) }))
                 .Where(item => item.Char == '?')
