@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 6240598673153187341}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -6.575463, y: -12.696472, z: 0.9404948}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -59,6 +59,7 @@ MonoBehaviour:
       m_Calls: []
   mazeGamePrefab: {fileID: 0}
   game: {fileID: 4988440955068428336}
+  mazeType: 0
 --- !u!1001 &3732701738356270382
 PrefabInstance:
   m_ObjectHideFlags: 0

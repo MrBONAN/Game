@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 
 namespace MazeMiniGame
@@ -33,19 +32,19 @@ namespace MazeMiniGame
         public Edge GetEdgeBetween(Node other)
             => edges.Intersect(other.edges).FirstOrDefault();
 
-        public Node GetNeighborNode(MoveDirection direction)
+        public Node GetNeighborNode(Control direction)
         {
             var target = pos + ConvertDirectionToVector(direction);
             return edges.Select(e => e.GetOtherNode(this)).FirstOrDefault(n => n.pos == target);
         }
 
-        public static Vector2Int ConvertDirectionToVector(MoveDirection direction)
+        public static Vector2Int ConvertDirectionToVector(Control direction)
             => direction switch
             {
-                MoveDirection.Up => Vector2Int.up,
-                MoveDirection.Down => Vector2Int.down,
-                MoveDirection.Left => Vector2Int.left,
-                MoveDirection.Right => Vector2Int.right,
+                Control.Up => Vector2Int.up,
+                Control.Down => Vector2Int.down,
+                Control.Left => Vector2Int.left,
+                Control.Right => Vector2Int.right,
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
     }

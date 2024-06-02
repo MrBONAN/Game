@@ -10,9 +10,20 @@ namespace Interaction_objects
         [SerializeField] private Transform start;
         [SerializeField] private Transform end;
         private Animator animator;
+        private AudioSource audio;
         private bool _moveUp;
-        public void MoveUp() => moveUp = true;
-        public void MoveDown() => moveUp = false;
+
+        public void MoveUp()
+        {
+            moveUp = true;
+            audio.Play();
+        }
+        public void MoveDown()
+        {
+            moveUp = false;
+            audio.Play();
+        }
+
         public void SwitchDirection() => moveUp = !moveUp;
         public void SetMoveUp(bool moveUp) => this.moveUp = moveUp;
 
@@ -31,6 +42,7 @@ namespace Interaction_objects
         {
             transform.position = start.position;
             animator = GetComponentInChildren<Animator>();
+            audio = GetComponentInParent<AudioSource>();
         }
 
         public void FixedUpdate()
@@ -41,6 +53,7 @@ namespace Interaction_objects
             
             animator.SetBool("IsWorking",
                 !(Math.Abs((transform.position - (moveUp ? end.position : start.position)).sqrMagnitude) < 1e-5));
+            if (!animator.GetBool("IsWorking")) audio.Stop();
         }
 
         private void UpdateAnimation()
