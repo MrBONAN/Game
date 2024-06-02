@@ -33,8 +33,6 @@ namespace MazeMiniGame
         public void RotateWire(float duration)
         {
             rotation = GetNewDirection(GetNextRotation(rotation.Item1));
-            if (reversed)
-                ReverseWire();
 
             WireGUI.ChangeRotation(duration);
         }
@@ -82,8 +80,7 @@ namespace MazeMiniGame
             };
         }
 
-        private (Rotation, Rotation)
-            GetNewDirection(Rotation firstRotation) // Восстановление второго аргумента у rotation
+        private (Rotation, Rotation) GetNewDirection(Rotation firstRotation) // Восстановление второго аргумента у rotation
         {
             return _type switch
             {
@@ -98,10 +95,10 @@ namespace MazeMiniGame
         {
             return rotation switch
             {
-                Rotation.Normal => Rotation.Degree270,
-                Rotation.Degree90 => Rotation.Normal,
-                Rotation.Degree180 => Rotation.Degree90,
-                Rotation.Degree270 => Rotation.Degree180,
+                Rotation.Normal => reversed	? Rotation.Degree90	: Rotation.Degree270,
+                Rotation.Degree90 => reversed? Rotation.Degree180 : Rotation.Normal,
+                Rotation.Degree180 => reversed? Rotation.Degree270 : Rotation.Degree90,
+                Rotation.Degree270 => reversed? Rotation.Normal	: Rotation.Degree180,
                 _ => throw new ArgumentException()
             };
         }

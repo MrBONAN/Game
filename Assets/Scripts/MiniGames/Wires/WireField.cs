@@ -320,18 +320,18 @@ namespace MazeMiniGame
 
         public IEnumerator WinAnimation(WiresGameObject obj)
         {
+            if (obj.animated) yield break;
             wireField[currentPosition2.yPos, currentPosition2.xPos].WireGUI.UnVisualize();
             wireField[currentPosition1.yPos, currentPosition1.xPos].WireGUI.UnVisualize();
             foreach (var point in points)
                 Destroy(point);
             Destroy(line);
-
+            
             foreach (var (y, x) in way)
             {
                 wireField[y, x].HighLight();
                 yield return new WaitForSeconds(0.2f);
             }
-
             
             obj.animated = true;
         }
