@@ -18,6 +18,7 @@ namespace MiniGames.MiniGamesZone
         public Vector2 targetCameraPosition = new(0.1f, 0.1f);
         // Камера как бы пролетает targetPosition до bottomPosition, и потом возвращается к target
         public Vector2 bottomCameraPosition = new(0.1f, 0.05f);
+        private SpriteRenderer background;
 
         public bool IsMiniGameActive
             => currentMiniGameHandler is not null && currentMiniGameHandler.isMiniGameExist;
@@ -29,6 +30,12 @@ namespace MiniGames.MiniGamesZone
             zoneCamera.enabled = false;
 
             zoneCamera.rect = new Rect(targetCameraPosition, cameraSettings);
+
+            background = GetComponentsInChildren<Canvas>()
+                .FirstOrDefault(c => c.gameObject.name is "Background")
+                .GetComponentInChildren<SpriteRenderer>();
+            Debug.Log(background.gameObject.name);
+            background.enabled = false;
         }
 
         public void CreateMiniGame(CurrentMiniGameHandler miniGameHandler)
@@ -69,6 +76,7 @@ namespace MiniGames.MiniGamesZone
             var startCameraPosition = new Vector2(targetCameraPosition.x, 1.1f);
             yield return CameraMove(startCameraPosition, bottomCameraPosition, 0.07f);
             yield return CameraMove(zoneCamera.rect.position, targetCameraPosition, 0.04f);
+            background.enabled = true;
             currentMiniGameHandler.StartMiniGame();
             yield return new WaitForSeconds(0.01f);
         }
@@ -76,6 +84,7 @@ namespace MiniGames.MiniGamesZone
         // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator CloseMiniGameAnimation(MiniGameResult gameResult)
         {
+            background.enabled = false;
             yield return new WaitForSeconds(0.01f);
             
             switch (gameResult)
