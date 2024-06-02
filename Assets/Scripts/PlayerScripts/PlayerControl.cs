@@ -30,6 +30,7 @@ public class PlayerControl : MonoBehaviour
     protected Transform legs;
     protected Vector2 legsSize;
     protected Animator animator;
+    protected AudioSource audio;
     protected HashSet<IInteractable> interactableObjects = new();
 
     public static readonly Dictionary<Control, KeyCode> ControlSecond = new()
@@ -57,6 +58,7 @@ public class PlayerControl : MonoBehaviour
     protected void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        
         foreach (var component in GetComponentsInChildren<Transform>())
         {
             if (component.name is "Legs")
@@ -69,6 +71,7 @@ public class PlayerControl : MonoBehaviour
         legsSize = transform.GetComponent<BoxCollider2D>().size * transform.lossyScale.x;
         legsSize = new Vector2(legsSize.x * 0.9f, 0.2f);
         animator = GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
 
         currentControl = gameObject.CompareTag("Small player") ? ControlFirst : ControlSecond;
     }
@@ -91,12 +94,18 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKey(currentControl[Control.Left]) ||
             Input.GetKey(currentControl[Control.Right]))
         {
+            if (!audio.isPlaying && !animator.GetBool("isJumping")) audio.Play();
+            if (animator.GetBool("isJumping")) audio.Stop();
             direction = Input.GetKey(currentControl[Control.Right]) ? 1 : -1;
             Flip(direction);
             SetAnimationRun(true);
         }
         else
+        {
+            audio.Stop();
             SetAnimationRun(false);
+        }
+            
 
         var velocity = new Vector2(direction * speed * Time.fixedDeltaTime, rb.velocity.y);
         if (state == PlayerState.grounded && Input.GetKey(currentControl[Control.Up]))

@@ -12,15 +12,19 @@ namespace MiniGames
         [SerializeField] protected UnityEvent exitAction;
         [SerializeField] protected UnityEvent continueAction;
         protected MiniGame miniGame;
+        public bool isMiniGameExist;
 
         public virtual void StartMiniGame()
         {
+            isMiniGameExist = true;
             miniGame.StartMiniGame();
         }
 
         public MiniGameResult UpdateMiniGame()
         {
             var result = miniGame.UpdateMiniGame();
+            if (result is not MiniGameResult.ContinuePlay)
+                CloseGame();
             switch (result)
             {
                 case MiniGameResult.Win:
@@ -39,9 +43,6 @@ namespace MiniGames
                     Debug.Log("Неизвестный результат для миниигры");
                     throw new ArgumentOutOfRangeException();
             }
-
-            if (result is not MiniGameResult.ContinuePlay)
-                CloseGame();
             return result;
         }
 
@@ -53,6 +54,9 @@ namespace MiniGames
         }
 
         public void CloseGame()
-            => miniGame.OnDestroy();
+        {
+            isMiniGameExist = false;
+            miniGame?.OnDestroy();
+        }
     }
 }

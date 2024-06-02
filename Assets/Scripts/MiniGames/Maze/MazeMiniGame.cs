@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -42,22 +41,6 @@ namespace MazeMiniGame
         public MazeState mazeState1 = new() { Start = (0, 0), End = (-1, -1), Missed = new(), Dots = new() };
         public MazeState mazeState2 = new() { Start = (0, 0), End = (-1, -1), Missed = new(), Dots = new() };
 
-        private static Dictionary<MoveDirection, KeyCode> player1Control = new()
-        {
-            { MoveDirection.Up, KeyCode.UpArrow },
-            { MoveDirection.Down, KeyCode.DownArrow },
-            { MoveDirection.Left, KeyCode.LeftArrow },
-            { MoveDirection.Right, KeyCode.RightArrow }
-        };
-
-        private static Dictionary<MoveDirection, KeyCode> player2Control = new()
-        {
-            { MoveDirection.Up, KeyCode.W },
-            { MoveDirection.Down, KeyCode.S },
-            { MoveDirection.Left, KeyCode.A },
-            { MoveDirection.Right, KeyCode.D }
-        };
-
         public void SetGameState(
             List<((int X, int Y), MoveDirection)> missed1,
             List<((int X, int Y), MoveDirection)> dots1,
@@ -68,6 +51,12 @@ namespace MazeMiniGame
         {
             mazeState1 = new MazeState { Start = start1, End = end1, Missed = missed1, Dots = dots1 };
             mazeState2 = new MazeState { Start = start2, End = end2, Missed = missed2, Dots = dots2 };
+        }
+
+        public void SetGameState(MazeState maze1, MazeState maze2)
+        {
+            mazeState1 = maze1;
+            mazeState2 = maze2;
         }
 
         public override void StartMiniGame()
@@ -121,18 +110,29 @@ namespace MazeMiniGame
 
         public override MiniGameResult UpdateMiniGame()
         {
-            foreach (var (direction, keyCode) in player1Control)
-                if (Input.GetKeyDown(keyCode))
+            if (CheckExit() is MiniGameResult.Exit) return MiniGameResult.Exit;
+            foreach (var (direction, keyCode) in PlayerControl.ControlSecond)
+                if (Input.GetKeyDown(keyCode) && 
+                    direction is Control.Up or Control.Down or Control.Left or Control.Right)
                     maze1.MoveInDirection(ref selected1, direction);
 
-            foreach (var (direction, keyCode) in player2Control)
-                if (Input.GetKeyDown(keyCode))
+            foreach (var (direction, keyCode) in PlayerControl.ControlFirst)
+                if (Input.GetKeyDown(keyCode) && 
+                    direction is Control.Up or Control.Down or Control.Left or Control.Right)
                     maze2.MoveInDirection(ref selected2, direction);
 
             if (maze1.DotsLeft == 0 && selected1.X == mazeState1.End.X && selected1.Y == mazeState1.End.Y &&
                 maze2.DotsLeft == 0 && selected2.X == mazeState2.End.X && selected2.Y == mazeState2.End.Y)
                 return MiniGameResult.Win;
 
+            return MiniGameResult.ContinuePlay;
+        }
+        
+        private MiniGameResult CheckExit()
+        {
+            if (Input.GetKey(PlayerControl.ControlFirst[Control.Exit]) &&
+                Input.GetKey(PlayerControl.ControlSecond[Control.Exit]))
+                return MiniGameResult.Exit;
             return MiniGameResult.ContinuePlay;
         }
 

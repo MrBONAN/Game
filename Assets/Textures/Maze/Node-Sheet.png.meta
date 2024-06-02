@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e36780b7de14f444592983198791de6a
+guid: eab687844844b864aa14c53e058b41fd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,85 +110,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Node-Sheet_0
+      name: Correct
       rect:
         serializedVersion: 2
         x: 1
         y: 1
-        width: 12
-        height: 50
-      alignment: 9
-      pivot: {x: 0.5, y: 0.12}
+        width: 80
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d737a28bc35917e41bd7ca8bf0aa0b81
-      internalID: -2077444513
+      spriteID: 0d9d70d4d6a40204181a6730a89d8014
+      internalID: 1889421170
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Node-Sheet_1
+      name: Failure
       rect:
         serializedVersion: 2
-        x: 14
+        x: 82
         y: 1
-        width: 12
-        height: 50
-      alignment: 9
-      pivot: {x: 0.5, y: 0.12}
+        width: 80
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd790c288b339d54ab7e3fe0a16b2f0c
-      internalID: -829093572
+      spriteID: 961bbfe134e502a41ab10d0bf856a7b3
+      internalID: 1962627644
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Node-Sheet_2
+      name: NextLevel
       rect:
         serializedVersion: 2
-        x: 27
+        x: 163
         y: 1
-        width: 12
-        height: 50
-      alignment: 9
-      pivot: {x: 0.5, y: 0.12}
+        width: 80
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8034b6bf0d5f28f4ba285c15f0bafea8
-      internalID: -1684642088
+      spriteID: a858fb727d7a8c2448e0757f9c4edcd1
+      internalID: 171248280
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Node-Sheet_3
+      name: LetsStart
       rect:
         serializedVersion: 2
-        x: 40
+        x: 244
         y: 1
-        width: 12
-        height: 50
-      alignment: 9
-      pivot: {x: 0.5, y: 0.12}
+        width: 80
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4c8f75f2cde9dd409d16f764c0dca15
-      internalID: -1892282918
+      spriteID: db2cb1eed10c19244a92f08ef8565433
+      internalID: 645155551
       vertices: []
       indices: 
       edges: []
@@ -204,11 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Node-Sheet_0: -2077444513
-      Node-Sheet_1: -829093572
-      Node-Sheet_2: -1684642088
-      Node-Sheet_3: -1892282918
-      Node-Sheet_4: 1137187986
+      Correct: 1889421170
+      Failure: 1962627644
+      LetsStart: 645155551
+      NextLevel: 171248280
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
