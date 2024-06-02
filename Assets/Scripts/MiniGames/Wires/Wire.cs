@@ -12,7 +12,7 @@ namespace MazeMiniGame
         LongCorner,
         Bridge
     }
-    
+
     public class Wire : MonoBehaviour
     {
         private WireType _type;
@@ -35,7 +35,7 @@ namespace MazeMiniGame
 
             WireGUI.ChangeRotation(duration);
         }
-        
+
         public void SetRandomRotation()
         {
             if (_type != WireType.Bridge)
@@ -48,7 +48,7 @@ namespace MazeMiniGame
                 MakeWireRotation();
             }
         }
-        
+
         private void MakeWireRotation()
         {
             switch (rotation.Item1)
@@ -79,7 +79,8 @@ namespace MazeMiniGame
             };
         }
 
-        private (Rotation, Rotation) GetNewDirection(Rotation firstRotation) // Восстановление второго аргумента у rotation
+        private (Rotation, Rotation)
+            GetNewDirection(Rotation firstRotation) // Восстановление второго аргумента у rotation
         {
             return _type switch
             {
@@ -115,10 +116,6 @@ namespace MazeMiniGame
             MakeWireRotation();
         }
 
-        public void HighLight()
-        {
-            WireGUI.HighLight();
-            
-        }
+        public void HighLight() => WireGUI.HighLight();
     }
 }

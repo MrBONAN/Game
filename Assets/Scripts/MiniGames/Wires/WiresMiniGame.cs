@@ -6,8 +6,7 @@ namespace MazeMiniGame
     public class WiresGameObject : MiniGame
     {
         private WireField wireField;
-        private bool gameWon = false;
-        private bool noGameActions = false;
+        public bool gameWon = false;
         public bool animated = false;
 
         public override void StartMiniGame()
@@ -19,49 +18,45 @@ namespace MazeMiniGame
         {
             if (animated)
                 return MiniGameResult.Win;
-            
-            CheckNoActions();
+
+            if (gameWon)
+                StartCoroutine(wireField.WinAnimation(this));
 
             foreach (var (keyCode, pressed) in PlayerControl.ControlFirst)
             {
-                if (gameWon && noGameActions) break;
-                CheckNoActions();
+                if (gameWon) break;
                 if (Input.GetKeyDown(pressed) && keyCode is Control.Up or Control.Down or Control.Left or Control.Right)
                     MovePosition1(keyCode);
                 if (Input.GetKeyDown(pressed) && keyCode is Control.Use)
                 {
                     wireField.RotateWire1();
-                    if (wireField.CheckWin())
-                        gameWon = true;
+                    wireField.CheckWin(this);
                 }
+
                 if (Input.GetKeyDown(pressed) && keyCode is Control.Use2)
+                {
                     wireField.ChangeRotation1();
-                if (wireField.CheckWin())
-                    gameWon = true;
+                    wireField.CheckWin(this);
+                }
             }
 
             foreach (var (keyCode, pressed) in PlayerControl.ControlSecond)
             {
-                if (gameWon && noGameActions) break;
-                CheckNoActions();
+                if (gameWon) break;
                 if (Input.GetKeyDown(pressed) && keyCode is Control.Up or Control.Down or Control.Left or Control.Right)
                     MovePosition2(keyCode);
                 if (Input.GetKeyDown(pressed) && keyCode is Control.Use)
                 {
                     wireField.RotateWire2();
-                    if (wireField.CheckWin())
-                        gameWon = true;
+                    wireField.CheckWin(this);
                 }
+
                 if (Input.GetKeyDown(pressed) && keyCode is Control.Use2)
+                {
                     wireField.ChangeRotation2();
-                if (wireField.CheckWin())
-                    gameWon = true;
+                    wireField.CheckWin(this);
+                }
             }
-
-            CheckNoActions();
-
-            if (gameWon && noGameActions)
-                StartCoroutine(wireField.WinAnimation(this));
 
             return MiniGameResult.ContinuePlay;
         }
@@ -132,13 +127,6 @@ namespace MazeMiniGame
         private bool IsInBorders2(int xPos, int yPos)
         {
             return xPos >= wireField.Width / 2 && yPos >= 0 && xPos < wireField.Width && yPos < wireField.Height;
-        }
-
-        private void CheckNoActions()
-        {
-            if (gameWon)
-                if (wireField.NoGameActions())
-                    noGameActions = true;
         }
     }
 }

@@ -48,23 +48,22 @@ namespace MazeMiniGame
         public int Width => wireField.GetLength(1);
         public int Height => wireField.GetLength(0);
 
-        public bool CheckWin()
+        public void CheckWin(WiresGameObject obj)
         {
             var firstPath = RecFind(startPosition1, startPosition2, new List<(int posY, int posX)>());
             var secondPath = RecFind(startPosition2, endPosition, new List<(int posX, int posY)>());
             if (firstPath.Item1 && secondPath.Item1)
             {
+                var win = true;
                 var allWay = firstPath.Item2.Concat(secondPath.Item2).ToArray();
+                way = allWay;
                 foreach (var pos in bridgesPos)
                     if (!allWay.Contains(pos))
-                        return false;
+                        win = false;
 
-                Debug.Log("game won");
-                way = allWay;
-                return true;
+                if (win)
+                    StartCoroutine(WaitForAnimation(obj));
             }
-
-            return false;
         }
 
         private (bool, List<(int, int)>) RecFind((int posY, int posX) currPos, (int posY, int posX) toFind,
@@ -140,7 +139,7 @@ namespace MazeMiniGame
         public void RotateWire2()
         {
             if (!wireField[currentPosition2.yPos, currentPosition2.xPos].WireGUI.rotating &&
-                wireField[currentPosition1.yPos, currentPosition1.xPos].Type != WireType.Bridge)
+                wireField[currentPosition2.yPos, currentPosition2.xPos].Type != WireType.Bridge)
                 wireField[currentPosition2.yPos, currentPosition2.xPos].RotateWire(0.4f);
         }
 
@@ -148,7 +147,7 @@ namespace MazeMiniGame
         {
             for (var i = 0; i < Height; i++)
             for (var j = 0; j < Width; j++)
-                Destroy(wireField[i, j].WireGUI);
+                Destroy(wireField[i, j].WireGUI.gameObj);
         }
 
         public void SetField(string[] fieldInfo, float scale, Vector2 shift, (int yPos, int xPos)[] bridges,
@@ -161,7 +160,7 @@ namespace MazeMiniGame
 
             field = gameObject.AddComponent<WireFieldGUI>();
             field.fieldPrefab = fieldGUIPrefab.fieldPrefab;
-            var scaleDist = 3.25f;
+            var scaleDist = 3f;
             for (var i = 0; i < Height; i++)
             {
                 for (var j = 0; j < Width; j++)
@@ -292,15 +291,6 @@ namespace MazeMiniGame
             EndPointPref.transform.localScale = scale;
         }
 
-        public bool NoGameActions()
-        {
-            foreach (var wire in wireField)
-                if (wire.WireGUI.rotating)
-                    return false;
-
-            return true;
-        }
-
         private void DrawLine(float dist, Vector2 shift)
         {
             line = Instantiate(linePref, field.transform);
@@ -334,15 +324,25 @@ namespace MazeMiniGame
             foreach (var point in points)
                 Destroy(point);
             Destroy(line);
-            
+
             foreach (var (y, x) in way)
             {
-                wireField[y,x].HighLight();
+                wireField[y, x].HighLight();
                 yield return new WaitForSeconds(0.2f);
             }
 
-            
+
             obj.animated = true;
+        }
+
+        private IEnumerator WaitForAnimation(WiresGameObject obj)
+        {
+            foreach (var wire in wireField)
+                if (wire.WireGUI.rotating)
+                    yield return new WaitForSeconds(0.1f);
+
+
+            obj.gameWon = true;
         }
     }
 }

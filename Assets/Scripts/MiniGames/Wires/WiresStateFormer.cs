@@ -42,19 +42,20 @@ namespace MazeMiniGame
             var stringField = new[]
             {
                 "-/-/",
-                "?---",
+                "?--?",
                 "////"
             };
             var bridgesRotations = new Dictionary<(int, int), (Rotation, Rotation)>
             {
-                {(1, 0), (Rotation.Degree270, Rotation.Degree90)},
-                {(2, 3), (Rotation.Normal, Rotation.Degree180)}
+                { (1, 0), (Rotation.Degree270, Rotation.Degree90) },
+                { (1, 3), (Rotation.Degree270, Rotation.Degree90) }
             };
-            var scale = 5.5f;
-            var bridgePositions = stringField.SelectMany((row, y) => row.Select((c, x) => new { Char = c, Coord = (y, x) }))
+            var scale = 6.25f;
+            var bridgePositions = stringField
+                .SelectMany((row, y) => row.Select((c, x) => new { Char = c, Coord = (y, x) }))
                 .Where(item => item.Char == '?')
                 .Select(item => item.Coord)
-                .ToArray();;
+                .ToArray();
             var shiftX = (stringField[0].Length - 1) / 2.0f;
             var shiftY = (stringField.Length - 1) / 2.0f;
             var shift = new Vector2(shiftX, -shiftY);
@@ -62,7 +63,7 @@ namespace MazeMiniGame
             field.startPosition2 = (0, 2);
             field.currentPosition2 = field.startPosition2;
             field.currentPosition1 = field.startPosition1;
-            field.endPosition = (1, 3);
+            field.endPosition = (2, 3);
             field.StartPointPref = start;
             field.EndPointPref = end;
             field.SetField(stringField, scale, shift, bridgePositions, bridgesRotations);
