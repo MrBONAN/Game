@@ -1,5 +1,9 @@
 using System;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class SplitScrin : MonoBehaviour
 {
@@ -9,6 +13,7 @@ public class SplitScrin : MonoBehaviour
 
     public Camera camera1;
     public Camera camera2;
+    public GameObject splitLinePrefab;
 
     public Transform player1;
     public Transform player2;
@@ -55,6 +60,26 @@ public class SplitScrin : MonoBehaviour
         var playerCenter = (player1.position + player2.position) / 2;
         camera1.transform.position = playerCenter + new Vector3(-halfWidth, 0, zPos);
         camera2.transform.position = playerCenter + new Vector3(halfWidth, 0, zPos);
+        
+        CreateSplitLine();
+    }
+
+    private void CreateSplitLine()
+    {
+        var canvas1 = camera1.GetComponentInChildren<Canvas>();
+        var canvas2 = camera2.GetComponentInChildren<Canvas>();
+        foreach (var line in canvas1.GetComponentInChildren<Transform>())
+        {
+            Debug.Log(line);
+        }
+        var line1 = canvas1.GetComponentsInChildren<Transform>().FirstOrDefault(mb => mb.gameObject.name is "Line");
+        var line2 = canvas2.GetComponentsInChildren<Transform>().FirstOrDefault(mb => mb.gameObject.name is "Line");
+        line1.localPosition = new Vector2(-halfWidth, 0);
+        line2.localPosition = new Vector2(halfWidth, 0);
+
+        // var line1 = Instantiate(splitLinePrefab, canvas1.transform);
+        // canvas1.transform.
+        // line1.transform.position = new Vector2(0, 0);
     }
 
     private void InitializeMonoCameraSettings()
