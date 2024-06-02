@@ -18,7 +18,8 @@ public enum Control
     Left,
     Right,
     Use,
-    Exit
+    Exit,
+    Use2
 }
 
 public class PlayerControl : MonoBehaviour
@@ -39,7 +40,8 @@ public class PlayerControl : MonoBehaviour
         { Control.Left, KeyCode.LeftArrow },
         { Control.Right, KeyCode.RightArrow },
         { Control.Use, KeyCode.RightShift },
-        { Control.Exit, KeyCode.Slash }
+        { Control.Exit, KeyCode.Slash },
+        { Control.Use2, KeyCode.RightControl}
     };
 
     public static readonly Dictionary<Control, KeyCode> ControlFirst = new()
@@ -49,7 +51,8 @@ public class PlayerControl : MonoBehaviour
         { Control.Left, KeyCode.A },
         { Control.Right, KeyCode.D },
         { Control.Use, KeyCode.E },
-        { Control.Exit, KeyCode.Q }
+        { Control.Exit, KeyCode.Q },
+        { Control.Use2, KeyCode.LeftAlt}
     };
 
     private Dictionary<Control, KeyCode> currentControl;

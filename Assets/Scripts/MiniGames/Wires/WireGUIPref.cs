@@ -11,6 +11,7 @@ namespace MazeMiniGame
         [SerializeField] public GameObject longCornerPrefab;
         [SerializeField] public GameObject cornerPrefab;
         [SerializeField] public GameObject longPrefab;
+        [SerializeField] public Sprite backCornerPref;
 
         [NonSerialized]
         public Dictionary<GameObject, Renderer> objectsRenderer = new Dictionary<GameObject, Renderer>();

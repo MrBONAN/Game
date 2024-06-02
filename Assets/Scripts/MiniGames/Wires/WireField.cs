@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using MiniGames;
 using UnityEditor;
+using UnityEditor.Compilation;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -34,11 +35,13 @@ namespace MazeMiniGame
         public (int yPos, int xPos) endPosition;
         public FieldGUIPref fieldGUIPrefab;
         public WireGUIPref WirePrefab;
+        public GameObject linePref;
         public WireFieldGUI field;
         public Transform cameraTransform;
         public GameObject StartPointPref;
         public GameObject EndPointPref;
         public HashSet<GameObject> points = new HashSet<GameObject>();
+        private GameObject line;
 
         public int Width => wireField.GetLength(1);
         public int Height => wireField.GetLength(0);
@@ -120,12 +123,14 @@ namespace MazeMiniGame
 
         public void RotateWire1()
         {
-            wireField[currentPosition1.yPos, currentPosition1.xPos].RotateWire(1.5f);
+            if (!wireField[currentPosition1.yPos, currentPosition1.xPos].WireGUI.rotating)
+                wireField[currentPosition1.yPos, currentPosition1.xPos].RotateWire(0.5f);
         }
 
         public void RotateWire2()
         {
-            wireField[currentPosition2.yPos, currentPosition2.xPos].RotateWire(1.5f);
+            if (!wireField[currentPosition2.yPos, currentPosition2.xPos].WireGUI.rotating)
+                wireField[currentPosition2.yPos, currentPosition2.xPos].RotateWire(0.5f);
         }
 
         public void DestroyWires()
@@ -135,6 +140,7 @@ namespace MazeMiniGame
                 Destroy(wireField[i, j].WireGUI);
             foreach (var point in points)
                 Destroy(point);
+            Destroy(line);
         }
 
         public void SetField(string[] fieldInfo, float scale, Vector2 shift)
@@ -155,6 +161,7 @@ namespace MazeMiniGame
             }
             
             DrawPoints(scaleDist, shift);
+            DrawLine(scaleDist, shift);
             wireField[startPosition1.yPos, startPosition1.xPos].WireGUI.Visualize();
             wireField[startPosition2.yPos, startPosition2.xPos].WireGUI.Visualize();
         }
@@ -179,6 +186,7 @@ namespace MazeMiniGame
             wire.cornerPrefab = WirePrefab.cornerPrefab;
             wire.longCornerPrefab = WirePrefab.longCornerPrefab;
             wire.bridgePrefab = WirePrefab.bridgePrefab;
+            wire.backCornerPref = WirePrefab.backCornerPref;
         }
 
         public void GoToFirst(Direction direction)
@@ -280,6 +288,22 @@ namespace MazeMiniGame
                     return false;
 
             return true;
+        }
+
+        private void DrawLine(float dist, Vector2 shift)
+        {
+            line = Instantiate(linePref, field.transform);
+            line.transform.localPosition = new Vector2();
+        }
+
+        public void ChangeRotation1()
+        {
+            wireField[currentPosition1.yPos, currentPosition1.xPos].ChangeDirection();
+        }
+
+        public void ChangeRotation2()
+        {
+            wireField[currentPosition2.yPos, currentPosition2.xPos].ChangeDirection();
         }
     }
 }

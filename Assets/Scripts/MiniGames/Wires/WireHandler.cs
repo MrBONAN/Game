@@ -14,12 +14,13 @@ namespace MazeMiniGame
         [SerializeField] private FieldGUIPref _fieldGUI;
         [SerializeField] private GameObject StartPoint;
         [SerializeField] private GameObject EndPoint;
+        [SerializeField] private GameObject LinePref;
 
         public override void StartMiniGame()
         {
             game = gameObject.AddComponent<WiresGameObject>();
             miniGame = game;
-            game.SetGameState(_wireGUI, _fieldGUI, StartPoint, EndPoint);
+            game.SetGameState(_wireGUI, _fieldGUI, StartPoint, EndPoint, LinePref);
             base.StartMiniGame();
         }
     }

@@ -99,5 +99,12 @@ namespace MazeMiniGame
                 _ => throw new ArgumentException()
             };
         }
+
+        public void ChangeDirection()
+        {
+            if (_type == WireType.Bridge || _type == WireType.Long || _type == WireType.Default) return;
+            rotation = (rotation.Item2, rotation.Item1);
+            WireGUI.ChangeRotationSides();
+        }
     }
 }

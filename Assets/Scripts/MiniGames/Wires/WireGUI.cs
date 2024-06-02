@@ -22,18 +22,22 @@ namespace MazeMiniGame
         public GameObject longCornerPrefab;
         public GameObject cornerPrefab;
         public GameObject longPrefab;
+        public Sprite backCornerPref;
+        public Sprite cornerPrefSprite;
         [NonSerialized] public GameObject gameObj;
         public Dictionary<WireType, GameObject> prefabs;
         public WireType type;
         public Dictionary<GameObject, Renderer> objectSizes;
         private new SpriteRenderer renderer;
         public bool rotating = false;
+        public SpriteRenderer sprite;
         
         public Vector2 position;
 
 
         public void ChangeRotation(float duration)
         {
+            if (rotating) return;
             if (duration == 0)
                 FastRotate();
             else
@@ -76,6 +80,8 @@ namespace MazeMiniGame
             };
             gameObj = Instantiate(prefabs[type], parent);
             gameObj.transform.localPosition = new Vector3(position.x, position.y, 0);
+            sprite = gameObj.GetComponent<SpriteRenderer>();
+            cornerPrefSprite = sprite.sprite;
         }
 
         public void SetGUIPosition(Vector2 pos)
@@ -94,6 +100,14 @@ namespace MazeMiniGame
         {
             if (renderer != null)
                 renderer.color = new Color(1f, 1f, 1f, 0.2f); 
+        }
+
+        public void ChangeRotationSides()
+        {
+            if (sprite.sprite == backCornerPref)
+                sprite.sprite = cornerPrefSprite;
+            else
+                sprite.sprite = backCornerPref;
         }
     }
 }

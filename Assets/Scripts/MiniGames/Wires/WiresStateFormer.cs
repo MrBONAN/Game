@@ -17,31 +17,32 @@ namespace MazeMiniGame
         };
 
         public static WireField GetLevel(int number, GameObject gameObject, WireGUIPref wirePef, FieldGUIPref fieldPref,
-            Transform cameraTransform, GameObject start, GameObject end)
+            Transform cameraTransform, GameObject start, GameObject end, GameObject line)
         {
             switch (number)
             {
                 case 1:
-                    return MakeWireField1(gameObject, wirePef, fieldPref, cameraTransform, start, end);
+                    return MakeWireField1(gameObject, wirePef, fieldPref, cameraTransform, start, end, line);
             }
 
             return null;
         }
 
         private static WireField MakeWireField1(GameObject gameObject, WireGUIPref wirePef, FieldGUIPref fieldPref,
-            Transform camera, GameObject start, GameObject end)
+            Transform camera, GameObject start, GameObject end, GameObject line)
         {
             var field = gameObject.AddComponent<WireField>();
             field.transform.position = camera.position;
             field.cameraTransform = camera;
             field.WirePrefab = wirePef;
             field.fieldGUIPrefab = fieldPref;
+            field.linePref = line;
 
             var stringField = new[]
             {
-                "---/",
+                "-/-/",
                 "----",
-                "--/-"
+                "///-"
             };
             var scale = 6.25f;
             var shiftX = (stringField[0].Length - 1) / 2.0f;
