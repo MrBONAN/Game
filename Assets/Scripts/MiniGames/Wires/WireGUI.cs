@@ -109,5 +109,10 @@ namespace MazeMiniGame
             else
                 sprite.sprite = backCornerPref;
         }
+
+        public void HighLight()
+        {
+            renderer.color = new Color(0, 1f, 1f, 1f);
+        }
     }
 }
