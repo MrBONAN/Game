@@ -53,6 +53,12 @@ namespace MazeMiniGame
             mazeState2 = new MazeState { Start = start2, End = end2, Missed = missed2, Dots = dots2 };
         }
 
+        public void SetGameState(MazeState maze1, MazeState maze2)
+        {
+            mazeState1 = maze1;
+            mazeState2 = maze2;
+        }
+
         public override void StartMiniGame()
         {
             var distanceFromOrigin = 4.5f;
