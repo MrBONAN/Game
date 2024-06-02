@@ -24,7 +24,12 @@ namespace MazeMiniGame
 
         private void CreateMaze1()
         {
-            var missedEdges1 = new List<((int, int), MoveDirection)>()
+            game.SetGameState(Type1(), Type2());
+        }
+
+        private MazeState Type1()
+        {
+            var missedEdges = new List<((int, int), MoveDirection)>()
             {
                 ((0, 1), MoveDirection.Right),
                 ((1, 0), MoveDirection.Right),
@@ -57,7 +62,7 @@ namespace MazeMiniGame
                 ((6, 5), MoveDirection.Up),
                 ((7, 3), MoveDirection.Up),
             };
-            var dots1 = new List<((int, int), MoveDirection)>()
+            var dots = new List<((int, int), MoveDirection)>()
             {
                 ((1, 4), MoveDirection.Right),
                 ((2, 0), MoveDirection.Right),
@@ -69,10 +74,67 @@ namespace MazeMiniGame
                 ((4, 4), MoveDirection.Up),
                 ((8, 6), MoveDirection.Up),
             };
-            var start1 = (0, 2);
-            var end1 = (8, 6);
+            
+            var start = (0, 2);
+            var end = (8, 6);
 
-            var missedEdges2 = new List<((int, int), MoveDirection)>()
+            return new MazeState(){ Start = start, End = end, Missed = missedEdges, Dots = dots };
+        }
+
+        private MazeState Type2()
+        {
+            var missedEdges = new List<((int, int), MoveDirection)>()
+            {
+                ((0, 7), MoveDirection.Right),
+                ((1, 0), MoveDirection.Right),
+                ((2, 2), MoveDirection.Right),
+                ((3, 1), MoveDirection.Right),
+                ((3, 4), MoveDirection.Right),
+                ((3, 5), MoveDirection.Right),
+                ((3, 6), MoveDirection.Right),
+                ((4, 2), MoveDirection.Right),
+                ((4, 4), MoveDirection.Right),
+                ((6, 1), MoveDirection.Right),
+                ((6, 2), MoveDirection.Right),
+                ((6, 3), MoveDirection.Right),
+                ((6, 5), MoveDirection.Right),
+                ((6, 6), MoveDirection.Right),
+
+                ((0, 2), MoveDirection.Up),
+                ((0, 4), MoveDirection.Up),
+                ((1, 2), MoveDirection.Up),
+                ((2, 6), MoveDirection.Up),
+                ((3, 3), MoveDirection.Up),
+                ((5, 1), MoveDirection.Up),
+                ((5, 6), MoveDirection.Up),
+                ((6, 1), MoveDirection.Up),
+                ((6, 4), MoveDirection.Up),
+                ((7, 3), MoveDirection.Up),
+                ((7, 5), MoveDirection.Up),
+            };
+            var dots = new List<((int, int), MoveDirection)>()
+            {
+                ((3, 2), MoveDirection.Right),
+                ((5, 6), MoveDirection.Right),
+                ((7, 6), MoveDirection.Right),
+
+                ((1, 1), MoveDirection.Up),
+                ((1, 3), MoveDirection.Up),
+                ((1, 6), MoveDirection.Up),
+                ((3, 5), MoveDirection.Up),
+                ((4, 5), MoveDirection.Up),
+                ((6, 2), MoveDirection.Up),
+                ((7, 2), MoveDirection.Up),
+            };
+            var start = (6, 5);
+            var end = (2, 6);
+            
+            return new MazeState(){ Start = start, End = end, Missed = missedEdges, Dots = dots };
+        }
+
+        private MazeState Reserve()
+        {
+            var missedEdges = new List<((int, int), MoveDirection)>()
             {
                 ((1, 1), MoveDirection.Right),
                 ((1, 2), MoveDirection.Right),
@@ -91,7 +153,7 @@ namespace MazeMiniGame
                 ((5, 3), MoveDirection.Right),
                 ((5, 6), MoveDirection.Right),
                 ((6, 0), MoveDirection.Right),
-
+            
                 ((0, 4), MoveDirection.Up),
                 ((1, 1), MoveDirection.Up),
                 ((1, 4), MoveDirection.Up),
@@ -115,13 +177,13 @@ namespace MazeMiniGame
                 ((7, 6), MoveDirection.Up),
                 ((8, 0), MoveDirection.Up),
                 ((8, 1), MoveDirection.Up),
-
+            
             };
-            var dots2 = new List<((int, int), MoveDirection)>() { };
-            var start2 = (0, 3);
-            var end2 = (8, 0);
-
-            game.SetGameState(missedEdges1, dots1, start1, end1, missedEdges2, dots2, start2, end2);
+            var dots = new List<((int, int), MoveDirection)>() { };
+            var start = (0, 3);
+            var end = (8, 0);
+            
+            return new MazeState(){ Start = start, End = end, Missed = missedEdges, Dots = dots };
         }
     }
 }
