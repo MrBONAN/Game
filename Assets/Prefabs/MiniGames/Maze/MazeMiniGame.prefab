@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   edgesGeneratorPrefab: {fileID: 7790559614730029, guid: bcae530c00e7960449818a220a89b47f, type: 3}
+  StartEndNodePrefab: {fileID: 1193760165263310971, guid: 4b613100a7527b2459e935d4e6103f91, type: 3}

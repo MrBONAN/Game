@@ -12,10 +12,12 @@ namespace Interaction_objects
         public UnityEvent onStayPressed;
         public UnityEvent onReleased;
         private string[] whoCanInteract = { "Big player" };
+        private AudioSource[] audio;
 
         private void Start()
         {
             animator = GetComponentInChildren<Animator>();
+            audio = GetComponentsInChildren<AudioSource>();
         }
 
         private void FixedUpdate()
@@ -29,6 +31,7 @@ namespace Interaction_objects
             {
                 turnOn += 1;
                 onPressed.Invoke();
+                audio[1].Play();
                 Debug.Log("Button pressed");
             }
         }
@@ -44,6 +47,7 @@ namespace Interaction_objects
             if (CheckIfCanInteract(other))
             {
                 turnOn -= 1;
+                audio[2].Play();
                 onReleased.Invoke();
             }
         }
