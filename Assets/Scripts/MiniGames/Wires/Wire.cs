@@ -29,11 +29,11 @@ namespace MazeMiniGame
             }
         }
 
-        public void RotateWire()
+        public void RotateWire(float duration)
         {
             rotation = GetNewDirection(GetNextRotation(rotation.Item1));
 
-            WireGUI.ChangeRotation();
+            WireGUI.ChangeRotation(duration);
         }
         
         public void SetRandomRotation()
@@ -41,6 +41,7 @@ namespace MazeMiniGame
             var random = new System.Random();
             Rotation[] rotations = (Rotation[])Enum.GetValues(typeof(Rotation));
             var rotationLocal = rotations[random.Next(0, rotations.Length)];
+            
             rotation = GetNewDirection(rotationLocal); // Gets random rotation
             
             MakeWireRotation(); // Подгоняет интерфейс по этот рандом
@@ -50,16 +51,16 @@ namespace MazeMiniGame
         {
             switch (rotation.Item1)
             {
-                case Rotation.Degree270:
-                    WireGUI.ChangeRotation();
-                    break;
-                case Rotation.Normal:
-                    for (var i = 0; i < 2; i++)
-                        WireGUI.ChangeRotation();
-                    break;
                 case Rotation.Degree90:
+                    WireGUI.ChangeRotation(0);
+                    break;
+                case Rotation.Degree180:
+                    for (var i = 0; i < 2; i++)
+                        WireGUI.ChangeRotation(0);
+                    break;
+                case Rotation.Degree270:
                     for (var i = 0; i < 3; i++)
-                        WireGUI.ChangeRotation();
+                        WireGUI.ChangeRotation(0);
                     break;
             }
         }
@@ -82,7 +83,19 @@ namespace MazeMiniGame
             {
                 WireType.Bridge or WireType.Long or WireType.Default => (firstRotation,
                     GetNextRotation(GetNextRotation(firstRotation))),
-                WireType.Corner or WireType.LongCorner => (firstRotation, GetNextRotation(firstRotation)),
+                WireType.Corner or WireType.LongCorner => (firstRotation, GetNextRotationCorner(firstRotation)),
+                _ => throw new ArgumentException()
+            };
+        }
+
+        private Rotation GetNextRotationCorner(Rotation rotation)
+        {
+            return rotation switch
+            {
+                Rotation.Normal => Rotation.Degree270,
+                Rotation.Degree90 => Rotation.Normal,
+                Rotation.Degree180 => Rotation.Degree90,
+                Rotation.Degree270 => Rotation.Degree180,
                 _ => throw new ArgumentException()
             };
         }

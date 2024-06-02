@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using MiniGames;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -34,21 +36,27 @@ namespace MazeMiniGame
         public WireGUIPref WirePrefab;
         public WireFieldGUI field;
         public Transform cameraTransform;
+        public GameObject StartPointPref;
+        public GameObject EndPointPref;
+        public HashSet<GameObject> points = new HashSet<GameObject>();
 
         public int Width => wireField.GetLength(1);
         public int Height => wireField.GetLength(0);
 
         public bool CheckWin()
         {
-            if (RecFind(startPosition1, startPosition2, new HashSet<(int posX, int posY)>()) &&
+            if (RecFind(startPosition1, startPosition2, new HashSet<(int posY, int posX)>()) &&
                 RecFind(startPosition2, endPosition, new HashSet<(int posX, int posY)>()))
+            {
+                Debug.Log("game won");
                 return true;
+            }
 
             return false;
         }
 
-        private bool RecFind((int posX, int posY) currPos, (int posY, int posX) toFind,
-            HashSet<(int posX, int posY)> visited)
+        private bool RecFind((int posY, int posX) currPos, (int posY, int posX) toFind,
+            HashSet<(int posY, int posX)> visited)
         {
             visited.Add(currPos);
             
@@ -112,12 +120,12 @@ namespace MazeMiniGame
 
         public void RotateWire1()
         {
-            wireField[currentPosition1.yPos, currentPosition1.xPos].RotateWire();
+            wireField[currentPosition1.yPos, currentPosition1.xPos].RotateWire(1.5f);
         }
 
         public void RotateWire2()
         {
-            wireField[currentPosition2.yPos, currentPosition2.xPos].RotateWire();
+            wireField[currentPosition2.yPos, currentPosition2.xPos].RotateWire(1.5f);
         }
 
         public void DestroyWires()
@@ -125,24 +133,28 @@ namespace MazeMiniGame
             for (var i = 0; i < Height; i++)
             for (var j = 0; j < Width; j++)
                 Destroy(wireField[i, j].WireGUI);
+            foreach (var point in points)
+                Destroy(point);
         }
 
         public void SetField(string[] fieldInfo, float scale, Vector2 shift)
         {
             wireField = new Wire[fieldInfo.Length, fieldInfo[0].Length];
             WirePrefab.SetScales(scale);
+            SetPointScales(new Vector2(scale, scale));
 
             field = gameObject.AddComponent<WireFieldGUI>();
             field.fieldPrefab = fieldGUIPrefab.fieldPrefab;
-            field.position = fieldGUIPrefab.position;
+            var scaleDist = 3;
             for (var i = 0; i < Height; i++)
             {
                 for (var j = 0; j < Width; j++)
                 {
-                    AddNewWire(fieldInfo[i][j], i, j, 3, shift);
+                    AddNewWire(fieldInfo[i][j], i, j, scaleDist, shift);
                 }
             }
-
+            
+            DrawPoints(scaleDist, shift);
             wireField[startPosition1.yPos, startPosition1.xPos].WireGUI.Visualize();
             wireField[startPosition2.yPos, startPosition2.xPos].WireGUI.Visualize();
         }
@@ -240,6 +252,34 @@ namespace MazeMiniGame
                 return rotation2 == Rotation.Degree90;
             
             throw new ArgumentException();
+        }
+
+        private void DrawPoints(float dist, Vector2 shift)
+        {
+            var start1 = Instantiate(StartPointPref, field.transform);
+            start1.transform.localPosition = (new Vector2(startPosition1.xPos, -startPosition1.yPos) - shift) * dist;
+            var start2 = Instantiate(StartPointPref, field.transform);
+            start2.transform.localPosition = (new Vector2(startPosition2.xPos, -startPosition2.yPos) - shift) * dist;
+            var end = Instantiate(EndPointPref, field.transform);
+            end.transform.localPosition = (new Vector2(endPosition.xPos, -endPosition.yPos) - shift) * dist;
+            points.Add(start1);
+            points.Add(start2);
+            points.Add(end);
+        }
+
+        private void SetPointScales(Vector2 scale)
+        {
+            StartPointPref.transform.localScale = scale;
+            EndPointPref.transform.localScale = scale;
+        }
+
+        public bool NoGameActions()
+        {
+            foreach (var wire in wireField)
+                if (wire.WireGUI.rotating)
+                    return false;
+
+            return true;
         }
     }
 }

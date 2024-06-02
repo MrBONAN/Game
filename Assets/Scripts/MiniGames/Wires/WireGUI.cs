@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
+using System.Threading;
 
 namespace MazeMiniGame
 {
@@ -25,13 +27,41 @@ namespace MazeMiniGame
         public WireType type;
         public Dictionary<GameObject, Renderer> objectSizes;
         private new SpriteRenderer renderer;
+        public bool rotating = false;
         
         public Vector2 position;
 
 
-        public void ChangeRotation()
+        public void ChangeRotation(float duration)
         {
-            gameObj.transform.Rotate(new Vector3(0,0, -90));
+            if (duration == 0)
+                FastRotate();
+            else
+                StartCoroutine(Rotate(duration));
+        }
+        
+
+        private IEnumerator Rotate(float durationSeconds)
+        {
+            if (rotating) yield break;
+            rotating = true;
+            Quaternion startRotation = gameObj.transform.rotation;
+            Quaternion targetRotation = startRotation * Quaternion.Euler(0, 0, -90); // Установка желаемого поворота
+
+            float t = 0;
+            while (t < 1)
+            {
+                t += Time.deltaTime / durationSeconds;
+                gameObj.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t); // Плавное вращение к целевому повороту
+                yield return null;        
+            }
+
+            rotating = false;
+        }
+
+        private void FastRotate()
+        {
+            gameObj.transform.Rotate(new Vector3(0, 0, -90));
         }
 
         public void DrawWire(Transform parent)

@@ -658,6 +658,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5711723914909185908, guid: f0854ee17c3f26f45a711b9feb93a135, type: 3}
+      propertyPath: EndPoint
+      value: 
+      objectReference: {fileID: 3532514425116605191, guid: 21e5130bb5fc9c74aa6cdb183cd8caf9, type: 3}
+    - target: {fileID: 5711723914909185908, guid: f0854ee17c3f26f45a711b9feb93a135, type: 3}
       propertyPath: _wireGUI
       value: 
       objectReference: {fileID: 8884556872146462636, guid: 617dd58902e78fb43a8efdc8693fd390, type: 3}
@@ -665,6 +669,10 @@ PrefabInstance:
       propertyPath: _fieldGUI
       value: 
       objectReference: {fileID: -7343351428448710638, guid: db0739e1504b07947b8f41b4726feefd, type: 3}
+    - target: {fileID: 5711723914909185908, guid: f0854ee17c3f26f45a711b9feb93a135, type: 3}
+      propertyPath: StartPoint
+      value: 
+      objectReference: {fileID: 7862522405296290348, guid: db90e4ab2cc278843bc4a9fe7177b411, type: 3}
     - target: {fileID: 8767955368361370492, guid: f0854ee17c3f26f45a711b9feb93a135, type: 3}
       propertyPath: m_Name
       value: WireGameHandler

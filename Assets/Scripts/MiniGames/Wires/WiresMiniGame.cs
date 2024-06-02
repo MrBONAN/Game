@@ -6,6 +6,8 @@ namespace MazeMiniGame
     public class WiresGameObject : MiniGame
     {
         private WireField wireField;
+        private bool gameWon = false;
+        private bool noGameActions = false;
         
         public override void StartMiniGame()
         {
@@ -14,29 +16,37 @@ namespace MazeMiniGame
         
         public override MiniGameResult UpdateMiniGame()
         {
+            CheckNoActions();
+            
             foreach (var (keyCode, pressed) in PlayerControl.ControlFirst)
             {
+                CheckNoActions();
                 if (Input.GetKeyDown(pressed) && keyCode is Control.Up or Control.Down or Control.Left or Control.Right)
                     MovePosition1(keyCode);
                 if (Input.GetKeyDown(pressed) && keyCode is Control.Use)
                 {
                     wireField.RotateWire1();
                     if (wireField.CheckWin())
-                        return MiniGameResult.Win;
+                        gameWon = true;
                 }
             }
             
             foreach (var (keyCode, pressed) in PlayerControl.ControlSecond)
             {
+                CheckNoActions();
                 if (Input.GetKeyDown(pressed) && keyCode is Control.Up or Control.Down or Control.Left or Control.Right)
                     MovePosition2(keyCode);
                 if (Input.GetKeyDown(pressed) && keyCode is Control.Use)
                 {
                     wireField.RotateWire2();
                     if (wireField.CheckWin())
-                        return MiniGameResult.Win;
+                        gameWon = true;
                 }
             }
+            CheckNoActions();
+            
+            if (gameWon && noGameActions)
+                return MiniGameResult.Win;
             
             return MiniGameResult.ContinuePlay;
         }
@@ -47,9 +57,9 @@ namespace MazeMiniGame
             Destroy(wireField.field);
         }
 
-        public void SetGameState(WireGUIPref wirePref, FieldGUIPref fieldPref)
+        public void SetGameState(WireGUIPref wirePref, FieldGUIPref fieldPref, GameObject start, GameObject end)
         {
-            wireField = WiresStateFormer.GetLevel(1, gameObject, wirePref, fieldPref, transform);
+            wireField = WiresStateFormer.GetLevel(1, gameObject, wirePref, fieldPref, transform, start, end);
         }
 
         private void MovePosition1(Control direction)
@@ -106,6 +116,13 @@ namespace MazeMiniGame
         private bool IsInBorders2(int xPos, int yPos)
         {
             return xPos >= wireField.Width/2 && yPos >= 0 && xPos < wireField.Width && yPos < wireField.Height;
+        }
+
+        private void CheckNoActions()
+        {
+            if (gameWon)
+                if (wireField.NoGameActions())
+                    noGameActions = true;
         }
     }
 }

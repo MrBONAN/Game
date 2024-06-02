@@ -12,12 +12,14 @@ namespace MazeMiniGame
         [SerializeField] private WiresGameObject game;
         [SerializeField] private WireGUIPref _wireGUI;
         [SerializeField] private FieldGUIPref _fieldGUI;
+        [SerializeField] private GameObject StartPoint;
+        [SerializeField] private GameObject EndPoint;
 
         public override void StartMiniGame()
         {
             game = gameObject.AddComponent<WiresGameObject>();
             miniGame = game;
-            game.SetGameState(_wireGUI, _fieldGUI);
+            game.SetGameState(_wireGUI, _fieldGUI, StartPoint, EndPoint);
             base.StartMiniGame();
         }
     }
