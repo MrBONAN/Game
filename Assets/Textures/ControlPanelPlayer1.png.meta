@@ -101,7 +101,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 2
         width: 16
         height: 33
       alignment: 0
@@ -122,7 +122,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 17
-        y: 0
+        y: 2
         width: 16
         height: 33
       alignment: 0
@@ -143,7 +143,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 34
-        y: 0
+        y: 2
         width: 16
         height: 33
       alignment: 0
@@ -164,7 +164,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 51
-        y: 0
+        y: 2
         width: 16
         height: 33
       alignment: 0
@@ -185,7 +185,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 68
-        y: 0
+        y: 2
         width: 16
         height: 33
       alignment: 0
@@ -206,7 +206,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 85
-        y: 0
+        y: 2
         width: 16
         height: 33
       alignment: 0
@@ -218,6 +218,27 @@ TextureImporter:
       bones: []
       spriteID: 785d019c22b24c94c95f4a82a4801c9d
       internalID: 2007847215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ControlPanelPlayer1_6
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 2
+        width: 16
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e5f5c34e93ef314889597087881149d
+      internalID: -548894741
       vertices: []
       indices: 
       edges: []
@@ -239,6 +260,7 @@ TextureImporter:
       ControlPanelPlayer1_3: 907195624
       ControlPanelPlayer1_4: -1607449240
       ControlPanelPlayer1_5: 2007847215
+      ControlPanelPlayer1_6: -548894741
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

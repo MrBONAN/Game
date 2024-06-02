@@ -1965,25 +1965,73 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 647486158567930895, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
+      propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 647486158567930895, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
+      propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 647486158567930895, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
       propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1449626782}
     - target: {fileID: 647486158567930895, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
+      propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 647486158567930895, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
+      propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CreateMiniGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 647486158567930895, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
+      propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MiniGames.MiniGamesZone.MiniGamesHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 647486158567930895, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
       propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 2040875518}
+    - target: {fileID: 647486158567930895, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
+      propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: MiniGames.CurrentMiniGameHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1947536075560264331, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
       propertyPath: m_Name
       value: Panels
+      objectReference: {fileID: 0}
+    - target: {fileID: 2516330408329531397, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
+      propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2516330408329531397, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
+      propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2516330408329531397, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
       propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1449626782}
     - target: {fileID: 2516330408329531397, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
+      propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2516330408329531397, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
+      propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CreateMiniGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 2516330408329531397, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
+      propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MiniGames.MiniGamesZone.MiniGamesHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2516330408329531397, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
       propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 2040875518}
+    - target: {fileID: 2516330408329531397, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
+      propertyPath: turnOn.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: MiniGames.CurrentMiniGameHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 5500082161982117686, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10
@@ -2018,15 +2066,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9012063855533118876, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9012063855533118876, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9012063855533118876, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9012063855533118876, guid: 5bc36d891843a5e47a603c6cc0573450, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2255,7 +2303,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 983768787117830579, guid: 228b7bd4f654f6d4583b110ee0cd6bc6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 983768787117830579, guid: 228b7bd4f654f6d4583b110ee0cd6bc6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3292,7 +3340,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 165601555580747540, guid: f0854ee17c3f26f45a711b9feb93a135, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.304024
+      value: 6.3040237
       objectReference: {fileID: 0}
     - target: {fileID: 165601555580747540, guid: f0854ee17c3f26f45a711b9feb93a135, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3304,15 +3352,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 165601555580747540, guid: f0854ee17c3f26f45a711b9feb93a135, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 165601555580747540, guid: f0854ee17c3f26f45a711b9feb93a135, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 165601555580747540, guid: f0854ee17c3f26f45a711b9feb93a135, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 165601555580747540, guid: f0854ee17c3f26f45a711b9feb93a135, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4879,7 +4927,7 @@ SceneRoots:
   - {fileID: 814215995}
   - {fileID: 1021802001}
   - {fileID: 434514224}
-  - {fileID: 904045808}
   - {fileID: 396297716}
   - {fileID: 1520030359}
   - {fileID: 1594533439}
+  - {fileID: 904045808}

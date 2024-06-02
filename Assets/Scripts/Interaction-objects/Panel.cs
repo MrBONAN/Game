@@ -1,4 +1,5 @@
 using System;
+using MiniGames.MiniGamesZone;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +12,7 @@ namespace Interaction_objects
         private AudioSource audio;
         private float timeElapsed = 10f;
         public UnityEvent turnOn;
+        private MiniGamesHandler handler;
         public bool state { get; private set; }
 
         public void SwitchOnOff()
@@ -40,14 +42,20 @@ namespace Interaction_objects
         {
             animator = GetComponentInChildren<Animator>();
             audio = GetComponentInParent<AudioSource>();
+            handler = GetComponentInParent<MiniGamesHandler>();
             state = false;
         }
 
         public void Interact(PlayerControl player)
         {
-            if (player.gameObject.CompareTag("Big player") && gameObject.CompareTag("Big Panel") ||
-                player.gameObject.CompareTag("Small player") && gameObject.CompareTag("Small Panel"))
-                SwitchOnOff();
+            if ((player.gameObject.CompareTag("Big player") && gameObject.CompareTag("Big Panel") ||
+                player.gameObject.CompareTag("Small player") && gameObject.CompareTag("Small Panel")) &&
+                !handler.HasWin && !handler.IsMiniGameActive) SwitchOnOff();
+        }
+
+        public void WinAnimation()
+        {
+            animator.SetBool("isWin", true);
         }
     }
 }

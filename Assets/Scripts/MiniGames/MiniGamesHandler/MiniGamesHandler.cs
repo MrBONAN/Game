@@ -19,6 +19,7 @@ namespace MiniGames.MiniGamesZone
         // Камера как бы пролетает targetPosition до bottomPosition, и потом возвращается к target
         public Vector2 bottomCameraPosition = new(0.1f, 0.05f);
         private SpriteRenderer background;
+        public bool HasWin;
 
         public bool IsMiniGameActive
             => currentMiniGameHandler is not null && currentMiniGameHandler.isMiniGameExist;
@@ -93,6 +94,7 @@ namespace MiniGames.MiniGamesZone
                     audio.FirstOrDefault(x => x.clip.name == "QuitMiniGame").Play();
                     break;
                 case MiniGameResult.Win:
+                    HasWin = true;
                     audio.FirstOrDefault(x => x.clip.name == "WinMiniGame").Play();
                     break;
             }
