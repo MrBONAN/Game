@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3264136437310220673
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 269138220744506859}
+  - component: {fileID: 8884556872146462636}
+  m_Layer: 0
+  m_Name: Prefabs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &269138220744506859
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3264136437310220673}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.879837, y: 6.304024, z: -0.07896327}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8884556872146462636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3264136437310220673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 807cefaf643849888330ee08b6c32bf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultPrefab: {fileID: 7779944469889855941, guid: 1a7f0ae71ec44184988139291f09ff51, type: 3}
+  bridgePrefab: {fileID: 6875608683995284321, guid: 4f3bb6917b0e5044d8ba3f97ad41fe57, type: 3}
+  longCornerPrefab: {fileID: 714271376798184354, guid: b1572f33a6021354f9a98cea15b2cb84, type: 3}
+  cornerPrefab: {fileID: 2585380238329304114, guid: 02fa3471628d96f4e867d61e39614a10, type: 3}
+  longPrefab: {fileID: 439830112413539904, guid: 076f73c5e8da9a141a8f7795d71c7688, type: 3}
+  backCornerPref: {fileID: 21300000, guid: f5353d38ac56e7448ab52921204cfc98, type: 3}
