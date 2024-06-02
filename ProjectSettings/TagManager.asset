@@ -10,6 +10,8 @@ TagManager:
   - Big player
   - Big Panel
   - Small Panel
+  - 1to2
+  - 2to3
   layers:
   - Default
   - TransparentFX

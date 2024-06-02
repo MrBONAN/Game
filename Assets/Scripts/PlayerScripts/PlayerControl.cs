@@ -4,6 +4,7 @@ using System.Linq;
 using Interaction_objects;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public enum PlayerState
 {
@@ -26,7 +27,9 @@ public class PlayerControl : MonoBehaviour
     public float speed = 350f;
     public float jumpForce = 10f;
     public PlayerState state = PlayerState.grounded;
+    public bool isFinished;
     protected Rigidbody2D rb;
+    protected PlayerControl otherPlayer;
     protected Transform legs;
     protected Vector2 legsSize;
     protected Animator animator;
@@ -58,7 +61,10 @@ public class PlayerControl : MonoBehaviour
     protected void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        
+        otherPlayer = CompareTag("Big player")
+            ? GetComponentInParent<GameHandler.GameHandler>().player1
+            : GetComponentInParent<GameHandler.GameHandler>().player2;
+
         foreach (var component in GetComponentsInChildren<Transform>())
         {
             if (component.name is "Legs")
@@ -86,7 +92,13 @@ public class PlayerControl : MonoBehaviour
     {
         //rb.velocity = new Vector2(0, rb.velocity.y);
         CheckControl();
+        if (CheckFinish()) LoadMap2();
     }
+
+    private void LoadMap2() => SceneManager.LoadScene("Map 2");
+    private void LoadMap3() => SceneManager.LoadScene("Map 3");
+
+    private bool CheckFinish() => otherPlayer.isFinished && isFinished;
 
     protected virtual void MovePlayer()
     {
@@ -105,7 +117,7 @@ public class PlayerControl : MonoBehaviour
             audio.Stop();
             SetAnimationRun(false);
         }
-            
+
 
         var velocity = new Vector2(direction * speed * Time.fixedDeltaTime, rb.velocity.y);
         if (state == PlayerState.grounded && Input.GetKey(currentControl[Control.Up]))
@@ -128,6 +140,9 @@ public class PlayerControl : MonoBehaviour
 
     private void CheckCollisions()
     {
+        isFinished = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y),
+                new Vector2(transform.localScale.x, transform.localScale.y), 0)
+            .FirstOrDefault(x => x.CompareTag("1to2") || x.CompareTag("2to3")) is not null;
         var colliders = Physics2D.OverlapBoxAll(legs.position, legsSize, 0);
         if (colliders.Any(c => c.gameObject.CompareTag("Ground")))
         {
