@@ -12,6 +12,7 @@ TagManager:
   - Small Panel
   - 1to2
   - 2to3
+  - EndOfGame
   layers:
   - Default
   - TransparentFX

@@ -1698,6 +1698,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6144457}
     m_Modifications:
+    - target: {fileID: 813070065548277291, guid: ab8ab02cb85d5bc4998a48d087ff303d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1273785906217067238, guid: ab8ab02cb85d5bc4998a48d087ff303d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7
@@ -2200,6 +2204,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6144457}
     m_Modifications:
+    - target: {fileID: 813070065548277291, guid: ab8ab02cb85d5bc4998a48d087ff303d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1273785906217067238, guid: ab8ab02cb85d5bc4998a48d087ff303d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 17
@@ -2309,6 +2317,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6144457}
     m_Modifications:
+    - target: {fileID: 813070065548277291, guid: ab8ab02cb85d5bc4998a48d087ff303d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1273785906217067238, guid: ab8ab02cb85d5bc4998a48d087ff303d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7
@@ -2683,6 +2695,14 @@ PrefabInstance:
     - target: {fileID: 983768787117830579, guid: 228b7bd4f654f6d4583b110ee0cd6bc6, type: 3}
       propertyPath: m_LocalPosition.y
       value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2228925432882681058, guid: 228b7bd4f654f6d4583b110ee0cd6bc6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 58
+      objectReference: {fileID: 0}
+    - target: {fileID: 2228925432882681058, guid: 228b7bd4f654f6d4583b110ee0cd6bc6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -76
       objectReference: {fileID: 0}
     - target: {fileID: 3815567636591640939, guid: 228b7bd4f654f6d4583b110ee0cd6bc6, type: 3}
       propertyPath: m_LocalPosition.x

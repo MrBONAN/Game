@@ -35,6 +35,7 @@ public class PlayerControl : MonoBehaviour
     protected Animator animator;
     protected AudioSource audio;
     protected HashSet<IInteractable> interactableObjects = new();
+    protected Collider2D FinishCollider;
 
     public static readonly Dictionary<Control, KeyCode> ControlSecond = new()
     {
@@ -92,13 +93,21 @@ public class PlayerControl : MonoBehaviour
     {
         //rb.velocity = new Vector2(0, rb.velocity.y);
         CheckControl();
-        if (CheckFinish()) LoadMap2();
+        if (otherPlayer.isFinished && isFinished && FinishCollider is not null)
+            switch (FinishCollider.tag)
+            {
+                case "1to2":
+                    SceneManager.LoadScene("Map 2");
+                    break;
+                case "2to3":
+                    SceneManager.LoadScene("Map 3");
+                    break;
+                case "EndOfGame":
+                    SceneManager.LoadScene("End");
+                    break;
+            }
+            
     }
-
-    private void LoadMap2() => SceneManager.LoadScene("Map 2");
-    private void LoadMap3() => SceneManager.LoadScene("Map 3");
-
-    private bool CheckFinish() => otherPlayer.isFinished && isFinished;
 
     protected virtual void MovePlayer()
     {
@@ -140,9 +149,10 @@ public class PlayerControl : MonoBehaviour
 
     private void CheckCollisions()
     {
-        isFinished = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y),
+        FinishCollider = Physics2D.OverlapBoxAll(new Vector2(transform.position.x, transform.position.y),
                 new Vector2(transform.localScale.x, transform.localScale.y), 0)
-            .FirstOrDefault(x => x.CompareTag("1to2") || x.CompareTag("2to3")) is not null;
+            .FirstOrDefault(x => x.CompareTag("1to2") || x.CompareTag("2to3") || x.CompareTag("EndOfGame"));
+        isFinished = FinishCollider is not null;
         var colliders = Physics2D.OverlapBoxAll(legs.position, legsSize, 0);
         if (colliders.Any(c => c.gameObject.CompareTag("Ground")))
         {
