@@ -51,6 +51,8 @@ namespace MazeMiniGame
         public void MoveInDirection(ref Node curNode, Control direction)
         {
             var otherNode = curNode.GetNeighborNode(direction);
+            if (otherNode is not null)
+                
             if (otherNode is null ||
                 otherNode.visited && otherNode != curNode.prevNode ||
                 curNode.GetEdgeBetween(otherNode).Type == EdgeState.Missed)
