@@ -20,7 +20,7 @@ namespace MazeMiniGame
         {
             game = gameObject.AddComponent<WiresGameObject>();
             miniGame = game;
-            var level = 2;
+            var level = 3;
             game.SetGameState(_wireGUI, _fieldGUI, StartPoint, EndPoint, LinePref, level);
             base.StartMiniGame();
         }
