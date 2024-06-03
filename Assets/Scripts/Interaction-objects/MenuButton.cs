@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Interaction_objects;
-using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public class MenuButton : MonoBehaviour, IInteractable
 {

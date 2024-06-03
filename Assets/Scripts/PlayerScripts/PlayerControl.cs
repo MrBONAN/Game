@@ -37,6 +37,7 @@ public class PlayerControl : MonoBehaviour
     protected AudioSource audio;
     protected HashSet<IInteractable> interactableObjects = new();
     protected Collider2D FinishCollider;
+    public bool isChangingMap;
 
     public static readonly Dictionary<Control, KeyCode> ControlSecond = new()
     {
@@ -96,17 +97,20 @@ public class PlayerControl : MonoBehaviour
     {
         //rb.velocity = new Vector2(0, rb.velocity.y);
         CheckControl();
-        if (otherPlayer.isFinished && isFinished && FinishCollider is not null)
+        if (otherPlayer.isFinished && isFinished && FinishCollider is not null && !isChangingMap && !otherPlayer.isChangingMap)
             switch (FinishCollider.tag)
             {
                 case "1to2":
-                    SceneManager.LoadScene("Map 2");
+                    SceneTransition.SwitchToScene("Map 2");
+                    isChangingMap = true;
                     break;
                 case "2to3":
-                    SceneManager.LoadScene("Map 3");
+                    SceneTransition.SwitchToScene("Map 3");
+                    isChangingMap = true;
                     break;
                 case "EndOfGame":
-                    SceneManager.LoadScene("End");
+                    SceneTransition.SwitchToScene("End");
+                    isChangingMap = true;
                     break;
             }
             
