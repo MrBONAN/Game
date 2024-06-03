@@ -37,8 +37,6 @@ namespace MazeMiniGame
                     wireField.ChangeRotation1();
                     wireField.CheckWin(this);
                 }
-                if (Input.GetKeyDown(pressed) && keyCode is Control.Exit)
-                    return MiniGameResult.Lose;
             }
 
             foreach (var (keyCode, pressed) in PlayerControl.ControlSecond)
@@ -56,10 +54,11 @@ namespace MazeMiniGame
                     wireField.ChangeRotation2();
                     wireField.CheckWin(this);
                 }
-                if (Input.GetKeyDown(pressed) && keyCode is Control.Exit)
-                    return MiniGameResult.Lose;
             }
-
+            if (Input.GetKey(PlayerControl.ControlFirst[Control.Exit]) &&
+                Input.GetKey(PlayerControl.ControlSecond[Control.Exit]))
+                return MiniGameResult.Exit;
+            
             return MiniGameResult.ContinuePlay;
         }
 
