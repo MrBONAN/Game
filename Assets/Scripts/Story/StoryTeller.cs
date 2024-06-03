@@ -10,11 +10,13 @@ namespace Story
         [SerializeField] private Vector3 positionOutOfBound = new Vector3(0, -10f);
         private SpriteRenderer spriteRenderer;
         private Camera camera;
+        private AudioSource _audioSource;
         public float delay = 1f;
 
         private void Awake()
         {
             camera = GetComponent<Camera>();
+            _audioSource = GetComponent<AudioSource>();
             camera.enabled = false;
             camera.rect = new Rect(0.05f, 0, 0.9f, 0.22f);
             camera.orthographicSize = 1.12f;
@@ -34,6 +36,7 @@ namespace Story
             camera.enabled = true;
             foreach (var dialog in dialogStory)
             {
+                _audioSource.Play();
                 spriteRenderer.sprite = dialog;
                 while (!Input.GetKeyDown(KeyCode.Space))
                     yield return null;

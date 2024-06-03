@@ -161,7 +161,7 @@ public class PlayerControl : MonoBehaviour
             .FirstOrDefault(x => x.CompareTag("1to2") || x.CompareTag("2to3") || x.CompareTag("EndOfGame"));
         isFinished = FinishCollider is not null;
         var colliders = Physics2D.OverlapBoxAll(legs.position, legsSize, 0);
-        if (colliders.Any(c => c.gameObject.CompareTag("Ground") || c.gameObject.CompareTag("Button")))
+        if (colliders.Any(c => c.gameObject.CompareTag("Ground")))
         {
             state = PlayerState.grounded;
             SetAnimationJump(false);
