@@ -18,6 +18,7 @@ public class SceneTransition : MonoBehaviour
         
         // Чтобы сцена не начала переключаться пока играет анимация closing:
         instance.loadingSceneOperation.allowSceneActivation = false;
+        
     }
     
     private void Start()

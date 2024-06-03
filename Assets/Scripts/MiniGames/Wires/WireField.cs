@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using MiniGames;
-using UnityEditor;
-using UnityEditor.Compilation;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace MazeMiniGame
 {
