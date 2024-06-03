@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using System.Threading;
+using Unity.VisualScripting;
 
 namespace MazeMiniGame
 {
@@ -31,6 +32,7 @@ namespace MazeMiniGame
         private new SpriteRenderer renderer;
         public bool rotating = false;
         public SpriteRenderer sprite;
+        public bool reversed;
         
         public Vector2 position;
 
@@ -99,11 +101,12 @@ namespace MazeMiniGame
         public void UnVisualize()
         {
             if (renderer != null)
-                renderer.color = new Color(1f, 1f, 1f, 0.2f); 
+                renderer.color = new Color(1f, 1f, 1f, 0.2f);
         }
 
         public void ChangeRotationSides()
         {
+            sprite = gameObj.GetComponent<SpriteRenderer>();
             if (sprite.sprite == backCornerPref)
                 sprite.sprite = cornerPrefSprite;
             else
@@ -112,9 +115,10 @@ namespace MazeMiniGame
 
         public void HighLight()
         {
-            if (gameObj	== null) return;
+            if (gameObj == null) return;
             if (renderer == null)
                 renderer = gameObj.GetComponent<SpriteRenderer>();
+ 
             renderer.color = new Color(0, 1f, 1f, 1f);
         }
     }

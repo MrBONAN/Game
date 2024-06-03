@@ -32,12 +32,13 @@ namespace MazeMiniGame
                     wireField.RotateWire1();
                     wireField.CheckWin(this);
                 }
-
                 if (Input.GetKeyDown(pressed) && keyCode is Control.Use2)
                 {
                     wireField.ChangeRotation1();
                     wireField.CheckWin(this);
                 }
+                if (Input.GetKeyDown(pressed) && keyCode is Control.Exit)
+                    return MiniGameResult.Lose;
             }
 
             foreach (var (keyCode, pressed) in PlayerControl.ControlSecond)
@@ -50,12 +51,13 @@ namespace MazeMiniGame
                     wireField.RotateWire2();
                     wireField.CheckWin(this);
                 }
-
                 if (Input.GetKeyDown(pressed) && keyCode is Control.Use2)
                 {
                     wireField.ChangeRotation2();
                     wireField.CheckWin(this);
                 }
+                if (Input.GetKeyDown(pressed) && keyCode is Control.Exit)
+                    return MiniGameResult.Lose;
             }
 
             return MiniGameResult.ContinuePlay;

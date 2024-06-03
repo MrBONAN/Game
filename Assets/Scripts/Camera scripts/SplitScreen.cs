@@ -78,6 +78,11 @@ public class SplitScrin : MonoBehaviour
         }
         line1 = canvas1.GetComponentsInChildren<Transform>().First(mb => mb.gameObject.name is "Line");
         line2 = canvas2.GetComponentsInChildren<Transform>().First(mb => mb.gameObject.name is "Line");
+        SetLineSettings();
+    }
+
+    private void SetLineSettings()
+    {
         var shift = new Vector2(camera1.pixelWidth/2f, 0);
         start1 = shift;
         start2 = -shift;
@@ -107,6 +112,7 @@ public class SplitScrin : MonoBehaviour
 
     public void FixedUpdate()
     {
+        SetLineSettings();
         if (initialized is false)
             return;
         if (!splitScreen)
