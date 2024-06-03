@@ -56,5 +56,11 @@ MonoBehaviour:
   continueAction:
     m_PersistentCalls:
       m_Calls: []
+  isMiniGameExist: 0
   wireGamePrefab: {fileID: 5066651540595059344, guid: 23f5b8ea842135d43875e3e43e9d1167, type: 3}
   game: {fileID: 0}
+  _wireGUI: {fileID: 0}
+  _fieldGUI: {fileID: -7343351428448710638, guid: db0739e1504b07947b8f41b4726feefd, type: 3}
+  StartPoint: {fileID: 0}
+  EndPoint: {fileID: 0}
+  LinePref: {fileID: 0}

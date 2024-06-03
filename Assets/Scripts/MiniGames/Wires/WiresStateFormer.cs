@@ -37,6 +37,7 @@ namespace MazeMiniGame
             Transform camera, GameObject start, GameObject end, GameObject line)
         {
             var field = gameObject.AddComponent<WireField>();
+            field.soundWin = fieldPref.winAnimationSound;
             field.transform.position = camera.position;
             field.cameraTransform = camera;
             field.WirePrefab = wirePef;
@@ -78,6 +79,7 @@ namespace MazeMiniGame
             Transform camera, GameObject start, GameObject end, GameObject line)
         {
             var field = gameObject.AddComponent<WireField>();
+            field.soundWin = fieldPref.winAnimationSound;
             field.transform.position = camera.position;
             field.cameraTransform = camera;
             field.WirePrefab = wirePef;
@@ -120,6 +122,7 @@ namespace MazeMiniGame
             Transform camera, GameObject start, GameObject end, GameObject line)
         {
             var field = gameObject.AddComponent<WireField>();
+            field.soundWin = fieldPref.winAnimationSound;
             field.transform.position = camera.position;
             field.cameraTransform = camera;
             field.WirePrefab = wirePef;

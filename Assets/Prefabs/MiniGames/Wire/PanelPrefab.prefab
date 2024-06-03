@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fieldPrefab: {fileID: 7706700079422626942, guid: 8af1d340e06e81849b7dcb5b8af6b801, type: 3}
   position: {x: 0, y: 0, z: 0}
+  winAnimationSound: {fileID: 8300000, guid: c891a0a342a0d974582af027d4291a11, type: 3}

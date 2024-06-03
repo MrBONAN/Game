@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace MazeMiniGame
@@ -39,6 +40,8 @@ namespace MazeMiniGame
         private GameObject line;
         private (int yPos, int xPos)[] bridgesPos;
         private (int yPos, int xPos)[] way;
+        public AudioClip soundWin;
+        private AudioSource winMusic;
 
         public int Width => wireField.GetLength(1);
         public int Height => wireField.GetLength(0);
@@ -156,6 +159,9 @@ namespace MazeMiniGame
 
             field = gameObject.AddComponent<WireFieldGUI>();
             field.fieldPrefab = fieldGUIPrefab.fieldPrefab;
+            winMusic = gameObject.AddComponent<AudioSource>();
+            winMusic.clip = soundWin;
+            
             
             for (var i = 0; i < Height; i++)
             {
@@ -324,12 +330,13 @@ namespace MazeMiniGame
                 Destroy(point);
             Destroy(line);
             
+            winMusic.Play();
             foreach (var (y, x) in way)
             {
                 wireField[y, x].HighLight();
                 yield return new WaitForSeconds(0.2f);
             }
-            
+            winMusic.Stop();
             obj.animated = true;
         }
         
