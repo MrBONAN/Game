@@ -13,6 +13,7 @@ TagManager:
   - 1to2
   - 2to3
   - EndOfGame
+  - Button
   layers:
   - Default
   - TransparentFX
