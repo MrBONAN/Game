@@ -68,9 +68,9 @@ namespace MazeMiniGame
         }
 
         public void SetGameState(WireGUIPref wirePref, FieldGUIPref fieldPref, GameObject start, GameObject end,
-            GameObject line)
+            GameObject line, int level)
         {
-            wireField = WiresStateFormer.GetLevel(1, gameObject, wirePref, fieldPref, transform, start, end, line);
+            wireField = WiresStateFormer.GetLevel(level, gameObject, wirePref, fieldPref, transform, start, end, line);
         }
 
         private void MovePosition1(Control direction)

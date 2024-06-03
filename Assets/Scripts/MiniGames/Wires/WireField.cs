@@ -152,7 +152,7 @@ namespace MazeMiniGame
         }
 
         public void SetField(string[] fieldInfo, float scale, Vector2 shift, (int yPos, int xPos)[] bridges,
-            Dictionary<(int, int), (Rotation, Rotation)> bridgeRotations)
+            Dictionary<(int, int), (Rotation, Rotation)> bridgeRotations, float scaleDist)
         {
             bridgesPos = bridges;
             wireField = new Wire[fieldInfo.Length, fieldInfo[0].Length];
@@ -161,7 +161,6 @@ namespace MazeMiniGame
 
             field = gameObject.AddComponent<WireFieldGUI>();
             field.fieldPrefab = fieldGUIPrefab.fieldPrefab;
-            var scaleDist = 3f;
             for (var i = 0; i < Height; i++)
             {
                 for (var j = 0; j < Width; j++)

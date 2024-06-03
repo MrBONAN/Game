@@ -18,6 +18,7 @@ namespace MazeMiniGame
         private WireType _type;
         public (Rotation, Rotation) rotation;
         public WireGUI WireGUI;
+        private bool reversed;
 
         public WireType Type
         {
@@ -95,10 +96,10 @@ namespace MazeMiniGame
         {
             return rotation switch
             {
-                Rotation.Normal => Rotation.Degree270,
-                Rotation.Degree90 => Rotation.Normal,
-                Rotation.Degree180 => Rotation.Degree90,
-                Rotation.Degree270 => Rotation.Degree180,
+                Rotation.Normal => reversed? Rotation.Degree90 : Rotation.Degree270,
+                Rotation.Degree90 => reversed? Rotation.Degree180 : Rotation.Normal,
+                Rotation.Degree180 => reversed? Rotation.Degree270 : Rotation.Degree90,
+                Rotation.Degree270 => reversed? Rotation.Normal : Rotation.Degree180,
                 _ => throw new ArgumentException()
             };
         }
@@ -107,6 +108,8 @@ namespace MazeMiniGame
         {
             if (_type == WireType.Bridge || _type == WireType.Long || _type == WireType.Default) return;
             rotation = (rotation.Item2, rotation.Item1);
+            reversed = !reversed;
+            
             WireGUI.ChangeRotationSides();
         }
 
