@@ -33,6 +33,10 @@ namespace MazeMiniGame
         public bool rotating = false;
         public SpriteRenderer sprite;
         public bool reversed;
+        public AudioClip RotateSound;
+        public AudioClip ReverseSound;
+        private AudioSource rotateSound;
+        private AudioSource swapSound;
         
         public Vector2 position;
 
@@ -50,6 +54,9 @@ namespace MazeMiniGame
         private IEnumerator Rotate(float durationSeconds)
         {
             if (rotating) yield break;
+
+            rotateSound.Play();
+            
             rotating = true;
             Quaternion startRotation = gameObj.transform.rotation;
             Quaternion targetRotation = startRotation * Quaternion.Euler(0, 0, -90); // Установка желаемого поворота
@@ -61,6 +68,7 @@ namespace MazeMiniGame
                 gameObj.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t); // Плавное вращение к целевому повороту
                 yield return null;        
             }
+            
 
             rotating = false;
         }
@@ -82,6 +90,10 @@ namespace MazeMiniGame
             };
             gameObj = Instantiate(prefabs[type], parent);
             gameObj.transform.localPosition = new Vector3(position.x, position.y, 0);
+            rotateSound = gameObj.AddComponent<AudioSource>();
+            rotateSound.clip = RotateSound;
+            swapSound = gameObj.AddComponent<AudioSource>();
+            swapSound.clip = ReverseSound;
             sprite = gameObj.GetComponent<SpriteRenderer>();
             cornerPrefSprite = sprite.sprite;
         }
@@ -106,6 +118,8 @@ namespace MazeMiniGame
 
         public void ChangeRotationSides()
         {
+            swapSound.Play();
+            
             sprite = gameObj.GetComponent<SpriteRenderer>();
             if (sprite.sprite == backCornerPref)
                 sprite.sprite = cornerPrefSprite;

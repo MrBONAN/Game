@@ -50,3 +50,5 @@ MonoBehaviour:
   cornerPrefab: {fileID: 2585380238329304114, guid: 02fa3471628d96f4e867d61e39614a10, type: 3}
   longPrefab: {fileID: 439830112413539904, guid: 076f73c5e8da9a141a8f7795d71c7688, type: 3}
   backCornerPref: {fileID: 21300000, guid: f5353d38ac56e7448ab52921204cfc98, type: 3}
+  RotateSound: {fileID: 8300000, guid: ce9cdc1a452139146a29b14dd0e01679, type: 3}
+  ChangeSidesSound: {fileID: 8300000, guid: 5c03bd9c63f0da74a8c042d64a9a9284, type: 3}

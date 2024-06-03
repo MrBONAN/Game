@@ -143,7 +143,7 @@ namespace MazeMiniGame
                 { (3, 8), (Rotation.Degree180, Rotation.Normal) },
                 { (2, 5), (Rotation.Degree180, Rotation.Normal) }
             };
-            var scale = 3f;
+            var scale = 2.9f;
             var bridgePositions = stringField
                 .SelectMany((row, y) => row.Select((c, x) => new { Char = c, Coord = (y, x) }))
                 .Where(item => item.Char == '?')
@@ -159,7 +159,7 @@ namespace MazeMiniGame
             field.endPosition = (5, 11); // Примерная середина по ширине и конечная точка на краю поля
             field.StartPointPref = start;
             field.EndPointPref = end;
-            field.SetField(stringField, scale, shift, bridgePositions, bridgesRotations, 1.5f);
+            field.SetField(stringField, scale, shift, bridgePositions, bridgesRotations, 1.35f);
             return field;
         }
     }

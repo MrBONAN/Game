@@ -181,6 +181,8 @@ namespace MazeMiniGame
         {
             var wire = gameObject.AddComponent<Wire>();
             wire.WireGUI = gameObject.AddComponent<WireGUI>();
+            wire.WireGUI.RotateSound = WirePrefab.RotateSound;
+            wire.WireGUI.ReverseSound = WirePrefab.ChangeSidesSound;
             wire.WireGUI.objectSizes = WirePrefab.objectsRenderer;
             SetWireGUIPref(wire.WireGUI);
             wire.Type = WiresStateFormer.translateDict[wireType]; // set type to wire
