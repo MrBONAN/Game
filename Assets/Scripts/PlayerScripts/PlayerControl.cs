@@ -38,6 +38,7 @@ public class PlayerControl : MonoBehaviour
     protected HashSet<IInteractable> interactableObjects = new();
     protected Collider2D FinishCollider;
     public bool isChangingMap;
+    public bool waspressed;
 
     public static readonly Dictionary<Control, KeyCode> ControlSecond = new()
     {
@@ -95,6 +96,12 @@ public class PlayerControl : MonoBehaviour
 
     protected void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R) && !waspressed && !otherPlayer.waspressed)
+        {
+            waspressed = true;
+            otherPlayer.waspressed = true;
+            SceneTransition.SwitchToScene(SceneManager.GetActiveScene().name);
+        }
         //rb.velocity = new Vector2(0, rb.velocity.y);
         CheckControl();
         if (otherPlayer.isFinished && isFinished && FinishCollider is not null && !isChangingMap && !otherPlayer.isChangingMap)
