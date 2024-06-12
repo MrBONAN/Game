@@ -118,15 +118,15 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKey(currentControl[Control.Left]) ||
             Input.GetKey(currentControl[Control.Right]))
         {
-            if (!audio.isPlaying && !animator.GetBool("isJumping")) audio.Play();
-            if (animator.GetBool("isJumping")) audio.Stop();
+            //if (!audio.isPlaying && !animator.GetBool("isJumping")) audio.Play();
+            //if (animator.GetBool("isJumping")) audio.Stop();
             direction = Input.GetKey(currentControl[Control.Right]) ? 1 : -1;
             Flip(direction);
             SetAnimationRun(true);
         }
         else
         {
-            audio.Stop();
+            //audio.Stop();
             SetAnimationRun(false);
         }
 
