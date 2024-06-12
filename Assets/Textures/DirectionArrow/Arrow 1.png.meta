@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: E
+      name: 0
       rect:
         serializedVersion: 2
         x: 1
@@ -118,7 +118,7 @@ TextureImporter:
         width: 77
         height: 56
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -131,7 +131,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SEE
+      name: 330
       rect:
         serializedVersion: 2
         x: 79
@@ -139,7 +139,7 @@ TextureImporter:
         width: 70
         height: 60
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -152,7 +152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SSE
+      name: 300
       rect:
         serializedVersion: 2
         x: 150
@@ -160,7 +160,7 @@ TextureImporter:
         width: 60
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,7 +173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: S
+      name: 270
       rect:
         serializedVersion: 2
         x: 1
@@ -181,7 +181,7 @@ TextureImporter:
         width: 56
         height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -194,7 +194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SSW
+      name: 240
       rect:
         serializedVersion: 2
         x: 58
@@ -202,7 +202,7 @@ TextureImporter:
         width: 60
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -215,7 +215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SWW
+      name: 210
       rect:
         serializedVersion: 2
         x: 119
@@ -223,7 +223,7 @@ TextureImporter:
         width: 70
         height: 60
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -236,7 +236,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: W
+      name: 180
       rect:
         serializedVersion: 2
         x: 1
@@ -244,7 +244,7 @@ TextureImporter:
         width: 76
         height: 55
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -257,15 +257,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NWW
+      name: 150
       rect:
         serializedVersion: 2
-        x: 78
-        y: 89
+        x: 79
+        y: 90
         width: 70
         height: 60
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -278,7 +278,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NNW
+      name: 120
       rect:
         serializedVersion: 2
         x: 149
@@ -286,7 +286,7 @@ TextureImporter:
         width: 60
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -299,7 +299,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Arrow 1_9
+      name: 90
       rect:
         serializedVersion: 2
         x: 1
@@ -307,7 +307,7 @@ TextureImporter:
         width: 56
         height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -320,7 +320,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Arrow 1_10
+      name: 60
       rect:
         serializedVersion: 2
         x: 58
@@ -328,7 +328,7 @@ TextureImporter:
         width: 60
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -341,7 +341,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Arrow 1_11
+      name: 30
       rect:
         serializedVersion: 2
         x: 119
@@ -349,7 +349,7 @@ TextureImporter:
         width: 70
         height: 60
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -372,18 +372,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Arrow 1_10: 169613160
-      Arrow 1_11: -1085968095
-      Arrow 1_9: -1010363933
-      E: 1624916236
-      NNW: 27121092
-      NWW: 219263391
-      S: -304479091
-      SEE: 983062399
-      SSE: 1228774558
-      SSW: 528180250
-      SWW: 853162539
-      W: 1069867446
+      0: 1624916236
+      120: 27121092
+      150: 219263391
+      180: 1069867446
+      210: 853162539
+      240: 528180250
+      270: -304479091
+      30: -1085968095
+      300: 1228774558
+      330: 983062399
+      60: 169613160
+      90: -1010363933
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
